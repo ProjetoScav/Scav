@@ -9,7 +9,7 @@ from objetos import (
     Requisição,
 )
 from processadores import ProcessadorDeDados
-from datetime import datetime
+
 
 class Operador:
     '''Classe central da aplicação, responsável pelo manejo 
@@ -88,13 +88,3 @@ class Operador:
         linhas = self.processador.scrape_dos_dados(self.paginas)
         df = self.processador.criar_dataframe(linhas)
         self.processador.exportar_dataframe(df)
-
-now = datetime.now()
-
-operador = Operador()
-operador.fechar_requisição()
-operador.puxar_dados()
-
-after = datetime.now()
-tempo = after - now
-print(tempo)

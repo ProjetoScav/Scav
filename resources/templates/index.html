@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="description"
+      content="Pesquise por CNPJs e acesse as infomações de todas as empresas cadastradas na Receita Federal."
+    />
+    <!-- TODO: Favicon -->
+    <title>Scav - Encontre e baixe empresas de todo o Brasil</title>
+    <link
+      rel="stylesheet"
+      href=" {{  url_for('static', filename='css/home.css')  }} "
+    />
+  </head>
+  <body>
+    <main>
+      <section id="section-1">
+        <article class="scav">
+          <h1 class="scav__title">Scav<span class="purple">.</span></h1>
+          <p class="scav__sub-title">
+            Encontre e baixe empresas de todo o Brasil
+          </p>
+          <form
+            action="{{  url_for('home')  }}"
+            class="scav__form"
+            method="get"
+          >
+            <input
+              class="scav__form-search-bar"
+              name="search-bar"
+              type="text"
+              id="search-bar"
+              placeholder="CNPJ, razão social ou cidade..."
+            />
+            <input
+              class="scav__form-btn"
+              name="search-btn"
+              type="button"
+              value="Pesquisar"
+              id="search-btn"
+            />
+          </form>
+        </article>
+      </section>
+      <section id="section-2">
+        <div class="feature">
+          <article class="filters">
+            <form
+              class="filters__form"
+              action="{{  url_for('home')  }}"
+              method="post"
+            >
+              <article class="form_camp">
+                <label class="form_camp__label" for="termo"
+                  >Razão social ou nome fantasia</label
+                >
+                <input
+                  class="form_camp__input"
+                  name="termo"
+                  type="text"
+                  id="termo"
+                  placeholder="Razão social ou nome fantasia"
+                />
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="atividade_principal"
+                  >Atividade principal(CNAE)</label
+                >
+                <input
+                  class="form_camp__input"
+                  type="text"
+                  name="atividade_principal"
+                  id="atividade_principal"
+                  placeholder="Código ou nome da atividade"
+                />
+                <div class="atv_secondary">
+                  <input
+                    class="atv_secondary__input"
+                    type="checkbox"
+                    name="atividade_secundaria"
+                    id="atividade_secundaria"
+                  />
+                  <label class="atv_secondary__label" for="atividade_secundaria"
+                    >Incluir atividade secundária</label
+                  >
+                </div>
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="natureza_juridica"
+                  >Natureza Jurídica</label
+                >
+                <input
+                  class="form_camp__input"
+                  type="text"
+                  name="natureza_juridica"
+                  id="natureza_juridica"
+                  placeholder="Código ou nome da natureza"
+                />
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="situacao_cadastral"
+                  >Situação cadastral</label
+                >
+                <!-- TODO: Colocar as opções de situação cadastral -->
+                <select
+                  class="form_camp__input"
+                  name="situacao_cadastral"
+                  id="situacao_cadastral"
+                >
+                  <option class="select_label" value="ATIVA">ATIVA</option>
+                  <option class="select_label" value="BAIXADA">BAIXADA</option>
+                  <option class="select_label" value="INAPTA">INAPTA</option>
+                  <option class="select_label" value="SUSPENSA">SUSPENSA</option>
+                  <option class="select_label" value="NULA">NULA</option>
+                </select>
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="uf">Estado (UF)</label>
+                <input
+                  class="form_camp__input"
+                  type="text"
+                  name="uf"
+                  id="uf"
+                  placeholder="Selecione o estado"
+                />
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="municipio"
+                  >Munícipio</label
+                >
+                <input
+                  class="form_camp__input"
+                  type="text"
+                  name="municipio"
+                  id="municipio"
+                  placeholder="Selecione o munícipio"
+                />
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="bairro">Bairro</label>
+                <input
+                  class="form_camp__input"
+                  type="text"
+                  name="bairro"
+                  id="bairro"
+                  placeholder="Selecione o bairro"
+                />
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="cep">CEP</label>
+                <input
+                  class="form_camp__input"
+                  type="text"
+                  name="cep"
+                  id="cep"
+                  placeholder="Somente 8 dígitos"
+                />
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="uf">DDD</label>
+                <input
+                  class="form_camp__input"
+                  type="text"
+                  name="uf"
+                  id="uf"
+                  placeholder="2 dígitos"
+                />
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="data_desde"
+                  >Data de Abertura - A partir de</label
+                >
+                <input
+                  class="form_camp__input"
+                  type="date"
+                  name="data_desde"
+                  id="data_desde"
+                  placeholder="dd/mm/aaaa"
+                />
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="date_ate"
+                  >Data de Abertura - Até</label
+                >
+                <input
+                  class="form_camp__input"
+                  type="date"
+                  name="data_ate"
+                  id="data_ate"
+                  placeholder="dd/mm/aaaa"
+                />
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="cp_desde"
+                  >Capital Social - A partir de</label
+                >
+                <input
+                  class="form_camp__input"
+                  type="text"
+                  name="cp_desde"
+                  id="cp_desde"
+                  placeholder="A partir de"
+                />
+              </article>
+              <article class="form_camp">
+                <label class="form_camp__label" for="cp_ate"
+                  >Capital Social - Até</label
+                >
+                <input
+                  class="form_camp__input"
+                  type="text"
+                  name="cp_ate"
+                  id="cp_ate"
+                  placeholder="Até"
+                />
+              </article>
+              <div class="form_camp-checks">
+                <article class="form_camp-check">
+                  <input
+                    class="form_camp-check__input"
+                    type="checkbox"
+                    name="so_mei"
+                    id="so_mei"
+                  />
+                  <label class="form_camp-check__label" for="so_mei"
+                    >Somente MEI</label
+                  >
+                </article>
+                <article class="form_camp-check">
+                  <input
+                    class="form_camp-check__input"
+                    type="checkbox"
+                    name="so_matriz"
+                    id="so_matriz"
+                  />
+                  <label class="form_camp-check__label" for="so_matriz"
+                    >Somente Matriz</label
+                  >
+                </article>
+                <article class="form_camp-check">
+                  <input
+                    class="form_camp-check__input"
+                    type="checkbox"
+                    name="contato_telefonico"
+                    id="contato_telefonico"
+                  />
+                  <label class="form_camp-check__label" for="contato_telefonico"
+                    >Com contato de telefone</label
+                  >
+                </article>
+                <article class="form_camp-check">
+                  <input
+                    class="form_camp-check__input"
+                    type="checkbox"
+                    name="so_fixo"
+                    id="so_fixo"
+                  />
+                  <label class="form_camp-check__label" for="so_fixo"
+                    >Somente fixo</label
+                  >
+                </article>
+                <article class="form_camp-check">
+                  <input
+                    class="form_camp-check__input"
+                    type="checkbox"
+                    name="email"
+                    id="email"
+                  />
+                  <label class="form_camp-check__label" for="email"
+                    >Com e-mail</label
+                  >
+                </article>
+                <article class="form_camp-check">
+                  <input
+                    class="form_camp-check__input"
+                    type="checkbox"
+                    name="sem_mei"
+                    id="sem_mei"
+                  />
+                  <label class="form_camp-check__label" for="sem_mei"
+                    >Excluir MEI</label
+                  >
+                </article>
+                <article class="form_camp-check">
+                  <input
+                    class="form_camp-check__input"
+                    type="checkbox"
+                    name="so_filial"
+                    id="so_filial"
+                  />
+                  <label class="form_camp-check__label" for="so_filial"
+                    >Somente filial</label
+                  >
+                </article>
+                <article class="form_camp-check">
+                  <input
+                    class="form_camp-check__input"
+                    type="checkbox"
+                    name="so_celular"
+                    id="so_celular"
+                  />
+                  <label class="form_camp-check__label" for="so_celular"
+                    >Somente celular</label
+                  >
+                </article>
+              </div>
+              <input class="form_camp__btn" type="button" value="Pesquisar">
+            </form>
+          </article>
+          <article class="results">
+            <!-- TODO: Montar por for loop os cnpjs -->
+          </article>
+        </div>
+      </section>
+      <section id="section-3">
+        <article class="pricing">
+          <h2 class="pricing__title">
+            <span class="caixa-alta">R$ 0,01</span> centavo por empresa
+          </h2>
+          <p class="pricing__text">
+            Baixe e pague através do pix ou no cartão de crédito com <br>
+            parcelamento em até 6 vezes</span>
+          </p>
+        </article>
+      </section>
+    </main>
+    <footer>
+      <article class="footer">
+        <p class="footer__first-p">Scav</p>
+        <p class="footer__second-p">®Todos os direitos reservados</p>
+      </article>
+    </footer>
+  </body>
+</html>

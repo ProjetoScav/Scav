@@ -72,6 +72,8 @@ class Requisição:
     def mudar_query(self, mudança: MudançaQuery):
         '''Método que muda as opções da categoria query do JSON,
         recebe uma lista de objetos MudançaQuery'''
+        if mudança.opção == "situacao_cadastral":
+            self.query["query"][mudança.opção] = mudança.filtros[0]
         self.query["query"][mudança.opção] = mudança.filtros
             
     def mudar_range_query(self, mudança: MudançaRangeQuery):
