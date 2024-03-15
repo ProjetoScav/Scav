@@ -10,6 +10,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins";
+  font-weight: 400;
 }
 
 body {
@@ -39,7 +40,6 @@ input[type="checkbox"] {
 
 .caixa-alta {
   font-size: clamp(2rem, 8vw, 5.85rem);
-  font-weight: 400;
 }
 
 .btn {
@@ -104,7 +104,6 @@ input[type="checkbox"] {
 .scav__form-search-bar::placeholder {
   color: var(--grey);
   font-size: 0.875rem;
-  font-weight: 400;
   text-align: center;
 }
 
@@ -147,7 +146,6 @@ input[type="checkbox"] {
 .form_camp__label {
   color: var(--black);
   font-size: 0.875rem;
-  font-weight: 400;
   white-space: nowrap;
   word-wrap: none;
 }
@@ -227,7 +225,6 @@ input[type="checkbox"] {
 .search-results__title {
   color: #25212f;
   font-size: clamp(1rem, 2vw, 1.5rem);
-  font-weight: 400;
 }
 
 .n-cnpjs {
@@ -252,21 +249,20 @@ input[type="checkbox"] {
 }
 
 .cnpj__state-block--grey {
-  background-color: #F1F1F1;
+  background-color: #f1f1f1;
 }
 
 .cnpj__state--green {
-  color: #009D65;
+  color: #009d65;
 }
 
 .cnpj__state--grey {
-  color: #3E363E;
+  color: #3e363e;
 }
 
 .search-results__text {
   color: #717074;
   font-size: clamp(0.8rem, 0.5rem + 1vw, 1rem);
-  font-weight: 400;
 }
 
 .baixar-btn {
@@ -289,7 +285,6 @@ input[type="checkbox"] {
 .cnpj__razao-social {
   color: #1a161a;
   font-size: clamp(0.75rem, 2vw, 1.25rem);
-  font-weight: 400;
   margin-bottom: 0.5rem;
 }
 
@@ -297,7 +292,6 @@ input[type="checkbox"] {
 .cnpj__city-state {
   color: #858185;
   font-size: clamp(0.6rem, 1.5vw, 0.875rem);
-  font-weight: 400;
 }
 
 .cnpjs-indexes {
@@ -313,7 +307,6 @@ input[type="checkbox"] {
   color: var(--black);
   font-size: 14px;
   text-decoration: none;
-  font-weight: 400;
   padding: 0.25rem 0.5rem;
   @media (min-width: 900px) {
     padding: 0.5rem 1rem;
@@ -338,7 +331,6 @@ input[type="checkbox"] {
 
 .pricing__title {
   font-size: clamp(1rem, 0.5rem + 1.5vw, 2.5rem);
-  font-weight: 400;
 }
 
 .pricing__text {

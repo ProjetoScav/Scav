@@ -1,13 +1,13 @@
 from flask.templating import render_template
 from flask import request
-from app.funcionalidades.operador import Operador, GarçomDoFront
+from app.funcionalidades.operador import Operador, HomeFront, CNPJFront
 
 def configure(app):
     @app.route("/")
     def home():
         pagina = request.args.get('pagina', 1, type=int)
         operador = Operador()
-        front = GarçomDoFront(operador.requisição)
+        front = HomeFront(operador.requisição)
         n_paginas = front.numero_paginas_tela
         fim_cards = pagina * 10
         começo_cards = fim_cards - 10
@@ -20,6 +20,8 @@ def configure(app):
                                pagina=pagina)
 
 
-    @app.route("/cnpj/<int:cnpj>")
+    @app.route("/cnpj/<cnpj>")
     def cnpj(cnpj):
-        return render_template("cnpj.html")
+        front = CNPJFront()
+        cnpj = front.gerar_dados_cnpj(cnpj)
+        return render_template("cnpj.html", cnpj=cnpj)

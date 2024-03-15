@@ -19,8 +19,8 @@ class MudançaQuery:
 class MudançaRangeQuery:
     '''Classe de dados que representa uma mudança nas categorias range query do JSON'''
     opção: str
-    desde: str | None
-    até: str | None
+    desde: str | None = None
+    até: str | None = None
 
 
 class Requisição:
