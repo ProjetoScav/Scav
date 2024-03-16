@@ -54,10 +54,13 @@
         <div class="feature">
           <article class="filters">
             <form
+              name="form"
+              id="form"
               class="filters__form"
               action="{{  url_for('home')  }}"
               method="post"
             >
+            <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}" />  
               <article class="form_camp">
                 <label class="form_camp__label" for="termo"
                   >Razão social ou nome fantasia</label
@@ -85,8 +88,8 @@
                   <input
                     class="atv_secondary__input"
                     type="checkbox"
-                    name="atividade_secundaria"
-                    id="atividade_secundaria"
+                    name="incluir_atividade_secundaria"
+                    id="incluir_atividade_secundaria"
                   />
                   <label class="atv_secondary__label" for="atividade_secundaria"
                     >Incluir atividade secundária</label
@@ -166,60 +169,60 @@
                 />
               </article>
               <article class="form_camp">
-                <label class="form_camp__label" for="uf">DDD</label>
+                <label class="form_camp__label" for="ddd">DDD</label>
                 <input
                   class="form_camp__input"
                   type="text"
-                  name="uf"
-                  id="uf"
+                  name="ddd"
+                  id="ddd"
                   placeholder="2 dígitos"
                 />
               </article>
               <article class="form_camp">
-                <label class="form_camp__label" for="data_desde"
+                <label class="form_camp__label" for="data_abertura_desde"
                   >Data de Abertura - A partir de</label
                 >
                 <input
                   class="form_camp__input"
                   type="date"
-                  name="data_desde"
-                  id="data_desde"
+                  name="data_abertura_desde"
+                  id="data_abertura_desde"
                   placeholder="dd/mm/aaaa"
                 />
               </article>
               <article class="form_camp">
-                <label class="form_camp__label" for="date_ate"
+                <label class="form_camp__label" for="data_abertura_ate"
                   >Data de Abertura - Até</label
                 >
                 <input
                   class="form_camp__input"
                   type="date"
-                  name="data_ate"
-                  id="data_ate"
+                  name="data_abertura_ate"
+                  id="data_abertura_ate"
                   placeholder="dd/mm/aaaa"
                 />
               </article>
               <article class="form_camp">
-                <label class="form_camp__label" for="cp_desde"
+                <label class="form_camp__label" for="capital_social_desde"
                   >Capital Social - A partir de</label
                 >
                 <input
                   class="form_camp__input"
                   type="text"
-                  name="cp_desde"
-                  id="cp_desde"
+                  name="capital_social_desde"
+                  id="capital_social_desde"
                   placeholder="A partir de"
                 />
               </article>
               <article class="form_camp">
-                <label class="form_camp__label" for="cp_ate"
+                <label class="form_camp__label" for="capital_social_ate"
                   >Capital Social - Até</label
                 >
                 <input
                   class="form_camp__input"
                   type="text"
-                  name="cp_ate"
-                  id="cp_ate"
+                  name="capital_social_ate"
+                  id="capital_social_ate"
                   placeholder="Até"
                 />
               </article>
@@ -228,10 +231,10 @@
                   <input
                     class="form_camp-check__input"
                     type="checkbox"
-                    name="so_mei"
-                    id="so_mei"
+                    name="somente_mei"
+                    id="somente_mei"
                   />
-                  <label class="form_camp-check__label" for="so_mei"
+                  <label class="form_camp-check__label" for="somente_mei"
                     >Somente MEI</label
                   >
                 </article>
@@ -239,10 +242,10 @@
                   <input
                     class="form_camp-check__input"
                     type="checkbox"
-                    name="so_matriz"
-                    id="so_matriz"
+                    name="somente_matriz"
+                    id="somente_matriz"
                   />
-                  <label class="form_camp-check__label" for="so_matriz"
+                  <label class="form_camp-check__label" for="somente_matriz"
                     >Somente Matriz</label
                   >
                 </article>
@@ -250,10 +253,10 @@
                   <input
                     class="form_camp-check__input"
                     type="checkbox"
-                    name="contato_telefonico"
-                    id="contato_telefonico"
+                    name="com_contato_telefonico"
+                    id="com_contato_telefonico"
                   />
-                  <label class="form_camp-check__label" for="contato_telefonico"
+                  <label class="form_camp-check__label" for="com_contato_telefonico"
                     >Com contato de telefone</label
                   >
                 </article>
@@ -261,10 +264,10 @@
                   <input
                     class="form_camp-check__input"
                     type="checkbox"
-                    name="so_fixo"
-                    id="so_fixo"
+                    name="somente_fixo"
+                    id="somente_fixo"
                   />
-                  <label class="form_camp-check__label" for="so_fixo"
+                  <label class="form_camp-check__label" for="somente_fixo"
                     >Somente fixo</label
                   >
                 </article>
@@ -272,10 +275,10 @@
                   <input
                     class="form_camp-check__input"
                     type="checkbox"
-                    name="email"
-                    id="email"
+                    name="com_email"
+                    id="com_email"
                   />
-                  <label class="form_camp-check__label" for="email"
+                  <label class="form_camp-check__label" for="com_email"
                     >Com e-mail</label
                   >
                 </article>
@@ -283,10 +286,10 @@
                   <input
                     class="form_camp-check__input"
                     type="checkbox"
-                    name="sem_mei"
-                    id="sem_mei"
+                    name="excluir_mei"
+                    id="excluir_mei"
                   />
-                  <label class="form_camp-check__label" for="sem_mei"
+                  <label class="form_camp-check__label" for="excluir_mei"
                     >Excluir MEI</label
                   >
                 </article>
@@ -294,10 +297,10 @@
                   <input
                     class="form_camp-check__input"
                     type="checkbox"
-                    name="so_filial"
-                    id="so_filial"
+                    name="somente_filial"
+                    id="somente_filial"
                   />
-                  <label class="form_camp-check__label" for="so_filial"
+                  <label class="form_camp-check__label" for="somente_filial"
                     >Somente filial</label
                   >
                 </article>
@@ -305,19 +308,19 @@
                   <input
                     class="form_camp-check__input"
                     type="checkbox"
-                    name="so_celular"
-                    id="so_celular"
+                    name="somente_celular"
+                    id="somente_celular"
                   />
-                  <label class="form_camp-check__label" for="so_celular"
+                  <label class="form_camp-check__label" for="somente_celular"
                     >Somente celular</label
                   >
                 </article>
               </div>
-              <input
+              <button
                 class="form_camp__btn btn"
-                type="button"
-                value="Pesquisar"
-              />
+                form="form"
+              > Pesquisar
+              </button>
             </form>
           </article>
           <article class="results">
@@ -400,7 +403,7 @@
                           />
                         </g>
                       </svg>
-                      {{ card.cnpj }}
+                      {{ card.cnpj|cnpj_format }}
                     </p>
                     <p class="cnpj__city-state">
                       <svg
