@@ -25,23 +25,17 @@ def pegar_dados_frontend(dado: dict) -> tuple[str, str, str, str, str]:
         "cnpj": cnpj,
     }
 
-
-def pegar_numero_paginas_cnpjs(
-    requisição: Requisição, n_dados: bool = False
-) -> int | tuple[int, int]:
-    """Função que recebe uma requisição da Casa dos Dados
-    e calcula sua quantidade de páginas"""
+def pegar_numero_cnpjs(requisição: Requisição) -> int:
     resposta = ApiExtendidaLigação().fazer_a_requisição(requisição.gerar_json())
     n_dados = int(resposta.json()["data"]["count"])
+    return n_dados
 
+
+def pegar_numero_paginas(n_dados: int) -> int:
     if n_dados < 1000 and n_dados > 20:
         n_paginas = math.ceil(n_dados / 20)
     elif n_dados > 1000:
         n_paginas = 50
     else:
         n_paginas = 1
-
-    if n_dados:
-        return n_paginas, n_dados
-    else:
-        return n_paginas
+    return n_paginas

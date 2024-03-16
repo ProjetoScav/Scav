@@ -2,16 +2,15 @@ import math
 from app.conectores.conectores import ApiCnpjLigação, ApiExtendidaLigação
 from app.objetos.classes_de_dados import CampoDeDados
 from app.objetos.requisição import Requisição
-from app.funcs.api import pegar_numero_paginas_cnpjs, pegar_dados_frontend
+from app.funcs.api import pegar_numero_cnpjs, pegar_numero_paginas, pegar_dados_frontend
 from app.funcs.pagina import scrape_dos_dados
 
 
 class HomeFront:
     def selecionar_requisição(self, requisição: Requisição):
         self.requisição = requisição
-        self.numero_paginas_api, self.numero_cnpjs = (
-           pegar_numero_paginas_cnpjs(requisição, n_dados=True)
-        )
+        self.numero_cnpjs = pegar_numero_cnpjs(self.requisição)
+        self.numero_paginas_api = pegar_numero_paginas(self.numero_cnpjs)
         self.numero_paginas_tela: int = self.numero_de_paginas_tela()
 
     def numero_de_paginas_tela(self) -> int:

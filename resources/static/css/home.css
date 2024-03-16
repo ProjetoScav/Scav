@@ -195,7 +195,7 @@ input[type="checkbox"] {
 .results {
   margin-top: 2.5rem;
   @media (min-width: 43.75rem) {
-    margin-top: auto;
+    margin-top: 0;
   }
 }
 

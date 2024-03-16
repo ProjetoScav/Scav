@@ -33,12 +33,12 @@ def gerar_faixa_de_cards(pagina: int):
     return começo_cards, fim_cards
 
 
-def formatar_campo_lista(key: str, value: str) -> list:
+def formatar_campo_lista(value: str) -> list:
     if value:
         if "," in value:
             value = value.split(",")
         else:
-            value = [key]
+            value = [value]
     else:
         value = []
     return value
@@ -50,6 +50,6 @@ def formatar_dados_requisição(kwargs: dict) -> dict:
         if key in campos_booleanos:
             kwargs[key] = True
         elif key in campos_lista:
-            value = formatar_campo_lista(key, value)
+            value = formatar_campo_lista(value)
             kwargs[key] = value
     return kwargs

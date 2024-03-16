@@ -17,7 +17,6 @@ def rota_home(app):
             kwargs = formatar_dados_requisição(kwargs)
             front.selecionar_requisição(Requisição(**kwargs))
             cards_iniciais = front.gerar_dados_cards()
-            print(cards_iniciais)
 
         pagina = request.args.get("pagina", 1, type=int)
         começo_cards, fim_cards = gerar_faixa_de_cards(pagina)
