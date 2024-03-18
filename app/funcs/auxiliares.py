@@ -37,12 +37,15 @@ def formatar_campo_lista(value: str) -> list:
     if value:
         if "," in value:
             value = value.split(",")
-        else:
-            value = [value]
-    else:
-        value = []
+            return value
+        value = [value]
+        return value 
+    value = []
     return value
 
+# TODO: Função que remove os valores invalidos no formulário
+def remover_valor_invalido(value: str) -> str:
+    ...    
 
 def formatar_dados_requisição(kwargs: dict) -> dict:
     kwargs.pop("csrf_token")

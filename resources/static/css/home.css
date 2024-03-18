@@ -34,6 +34,11 @@ input[type="checkbox"] {
 }
 
 /* General Classes */
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
 .purple {
   color: var(--purple);
 }
