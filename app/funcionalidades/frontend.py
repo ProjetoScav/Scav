@@ -7,7 +7,7 @@ from flask_caching import Cache
 
 cache = Cache()
 
-
+# TODO: Documentar essa função
 class HomeFront:
     def selecionar_requisição(self, requisição: Requisição):
         self.requisição = requisição

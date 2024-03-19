@@ -1,4 +1,4 @@
 from .home import rota_home
 
-def configure(app):
+def configurar_rotas(app):
     rota_home(app)

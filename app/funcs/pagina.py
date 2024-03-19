@@ -27,7 +27,7 @@ def extrair_dado_categoria(bloco: SelectorList) -> tuple[str, str]:
 
     return valor, categoria
 
-
+# TODO: Documentar essa função
 def preencher_cnpj_obj(pagina: str) -> CNPJ:
     html = Selector(pagina)
     blocos = html.css(".is-narrow")

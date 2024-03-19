@@ -10,7 +10,7 @@ def pegar_os_cnpjs(json: dict) -> list[str]:
     cnpjs = [cnpj["cnpj"] for cnpj in lista_de_cnpjs]
     return cnpjs
 
-
+# TODO: Documentar essa função
 def pegar_dados_frontend(dado: dict) -> tuple[str, str, str, str, str]:
     cnpj = dado["cnpj"]
     razao = dado["razao_social"]
@@ -25,17 +25,16 @@ def pegar_dados_frontend(dado: dict) -> tuple[str, str, str, str, str]:
         "cnpj": cnpj,
     }
 
+# TODO: Documentar essa função
 def pegar_numero_cnpjs(requisição: Requisição) -> int:
     resposta = ApiExtendidaLigação().fazer_a_requisição(requisição.gerar_json())
     n_dados = int(resposta.json()["data"]["count"])
     return n_dados
 
-
+# TODO: Documentar essa função
 def pegar_numero_paginas(n_dados: int) -> int:
-    if n_dados < 1000 and n_dados > 20:
-        n_paginas = math.ceil(n_dados / 20)
-    elif n_dados > 1000:
-        n_paginas = 50
-    else:
-        n_paginas = 1
-    return n_paginas
+    if n_dados > 1000:
+        return 50
+    elif n_dados < 1000 and n_dados > 20:
+        return math.ceil(n_dados / 20)
+    return 1
