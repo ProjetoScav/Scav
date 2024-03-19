@@ -47,5 +47,4 @@ def scrape_dos_dados(paginas: str | list) -> list[CNPJ] | CNPJ:
             cnpj = preencher_cnpj_obj(pagina)
             cnpjs.append(cnpj)
         return cnpjs
-    else:
-        return preencher_cnpj_obj(paginas)
+    return preencher_cnpj_obj(paginas)

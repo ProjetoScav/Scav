@@ -4,7 +4,7 @@ from flask.app import Flask
 from flask_wtf import CSRFProtect
 from flask_caching import Cache
 from .rotas import configure
-from .blueprints.cnpj import cnpj_page 
+from .blueprints import configure_blueprint 
 
 
 def create_app():
@@ -18,6 +18,6 @@ def create_app():
     Cache(app)
     CSRFProtect(app)
     configure(app)
-    app.register_blueprint(cnpj_page)
+    configure_blueprint(app)
     app.jinja_env.filters["cnpj_format"] = formatar_cnpj
     return app

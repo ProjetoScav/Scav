@@ -1,5 +1,5 @@
 from flask.templating import render_template
-from funcs.cnpj_front import CNPJFront
+from .cnpj_front import CNPJFront
 
 def rota_cnpj(blueprint): 
     @blueprint.route("/cnpj/<cnpj>")
