@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, session, redirect, url_for
 from flask.templating import render_template
 
 from app.funcionalidades.frontend import HomeFront
@@ -7,18 +7,17 @@ from app.objetos.requisição import Requisição
 
 
 def rota_home(app):
-    @app.route("/", methods=["GET", "POST"])
+    @app.route("/", methods=["GET"])
     def home():
-        front = HomeFront()
-        front.selecionar_requisição(Requisição())
-        cards_iniciais = front.gerar_dados_cards()
-        if request.method == "POST":
-            kwargs = request.form.to_dict()
-            kwargs = formatar_dados_requisição(kwargs)
-            front.selecionar_requisição(Requisição(**kwargs))
-            cards_iniciais = front.gerar_dados_cards()
-
         pagina = request.args.get("pagina", 1, type=int)
+        front = HomeFront()
+
+        if session.get("_requisição"):
+            front.selecionar_requisição(Requisição(**session.get("_requisição")))
+        else:
+            front.selecionar_requisição(Requisição())
+        
+        cards_iniciais = front.gerar_dados_cards()
         começo_cards, fim_cards = gerar_faixa_de_cards(pagina)
         cards = cards_iniciais[começo_cards:fim_cards]
         return render_template(
@@ -28,3 +27,10 @@ def rota_home(app):
             n_paginas=front.numero_paginas_tela,
             pagina=pagina,
         )
+    
+    @app.route("/", methods=["POST"])
+    def search():
+        kwargs = request.form.to_dict()
+        kwargs = formatar_dados_requisição(kwargs)
+        session["_requisição"] = kwargs
+        return redirect(url_for("home"))
