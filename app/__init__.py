@@ -2,10 +2,9 @@ import os
 from app.funcs.auxiliares import formatar_cnpj
 from flask.app import Flask
 from flask_wtf import CSRFProtect
-from flask_caching import Cache
 from .rotas import configure
 from .blueprints import configure_blueprint 
-
+from app.funcionalidades.frontend import cache
 
 def create_app():
     app = Flask(
@@ -15,7 +14,7 @@ def create_app():
     )
     app.config["SECRET_KEY"] = os.urandom(20).hex()
     app.config["CACHE_TYPE"] = "SimpleCache"
-    Cache(app)
+    cache.init_app(app, config={'CACHE_TYPE': 'simple'})
     CSRFProtect(app)
     configure(app)
     configure_blueprint(app)

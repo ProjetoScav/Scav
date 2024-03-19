@@ -3,6 +3,9 @@ from app.conectores.conectores import ApiExtendidaLigação
 from app.objetos.classes_de_dados import CampoDeDados
 from app.objetos.requisição import Requisição
 from app.funcs.api import pegar_numero_cnpjs, pegar_numero_paginas, pegar_dados_frontend
+from flask_caching import Cache
+
+cache = Cache()
 
 
 class HomeFront:
@@ -19,8 +22,14 @@ class HomeFront:
             return 1
         return math.ceil(self.numero_cnpjs / 10)
 
-    # TODO: Otimizar essa função
+    # TODO: Organizar essa função e Otimizar essa função
+    @cache.memoize(timeout=300)
     def gerar_dados_cards(self):
+        cache_key = (
+            f"{self.numero_cnpjs}-{self.numero_paginas_api}-{self.numero_paginas_tela}"
+        )
+        if cached := cache.get(cache_key):
+            return cached
         cnpjs = []
         for i in range(1, math.ceil(self.numero_paginas_tela / 2) + 1):
             json = self.requisição.gerar_json(i)
@@ -31,4 +40,5 @@ class HomeFront:
                 dados_cnpj = pegar_dados_frontend(dado)
                 cnpj_objeto = CampoDeDados(**dados_cnpj)
                 cnpjs.append(cnpj_objeto)
+        cache.set(cache_key, cnpjs)
         return cnpjs
