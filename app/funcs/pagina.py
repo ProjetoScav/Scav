@@ -27,8 +27,9 @@ def extrair_dado_categoria(bloco: SelectorList) -> tuple[str, str]:
 
     return valor, categoria
 
-# TODO: Documentar essa função
+
 def preencher_cnpj_obj(pagina: str) -> CNPJ:
+    """Função que extrae os dados de uma pagina de CNPJ e retorna um objeto CNPJ populado pelos dados"""
     html = Selector(pagina)
     blocos = html.css(".is-narrow")
     cnpj = CNPJ()
@@ -39,8 +40,8 @@ def preencher_cnpj_obj(pagina: str) -> CNPJ:
 
 
 def scrape_dos_dados(paginas: str | list) -> list[CNPJ] | CNPJ:
-    """Função que recebe uma lista de páginas de CNPJ e retorna uma lista
-    contendo os dados de dos CNPJ's como dicionários"""
+    """Função que recebe uma lista de páginas de CNPJ ou um único,
+    e retorna uma lista contendo os dados de um dos CNPJ's como dicionários"""
     if isinstance(paginas, list):
         cnpjs = []
         for pagina in paginas:

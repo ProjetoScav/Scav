@@ -1,5 +1,6 @@
 class Requisição:
     """Classe que monta o JSON para ser enviado à Casa de Dados"""
+
     def __init__(
         self,
         termo: list = [],
@@ -62,9 +63,8 @@ class Requisição:
         }
 
     def __repr__(self):
-        return f"Requisição({self.query}, {self.range_query}, {self.extras})"    
+        return f"Requisição({self.query}, {self.range_query}, {self.extras})"
 
-    
     def gerar_json(self, pagina: int = 1) -> dict:
         """Função que gera o json à ser enviado,
         recebe o parâmetro página e retorna o JSON"""
