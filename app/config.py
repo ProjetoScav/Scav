@@ -1,9 +1,7 @@
 import os
-from .filtros_jinja import configurar_jinja
-from flask_caching import Cache
+from flask_wtf import CSRFProtect
 
-cache = Cache()
 
 def configurações(app):
     app.config["SECRET_KEY"] = os.urandom(20).hex()
-    configurar_jinja(app)
+    CSRFProtect(app)

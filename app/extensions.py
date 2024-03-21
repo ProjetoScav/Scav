@@ -1,3 +1,8 @@
+from flask_caching import Cache
+
+cache = Cache()
+
+
 def formatar_cnpj(cnpj: str):
     return (
         cnpj[:2]
@@ -12,5 +17,5 @@ def formatar_cnpj(cnpj: str):
     )
 
 
-def configurar_jinja(app):
+def configurar_filtros_jinja(app):
     app.jinja_env.filters["cnpj_format"] = formatar_cnpj

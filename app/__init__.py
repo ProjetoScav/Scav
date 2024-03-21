@@ -1,7 +1,8 @@
 from flask.app import Flask
-from flask_wtf import CSRFProtect
-from .blueprints import configure_blueprint 
-from .config import configurações, cache
+from .blueprints import configurar_blueprints
+from .config import configurações
+from .extensions import cache, configurar_filtros_jinja
+
 
 def create_app():
     app = Flask(
@@ -9,7 +10,7 @@ def create_app():
         static_folder="../static/",
     )
     cache.init_app(app, config={"CACHE_TYPE": "simple"})
-    CSRFProtect(app)
     configurações(app)
-    configure_blueprint(app)
+    configurar_blueprints(app)
+    configurar_filtros_jinja(app)
     return app

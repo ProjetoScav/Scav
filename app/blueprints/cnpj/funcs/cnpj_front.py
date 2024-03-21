@@ -8,5 +8,4 @@ class CNPJFront:
     def gerar_dados_cnpj(self, cnpj: str):
         """Função que gera os dados pra popular uma pagina CNPJ"""
         pagina = ApiCnpjLigação().fazer_a_requisição(cnpj)
-        cnpj = scrape_dos_dados(pagina.text)
-        return cnpj
+        return scrape_dos_dados(pagina.text)

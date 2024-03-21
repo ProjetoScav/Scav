@@ -1,9 +1,8 @@
 import math
-from app.conectores.conectores import ApiExtendidaLigação
-from app.objetos.classes_de_dados import CampoDeDados
 from app.objetos.requisição import Requisição
-from .api import pegar_numero_cnpjs, pegar_numero_paginas, pegar_dados_frontend
-from app.config import cache
+from .auxiliares import gera_chave_cache_cards
+from .api import pegar_numero_cnpjs, pegar_numero_paginas, pegar_campos_de_dados_pagina
+from app.extensions import cache
 
 
 class HomeFront:
@@ -24,23 +23,15 @@ class HomeFront:
             return 1
         return math.ceil(self.numero_cnpjs / 10)
 
-    # TODO: Organizar essa função e Otimizar essa função
     def gerar_dados_cards(self):
         """Função que gera os cards pra pagina da home"""
-        cache_key = (
-            f"{self.numero_cnpjs}-{self.numero_paginas_api}-{self.numero_paginas_tela}"
-        )
-        if cached_return := cache.get(cache_key):
-            return cached_return
+        cache_key = gera_chave_cache_cards(self.requisição)
+        if cache.get(cache_key):
+            return cache.get(cache_key)
         cnpjs = []
         for i in range(1, math.ceil(self.numero_paginas_tela / 2) + 1):
             json = self.requisição.gerar_json(i)
-            resposta = ApiExtendidaLigação().fazer_a_requisição(json)
-            json = resposta.json()
-            dados = json["data"]["cnpj"]
-            for dado in dados:
-                dados_cnpj = pegar_dados_frontend(dado)
-                cnpj_objeto = CampoDeDados(**dados_cnpj)
-                cnpjs.append(cnpj_objeto)
+            cnpjs_pagina = pegar_campos_de_dados_pagina(json)
+            cnpjs = cnpjs + cnpjs_pagina
         cache.set(cache_key, cnpjs, 0)
         return cnpjs

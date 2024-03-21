@@ -1,29 +1,24 @@
 from app.conectores.conectores import ApiExtendidaLigação
 from app.objetos.requisição import Requisição
+from app.objetos.classes_de_dados import CampoDeDados
 import math
 
 
 def pegar_dados_frontend(dado: dict) -> tuple[str, str, str, str, str]:
     """Função que recebe um arquivo JSON e pega os dados que serão usados nos cards da homepage"""
-    cnpj = dado["cnpj"]
-    razao = dado["razao_social"]
-    cadastro = dado["situacao_cadastral"]
-    municipio = dado["municipio"]
-    estado = dado["uf"]
     return {
-        "razao_social": razao,
-        "municipio": municipio,
-        "estado": estado,
-        "cadastro": cadastro,
-        "cnpj": cnpj,
+        "razao_social": dado["razao_social"],
+        "municipio": dado["municipio"],
+        "estado": dado["uf"],
+        "cadastro": dado["situacao_cadastral"],
+        "cnpj": dado["cnpj"],
     }
 
 
 def pegar_numero_cnpjs(requisição: Requisição) -> int:
     """Função que recebe uma requisição e retorna o número de dados na requisição"""
     resposta = ApiExtendidaLigação().fazer_a_requisição(requisição.gerar_json())
-    n_dados = int(resposta.json()["data"]["count"])
-    return n_dados
+    return int(resposta.json()["data"]["count"])
 
 
 def pegar_numero_paginas(n_dados: int) -> int:
@@ -33,3 +28,24 @@ def pegar_numero_paginas(n_dados: int) -> int:
     elif n_dados < 1000 and n_dados > 20:
         return math.ceil(n_dados / 20)
     return 1
+
+
+def gerar_campo_de_dados(dado: dict) -> CampoDeDados:
+    """Função que recebe um dicionário com dados de CNPJ e
+    retorna um objeto Campo de Dados populado"""
+    dados_cnpj = pegar_dados_frontend(dado)
+    return CampoDeDados(**dados_cnpj)
+
+
+def pegar_blocos_cnpj(json: dict) -> list[dict]:
+    """Função que faz uma requisição a API da Casa dos Dados e
+    retorna uma lista com dicionários que contem os dados dos CNPJs"""
+    resposta = ApiExtendidaLigação().fazer_a_requisição(json)
+    json = resposta.json()
+    return json["data"]["cnpj"]
+
+
+def pegar_campos_de_dados_pagina(json: dict) -> list[CampoDeDados]:
+    """Função que recebe um dicionário com dados de CNPJ e retorna uma lista de Campos de Dados"""
+    dados = pegar_blocos_cnpj(json)
+    return [gerar_campo_de_dados(dado) for dado in dados]
