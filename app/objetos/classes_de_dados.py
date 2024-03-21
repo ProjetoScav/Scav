@@ -1,6 +1,7 @@
 from dataclasses import dataclass, asdict
 from .variaveis import campos_mapper
 
+
 @dataclass
 class CNPJ:
     cnpj: str | None = None
