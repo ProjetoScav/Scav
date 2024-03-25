@@ -13,8 +13,8 @@
       name="description"
       content="Pesquise por CNPJs e acesse as infomações de todas as empresas cadastradas na Receita Federal."
     />
-    <!-- TODO: Favicon -->
     <title>Scav - Encontre e baixe empresas de todo o Brasil</title>
+    <link rel="icon" type="image/png" href="{{  url_for('static', filename='favicon.png')  }}" />
     <link
       rel="stylesheet"
       href=" {{  url_for('static', filename='css/home.css')  }} "
@@ -248,7 +248,7 @@
                     >Somente Matriz</label
                   >
                 </article>
-                <article class="form_camp-check">
+                <article class="form_camp-check com-telefone">
                   <input
                     class="form_camp-check__input"
                     type="checkbox"
@@ -327,7 +327,7 @@
               <div class="search-results__summary">
                 <h2 class="search-results__title">Resultados da pesquisa...</h2>
                 <p class="search-results__text">
-                  <span class="n-cnpjs">{{ n_de_dados }}</span> empresas
+                  <span class="n-cnpjs">{{ n_de_dados|numero_format }}</span> empresas
                   encontradas
                 </p>
               </div>
@@ -375,7 +375,7 @@
               >
                 <article class="cnpj">
                   <div class="cnpj__infos">
-                    <h3 class="cnpj__razao-social">{{ card.razao_social }}</h3>
+                    <h3 class="cnpj__razao-social">{{ card.razao_social|razao_format }}</h3>
                     <p class="cnpj__cnpj">
                       <svg
                         width="21"
@@ -483,7 +483,7 @@
     </main>
     <footer>
       <article class="footer">
-        <p class="footer__first-p">Scav</p>
+      <p class="footer__first-p">Scav.cc</p>
         <p class="footer__second-p">®Todos os direitos reservados</p>
       </article>
     </footer>

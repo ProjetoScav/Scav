@@ -43,6 +43,7 @@ def extrair_dado_categoria(bloco: SelectorList) -> tuple[str, str]:
         return valor, categoria
     elif bloco.css(":nth-child(2) + p"):
         valor = extrair_valores_lista(seletor)
+        return valor, categoria
     valor = bloco.css(":nth-child(2)::text").get()
     return valor, categoria
 

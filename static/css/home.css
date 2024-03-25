@@ -65,7 +65,7 @@ input[type="checkbox"] {
 /* first-section */
 #section-1 {
   display: flex;
-  padding: 15% 10%;
+  padding: 10% 10% 18%;
   justify-content: center;
 }
 
@@ -95,7 +95,7 @@ input[type="checkbox"] {
 
 .scav__form-search-bar {
   background: #fff;
-  border: 1px solid #f5f5f5;
+  border: 1px solid rgba(113, 112, 116, 0.2);
   border-radius: 4px;
   margin-bottom: clamp(1em, 1em + 1vw, 2.5em);
   min-height: 2.5rem;
@@ -131,12 +131,13 @@ input[type="checkbox"] {
 }
 
 .filters__form {
+  background-color: white;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  @media (min-width: 43.75rem) {
-    margin-top: 3rem;
-  }
+  gap: 0.85rem;
+  padding: 8%;
+  margin-top: 0.4rem;
 }
 
 .form_camp {
@@ -153,7 +154,8 @@ input[type="checkbox"] {
 }
 
 .form_camp__input {
-  border: none;
+  border: 2px solid #f5f5f5;
+  border-radius: 8px;
   min-height: 2.5rem;
   text-indent: 0.7em;
 }
@@ -171,13 +173,25 @@ input[type="checkbox"] {
 
 .form_camp-checks {
   display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(5, 1fr);
+  grid-auto-flow: row;
+  grid-template-columns: 1fr;
+  @media (min-width: 1350px) {
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, 1fr);
+    row-gap: 0.6rem;
+  }
+}
+
+.com-telefone {
+  @media (min-width: 1350px) {
+    grid-column: 1/3;
+    grid-row: 3;
+  }
 }
 
 .form_camp-check__label {
-  font-size: 0.625rem;
+  font-size: 0.7rem;
   font-weight: 500;
 }
 
@@ -190,10 +204,6 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-.so-celular {
-  grid-row: 4;
-}
-
 .results {
   margin-top: 2.5rem;
   @media (min-width: 43.75rem) {
@@ -204,7 +214,7 @@ input[type="checkbox"] {
 .cnpjs {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0.8rem;
 }
 
 .search-results {
@@ -270,6 +280,9 @@ input[type="checkbox"] {
 .baixar-btn {
   width: 193px;
   height: 40px;
+  @media (min-width: 700px) {
+    margin-top: 0.4rem;
+  }
 }
 
 .cnpj-link-wrapper {
@@ -327,7 +340,7 @@ input[type="checkbox"] {
   padding: 20% 10%;
   text-align: center;
   @media (min-width: 700px) {
-    padding: 13% 10%;
+    padding: 10% 10%;
   }
 }
 
