@@ -1,29 +1,31 @@
-from app.blueprints.download.planillha import criar_dataframe, exportar_dataframe
-from app.funcs.pagina import scrape_dos_dados
-
+from app.blueprints.home.funcs.api import pegar_numero_cnpjs, pegar_numero_paginas
 from app.conectores.conectores import ApiCnpjLigação, ApiExtendidaLigação
+from app.funcs.pagina import scrape_dos_dados
 from app.objetos.requisição import Requisição
+
+from .funcs import pegar_os_cnpjs
+from .planillha import criar_dataframe, exportar_dataframe
 
 
 class Scav:
     """Classe central da aplicação, responsável pelo manejo
     das API's internas e gerar os resultados do programa"""
 
-    def __init__(self):
-        self.conector_extendida: ApiExtendidaLigação = ApiExtendidaLigação()
-        self.conector_cnpj: ApiCnpjLigação = ApiCnpjLigação()
-        self.requisição: Requisição = Requisição()
+    def __init__(self, requisição: Requisição):
+        self.conector_extendida = ApiExtendidaLigação()
+        self.conector_cnpj = ApiCnpjLigação()
+        self.requisição = requisição
         self.cnpjs: list = []
         self.paginas: list = []
 
     def fazer_requisições_cnpj(self):
         """Função que faz a requisição na API da Casa de Dados
         e salvas os cnpjs"""
-        numero_paginas = self.pegar_numero_paginas_cnpjs(self.requisição)
+        numero_paginas = pegar_numero_paginas(pegar_numero_cnpjs(self.requisição))
         for i in range(1, numero_paginas + 1):
             json = self.requisição.gerar_json(i)
             resposta = self.conector_extendida.fazer_a_requisição(json)
-            self.cnpjs = self.cnpjs + self.processador.pegar_os_cnpjs(resposta.json())
+            self.cnpjs = self.cnpjs + pegar_os_cnpjs(resposta.json())
             print("cnpjs adicionados")
 
     def fazer_requisições_dados(self):

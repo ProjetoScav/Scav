@@ -331,12 +331,12 @@
                   encontradas
                 </p>
               </div>
-              <button class="baixar-btn btn">
+              <a href="{{  url_for('download.download')  }}" class="baixar-btn btn">
                 Baixar
                 <svg
                   width="21"
                   height="21"
-                  viewBox="0 0 20 15"
+                  viewBox="0 0 20 22"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -364,7 +364,7 @@
                     />
                   </g>
                 </svg>
-              </button>
+              </a>
             </article>
             <article class="cnpjs">
               {% for card in cards %}
@@ -487,5 +487,6 @@
         <p class="footer__second-p">®Todos os direitos reservados</p>
       </article>
     </footer>
+    <script src="{{  url_for('static', filename='js/home.js')  }}"></script>
   </body>
 </html>

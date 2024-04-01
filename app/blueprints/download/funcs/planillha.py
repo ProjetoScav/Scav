@@ -10,4 +10,4 @@ def criar_dataframe(linhas: list[CNPJ]) -> pd.DataFrame:
 
 def exportar_dataframe(df: pd.DataFrame):
     """Função que recebe um dataframe e gera um arquivo Excel com ele"""
-    df.to_excel("planilha.xlsx", index=False, engine="openpyxl")
+    df.to_excel("./static/planilha.xlsx", index=False, engine="openpyxl")

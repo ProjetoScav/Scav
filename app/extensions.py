@@ -23,8 +23,9 @@ def formatar_numero(numero: str):
 
 def formatar_razao_social(razao: str):
     if len(razao) > 59:
-        return  razao[:59] + razao[59].strip(' ') + "..."
+        return razao[:59] + razao[59].strip(" ") + "..."
     return razao
+
 
 def configurar_extensões(app):
     app.jinja_env.filters["cnpj_format"] = formatar_cnpj

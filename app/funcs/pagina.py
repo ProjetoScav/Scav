@@ -7,7 +7,7 @@ def extrair_valores_socios(bloco: SelectorList, seletor: SelectorList) -> list[s
     """Função que extrae os membros do quadro societário da página do CNPJ"""
     nomes = bloco.xpath("./p//b//text()").getall()
     adendos = seletor.getall()
-    valores = [nome + adendo for nome, adendo in zip(nomes, adendos)]
+    valores = (nome + adendo for nome, adendo in zip(nomes, adendos))
     valor = gerar_string_de_lista(valores).split(",   ")
     checar_e_remover("", valor)
     valor = [socio.strip(",  ") for socio in valor]
@@ -55,7 +55,7 @@ def preencher_cnpj_obj(pagina: str) -> CNPJ:
     cnpj = CNPJ()
     for bloco in blocos:
         valor, categoria = extrair_dado_categoria(bloco)
-        categoria = cnpj.setar_valor(categoria, valor)
+        cnpj.setar_valor(categoria, valor)
     return cnpj
 
 

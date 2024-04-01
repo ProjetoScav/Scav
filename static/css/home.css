@@ -211,6 +211,13 @@ input[type="checkbox"] {
   }
 }
 
+.baixar-btn {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .cnpjs {
   display: flex;
   flex-direction: column;

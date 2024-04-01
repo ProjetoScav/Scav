@@ -35,5 +35,4 @@ def gerar_faixa_de_cards(pagina: int):
 
 def gera_chave_cache_cards(requisição: Requisição) -> str:
     """Função que gera uma key da requisição pro cache"""
-    cache_key = f"{str(requisição.query)} + {str(requisição.extras)} + {str(requisição.range_query)}"
-    return cache_key
+    return f"{str(requisição.query)} + {str(requisição.extras)} + {str(requisição.range_query)}"

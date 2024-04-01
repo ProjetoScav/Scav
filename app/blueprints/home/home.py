@@ -5,12 +5,14 @@ from .funcs.frontend import HomeFront
 from app.objetos.requisição import Requisição
 from .funcs.auxiliares import formatar_dados_requisição, gerar_faixa_de_cards
 
+
 def rota_home(app):
     @app.route("/", methods=["GET"])
     def home():
         pagina = request.args.get("pagina", 1, type=int)
         front = HomeFront()
 
+        # TODO: Transformar em função
         if session.get("_requisição"):
             front.selecionar_requisição(Requisição(**session.get("_requisição")))
         else:
@@ -32,4 +34,4 @@ def rota_home(app):
         kwargs = request.form.to_dict()
         kwargs = formatar_dados_requisição(kwargs)
         session["_requisição"] = kwargs
-        return redirect(url_for("home.home"))
+        return redirect(url_for("home.home", pagina=1))
