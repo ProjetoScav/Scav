@@ -33,6 +33,10 @@ input[type="checkbox"] {
   accent-color: var(--purple);
 }
 
+img {
+  display: block;
+}
+
 /* General Classes */
 .disabled {
   pointer-events: none;
@@ -60,6 +64,136 @@ input[type="checkbox"] {
 .btn:hover {
   background-color: var(--dark-purple);
   cursor: pointer;
+}
+
+/* Modal window */
+.popup {
+  border: none;
+  border-radius: 4px;
+  top: 10%;
+  left: 30%;
+  height: 80%;
+  width: 40%;
+}
+
+.popup::backdrop {
+  background-color: rgb(0 0 0 /0.2);
+  backdrop-filter: blur(3px);
+}
+
+.popup__section {
+  padding: 5%;
+}
+
+.popup__section--visu,
+.popup__section--payment,
+.popup__section--end {
+  display: none;
+}
+
+.fa-arrow-left {
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  display: block;
+  background-color: var(--purple);
+  padding: 1em;
+  margin-bottom: 2rem;
+}
+
+/* Popup - Pricing */
+.pricing-title {
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.n-dados {
+  font-weight: 600;
+}
+
+.pricing-total-value {
+  color: #858185;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 0.8;
+  margin-top: 1rem;
+}
+
+.pricing-price {
+  font-size: 1.5rem;
+}
+
+.pricing__block {
+  @media (min-width: 1200px) {
+    margin-bottom: 12.5rem;
+  }
+}
+
+.pricing__btns {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.popup__btn {
+  font-size: 1rem;
+  font-weight: 500;
+  min-height: 2.7rem;
+  width: 100%;
+}
+
+.pricing__second-btn {
+  border: 1px solid var(--purple);
+  border-radius: 4px;
+  background-color: white;
+  color: var(--purple);
+}
+
+.pricing__second-btn:hover {
+  background-color: white;
+  color: var(--purple);
+  opacity: 0.7;
+}
+
+/* Popup - Payment */
+.payment__input-email {
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 1200px) {
+    margin-bottom: 19rem;
+  }
+}
+
+.payment__email-label {
+  font-size: 1rem;
+}
+
+.payment__email-subtext {
+  color: var(--purple);
+  font-size: 0.75rem;
+  line-height: 1;
+  margin-top: 0.25rem;
+}
+
+/* Popup - Last section */
+.end__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+  @media (min-width: 1200px) {
+    margin-bottom: 9rem;
+  }
+}
+
+.end__text {
+  color: #323845;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 2rem;
+  line-height: 1.5;
+  text-align: center;
 }
 
 /* first-section */
