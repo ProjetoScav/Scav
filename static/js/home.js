@@ -1,7 +1,7 @@
 "strict";
 // Foco nos cnpjs após mudança de página e nova requisição
 window.onload = function () {
-  var urlParams = new URLSearchParams(window.location.search);
+  const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("pagina")) {
     document.getElementById("section-2").scrollIntoView();
   }
@@ -11,7 +11,7 @@ window.onload = function () {
 const modal = document.querySelector(".popup");
 
 // Popup - Setas
-const closeModal = document.querySelector("#close-arrow");
+const closeModal = document.getElementsByClassName("close");
 const paymentToPricing = document.querySelector("#payment-pricing-arrow");
 const endToPayment = document.querySelector("#to-payment-arrow");
 
@@ -31,9 +31,11 @@ openModal.addEventListener("click", function () {
   modal.showModal();
 });
 
-closeModal.addEventListener("click", function () {
-  modal.close();
-});
+for (let i = 0; i < closeModal.length; i++) {
+  closeModal[i].addEventListener("click", function () {
+    modal.close();
+  });
+}
 
 // Popup - Mudador de seção
 const changeSection = function (from, to) {
@@ -47,6 +49,30 @@ const createChangeSectionEvent = function (element, from, to) {
   });
 };
 
+const changePaymentEnd = function (element, from, to) {
+  element.addEventListener("click", function () {
+    if (isEmail) {
+      console.log("mudei");
+      from.style.display = "none";
+      to.style.display = "block";
+      document.querySelector(".payment__email").classList.remove("outline-red");
+      document
+        .querySelector(".payment__email-subtext")
+        .classList.remove("color-red");
+      document.querySelector(".payment__email-subtext").textContent =
+        "*O arquivo será enviado para o email inserido";
+    } else {
+      document.querySelector(".payment__email").classList.add("outline-red");
+      document.querySelector(".payment__email").focus();
+      document
+        .querySelector(".payment__email-subtext")
+        .classList.add("color-red");
+      document.querySelector(".payment__email-subtext").textContent =
+        "* Insira um email válido";
+    }
+  });
+};
+
 // Popup - Pricing -> Payment
 createChangeSectionEvent(baixarBtn, pricingSection, paymentSection);
 
@@ -54,10 +80,37 @@ createChangeSectionEvent(baixarBtn, pricingSection, paymentSection);
 createChangeSectionEvent(paymentToPricing, paymentSection, pricingSection);
 
 // Popup - Payment -> End
-createChangeSectionEvent(toEndBtn, paymentSection, endSection);
+changePaymentEnd(toEndBtn, paymentSection, endSection);
 
 // Popup - Encerramento
 endBtn.addEventListener("click", function () {
   modal.close();
   changeSection(endSection, pricingSection);
+});
+
+// Validação de email
+// Expressão regular para validar o formato do e-mail
+function validateEmail(email) {
+  var emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  return emailRegex.test(email);
+}
+
+let isEmail = false;
+
+const inputEmail = document.querySelector(".payment__email");
+inputEmail.addEventListener("input", function () {
+  let email = inputEmail.value;
+  if (validateEmail(email)) {
+    isEmail = true;
+  }
+});
+
+inputEmail.addEventListener("keydown", function (e) {
+  if (e.keyCode === 13) {
+    e.preventDefault();
+    if (isEmail === true) {
+      toEndBtn.click();
+    }
+  }
 });

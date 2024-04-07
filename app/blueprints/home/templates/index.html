@@ -17,7 +17,7 @@
       <link rel="icon" type="image/png" href="{{  url_for('static', filename='favicon.png')  }}" />
       <link
       rel="stylesheet"
-      href=" {{  url_for('static', filename='css/home.css')  }} "
+      href="{{  url_for('static', filename='css/home.css')  }}"
       />
     </head>
     <body>
@@ -367,15 +367,19 @@
               </button>
               <dialog class="popup">
                 <section class="popup__section--pricing popup__section">
-                  <div class="pricing">
-                    <i id="close-arrow" class="fa-solid fa-arrow-left"></i>
+                  <div class="pricing popup__section-wrapper">
+                    <div class="pricing__icons">
+                      <img class="logo-icon" src="{{  url_for('static', filename='icon.png')  }}" alt="Scav logo" height="40px" width="40px">
+                      <i class="fa-solid fa-x close modal-close"></i>
+                    </div>
                     <div class="pricing-wrapper">
                       <div class="pricing__block">
                         <h2 class="pricing-title">Você está baixando <b class="n-dados">{{  n_de_dados|data_number|numero_format  }} </b>contatos da segmentação definida.</h2>
                         <p class="pricing-total-value">Valor total</p>
-                        <p class="pricing-price">R$ 0,00</p>
+                        <p class="pricing-price">R$ 0,00</p>    
                       </div>
                       <div class="pricing__btns">
+                        <p class="pricing__disclaimer">É possível baixar até 1000 contatos por download</p>
                         <button class="pricing__first-btn popup__btn btn">Pré-visualizar</button>
                         <button class="pricing__second-btn popup__btn btn">Baixar</button>
                       </div>
@@ -383,23 +387,29 @@
                   </div>
                 </section>
                 <section class="popup__section--visu popup__section">
-                  <i id="visu-pricing-arrow" class="fa-solid fa-arrow-left arrow-btn"></i>
+                  <i id="visu-pricing-arrow" class="fa-solid fa-arrow-left"></i>
                 </section>
                 <section class="popup__section--payment popup__section">
-                  <div class="payment">
-                    <i id="payment-pricing-arrow" class="fa-solid fa-arrow-left arrow-btn"></i>
+                  <div class="payment popup__section-wrapper">
+                    <div class="payment__icons">
+                      <i id="payment-pricing-arrow" class="fa-solid fa-arrow-left arrow-btn"></i>
+                      <i class="fa-solid fa-x close"></i>
+                    </div>
                     <form class="payment__form" action="">
                       <div class="payment__input-email">
                         <label class="payment__email-label" for="pay-email">Email</label>
-                        <input class="payment__email form_camp__input" type="email" name="pay-email" placeholder="Email"></input>
+                        <input id="pay-email" class="payment__email form_camp__input" type="text" name="pay-email" placeholder="Email"></input>
                         <p class="payment__email-subtext">*O arquivo será enviado para o email inserido</p>
                       </div>
-                      <input class="payment__btn popup__btn btn" type="button" value="Confirmar">
+                      <div class="payment__bottom">
+                        <p class="payment__disclaimer">Formato do arquivo: .xlsx</p>
+                        <input class="payment__btn popup__btn btn" type="button" value="Confirmar">
+                      </div>
                     </form>
                   </div>
                 </section>
                 <section class="popup__section--end popup__section">
-                  <div class="end">
+                  <div class="end popup__section-wrapper">
                     <div class="end__block">
                       <img src="{{  url_for('static', filename='imgs/ok.png')  }}" alt="Envio confirmado!">
                       <p class="end__text">Informações enviadas <br>com sucesso!</p>
