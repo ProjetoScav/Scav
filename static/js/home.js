@@ -96,17 +96,12 @@ function validateEmail(email) {
   return emailRegex.test(email);
 }
 
+// Evento do input
+inputEmail = document.querySelector(".payment__email");
 let isEmail = false;
-
-const inputEmail = document.querySelector(".payment__email");
-inputEmail.addEventListener("input", function () {
-  let email = inputEmail.value;
-  if (validateEmail(email)) {
-    isEmail = true;
-  }
-});
-
 inputEmail.addEventListener("keydown", function (e) {
+  const email = inputEmail.value;
+  isEmail = validateEmail(email);
   if (e.keyCode === 13) {
     e.preventDefault();
     if (isEmail === true) {
