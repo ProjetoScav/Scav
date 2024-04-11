@@ -1,1 +1,1 @@
-web: gunicorn wsgi:app_gun
+web: gunicorn wsgi:scav_app && celery -A app.fila worker --loglevel=INFO

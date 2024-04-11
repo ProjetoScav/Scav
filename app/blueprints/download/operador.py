@@ -3,7 +3,7 @@ from app.conectores.conectores import ApiCnpjLigação, ApiExtendidaLigação
 from app.funcs.pagina import scrape_dos_dados
 from app.objetos.requisição import Requisição
 
-from .funcs import pegar_os_cnpjs
+from .funcs.funcs import pegar_os_cnpjs
 from .planillha import criar_dataframe, exportar_dataframe
 
 
@@ -47,4 +47,4 @@ class Scav:
         """Função que exporta os dados em um arquivo .xlxs"""
         cnpjs = scrape_dos_dados(self.paginas)
         df = criar_dataframe(cnpjs)
-        exportar_dataframe(df)
+        return exportar_dataframe(df)

@@ -22,7 +22,7 @@ const endSection = document.querySelector(".popup__section--end");
 
 // Popup - Botões
 const openModal = document.querySelector(".baixar-btn");
-const baixarBtn = document.querySelector(".pricing__second-btn");
+const baixarBtn = document.querySelector(".pricing__first-btn");
 const toEndBtn = document.querySelector(".payment__btn");
 const endBtn = document.querySelector(".end__btn");
 
@@ -49,10 +49,21 @@ const createChangeSectionEvent = function (element, from, to) {
   });
 };
 
+// Popup - Envio de email
+const sendEmailData = function (email) {
+  fetch("download", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": document.querySelector("#token").value,
+    },
+    body: JSON.stringify({ "pay-email": email }),
+  }).then((response) => console.log(response));
+};
+
 const changePaymentEnd = function (element, from, to) {
   element.addEventListener("click", function () {
     if (isEmail) {
-      console.log("mudei");
       from.style.display = "none";
       to.style.display = "block";
       document.querySelector(".payment__email").classList.remove("outline-red");
@@ -61,6 +72,7 @@ const changePaymentEnd = function (element, from, to) {
         .classList.remove("color-red");
       document.querySelector(".payment__email-subtext").textContent =
         "*O arquivo será enviado para o email inserido";
+      sendEmailData(inputEmail.value);
     } else {
       document.querySelector(".payment__email").classList.add("outline-red");
       document.querySelector(".payment__email").focus();
@@ -96,7 +108,7 @@ function validateEmail(email) {
   return emailRegex.test(email);
 }
 
-// Evento do input
+// Eventos do input
 inputEmail = document.querySelector(".payment__email");
 let isEmail = false;
 inputEmail.addEventListener("keydown", function (e) {
@@ -104,8 +116,33 @@ inputEmail.addEventListener("keydown", function (e) {
   isEmail = validateEmail(email);
   if (e.keyCode === 13) {
     e.preventDefault();
-    if (isEmail === true) {
-      toEndBtn.click();
-    }
+    toEndBtn.click();
   }
 });
+
+inputEmail.addEventListener("input", function () {
+  isEmail = validateEmail(inputEmail.value);
+});
+
+// Formulário - Apenar núméricos
+const dddInput = document.querySelector("#ddd");
+const cepInput = document.querySelector("#cep");
+const cpAteInput = document.querySelector("#capital_social_ate");
+const cpDesdeInput = document.querySelector("#capital_social_desde");
+
+const removeLetters = function (input) {
+  input.addEventListener("input", function () {
+    input.value = input.value.replace(/(?![0-9, ])./gim, "");
+  });
+};
+
+const removeNonNumeric = function (input) {
+  input.addEventListener("input", function () {
+    input.value = input.value.replace(/(?![0-9])./gim, "");
+  });
+};
+
+removeLetters(dddInput);
+removeLetters(cepInput);
+removeNonNumeric(cpAteInput);
+removeNonNumeric(cpDesdeInput);

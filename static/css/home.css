@@ -141,25 +141,25 @@ img {
 }
 
 .pricing-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   line-height: 1.5;
 }
 
 .n-dados {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
 }
 
 .pricing-total-value {
   color: #858185;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   line-height: 0.8;
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
 }
 
 .pricing-price {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
 }
 
 .pricing__icons {
@@ -176,8 +176,10 @@ img {
 }
 
 .pricing__disclaimer {
+  color: rgba(26, 22, 26, 0.4);
   font-size: 0.8rem;
-  color: var(--grey);
+  margin-bottom: 0.2rem;
+  text-align: center;
 }
 
 .popup__btn {
@@ -241,9 +243,9 @@ img {
 }
 
 .payment__disclaimer {
+  color: rgba(26, 22, 26, 0.4);
   font-size: 0.8rem;
-  color: var(--grey);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.7rem;
   text-align: center;
 }
 

@@ -14,7 +14,12 @@
       content="Pesquise por CNPJs e acesse as infomações de todas as empresas cadastradas na Receita Federal."
       />
       <title>Scav - Encontre e baixe empresas de todo o Brasil</title>
-      <link rel="icon" type="image/png" href="{{  url_for('static', filename='favicon.png')  }}" />
+      <link rel="icon" type="image/png" href="{{  url_for('static', filename='favicon/favicon.png')  }}" />
+      <link rel="apple-touch-icon" sizes="180x180" href="{{  url_for('static', filename='favicon/apple-touch-icon.png')  }}">
+      <link rel="manifest" href="{{  url_for('static', filename='favicon/site.webmanifest')  }}">
+      <link rel="mask-icon" href="{{  url_for('static', filename='favicon/safari-pinned-tab.svg')  }}" color="#5bbad5">
+      <meta name="msapplication-TileColor" content="#da532c">
+      <meta name="theme-color" content="#ffffff">
       <link
       rel="stylesheet"
       href="{{  url_for('static', filename='css/home.css')  }}"
@@ -33,7 +38,7 @@
             class="scav__form"
             method="post"
             name="search-bar">
-            <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}" />  
+            <input id="token" type="hidden" name="csrf_token" value = "{{ csrf_token() }}" />  
             <input
               class="scav__form-search-bar"
               name="termo"
@@ -374,14 +379,14 @@
                     </div>
                     <div class="pricing-wrapper">
                       <div class="pricing__block">
-                        <h2 class="pricing-title">Você está baixando <b class="n-dados">{{  n_de_dados|data_number|numero_format  }} </b>contatos da segmentação definida.</h2>
+                        <h2 class="pricing-title">Você está baixando <b class="n-dados">{{  n_de_dados|data_number|numero_format  }} </b>contatos da segmentação definida. 
                         <p class="pricing-total-value">Valor total</p>
                         <p class="pricing-price">R$ 0,00</p>    
                       </div>
                       <div class="pricing__btns">
-                        <p class="pricing__disclaimer">É possível baixar até 1000 contatos por download</p>
-                        <button class="pricing__first-btn popup__btn btn">Pré-visualizar</button>
-                        <button class="pricing__second-btn popup__btn btn">Baixar</button>
+                        <p class="pricing__disclaimer">Esse é o nosso limite por download. Você poderá realizar novos downloads posteriormente alterando os filtros do seu pedido</p>
+                        <button class="pricing__first-btn popup__btn btn">Baixar</button>
+                        <!-- <button class="pricing__second-btn popup__btn btn">Pré-visualizar</button> -->
                       </div>
                     </div>
                   </div>
@@ -402,7 +407,7 @@
                         <p class="payment__email-subtext">*O arquivo será enviado para o email inserido</p>
                       </div>
                       <div class="payment__bottom">
-                        <p class="payment__disclaimer">Formato do arquivo: .xlsx</p>
+                        <p class="payment__disclaimer">Você receberá um arquivo no formato xlsx. Ao confirmar, você está de acordo com os nossos <a href="https://docs.google.com/document/d/1JnnJBcxQFvwNYtmcp3nK9EPAcZ_fP6wD_kOSzbXKM4E/edit?usp=sharing">Termos de Uso e Política de Privacidade</a></p>
                         <input class="payment__btn popup__btn btn" type="button" value="Confirmar">
                       </div>
                     </form>
@@ -512,7 +517,7 @@
                 {% else %}
                 <a
                   class="cnpjs-indexes__index"
-                  href="{{  url_for('home.home', pagina=i, passagem=True)  }} "
+                  href="{{  url_for('home.home', pagina=i)  }} "
                   >{{ i }}</a
                 >
                 {% endif %}
