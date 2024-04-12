@@ -34,7 +34,7 @@ def pegar_binario_planilha(caminho: str):
 def enviar_email(email_destinatario: str, file_name: str):
     msg = montar_email(email_destinatario)
     senha = getenv("SCAV_SENHA")
-    caminho = f".//static//planilhas//{file_name}"
+    caminho = f".//static//{file_name}"
     dados = pegar_binario_planilha(caminho)
     msg.add_attachment(
         dados,

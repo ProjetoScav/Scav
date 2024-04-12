@@ -22,5 +22,5 @@ def exportar_dataframe(df: pd.DataFrame):
         )
         + ".xlsx"
     )
-    df.to_excel(f"./static/planilhas/{caminho}", index=False, engine="openpyxl")
+    df.to_excel(f".//static//{caminho}", index=False, engine="openpyxl")
     return caminho
