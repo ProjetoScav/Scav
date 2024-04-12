@@ -137,7 +137,7 @@
                 type="text"
                 name="uf"
                 id="uf"
-                placeholder="Selecione o estado"
+                placeholder="Ex: sp, mg, go..."
                 />
               </article>
               <article class="form_camp">
@@ -149,7 +149,7 @@
                 type="text"
                 name="municipio"
                 id="municipio"
-                placeholder="Selecione o munícipio"
+                placeholder="Ex: sao paulo, rio de janeiro..."
                 />
               </article>
               <article class="form_camp">
@@ -159,7 +159,7 @@
                 type="text"
                 name="bairro"
                 id="bairro"
-                placeholder="Selecione o bairro"
+                placeholder="Ex: jardim industrial, jardim são dimas..."
                 />
               </article>
               <article class="form_camp">
@@ -169,7 +169,7 @@
                 type="text"
                 name="cep"
                 id="cep"
-                placeholder="Somente 8 dígitos"
+                placeholder="Ex: 12227650, 75960970..."
                 />
               </article>
               <article class="form_camp">
@@ -179,7 +179,7 @@
                 type="text"
                 name="ddd"
                 id="ddd"
-                placeholder="2 dígitos"
+                placeholder="Ex: 12, 32, 55..."
                 />
               </article>
               <article class="form_camp">
@@ -425,6 +425,7 @@
               </dialog>
             </article>
             <article class="cnpjs">
+              {% if cards %}
               {% for card in cards %}
               <a
                 class="cnpj-link-wrapper"
@@ -507,6 +508,7 @@
               </a>
               {% endfor %}
               <div class="cnpjs-indexes">
+                {% if n_paginas %}
                 {% for i in range(1, n_paginas + 1) %}
                 {% if i == pagina %}
                 <a
@@ -516,13 +518,15 @@
                 >
                 {% else %}
                 <a
-                  class="cnpjs-indexes__index"
-                  href="{{  url_for('home.home', pagina=i)  }} "
-                  >{{ i }}</a
+                class="cnpjs-indexes__index"
+                href="{{  url_for('home.home', pagina=i)  }} "
+                >{{ i }}</a
                 >
                 {% endif %}
                 {% endfor %}
+                {% endif %}
               </div>
+             {% endif %} 
             </article>
           </article>
         </div>

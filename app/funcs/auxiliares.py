@@ -2,7 +2,17 @@ from typing import Any
 
 
 def formatar_cnpj(cnpj: str):
-    return cnpj[:2] + "." + cnpj[2:5] + "." + cnpj[5:8] + "/" + cnpj[8:12] + "-" + cnpj[12:]
+    return (
+        cnpj[:2]
+        + "."
+        + cnpj[2:5]
+        + "."
+        + cnpj[5:8]
+        + "/"
+        + cnpj[8:12]
+        + "-"
+        + cnpj[12:]
+    )
 
 
 def formatar_numero(numero: str):
@@ -32,7 +42,3 @@ def checar_e_remover(valor: Any, lista: list) -> None:
     """Função que recebe um valor e uma lista e remove o valor se presente"""
     if valor in lista:
         lista.remove(valor)
-
-
-# TODO: Função que remove os valores invalidos no formulário
-def remover_valor_invalido(value: str) -> str: ...

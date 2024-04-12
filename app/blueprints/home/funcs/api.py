@@ -2,6 +2,7 @@ from app.conectores.conectores import ApiExtendidaLigação
 from app.objetos.requisição import Requisição
 from app.objetos.classes_de_dados import CampoDeDados
 import math
+from flask import abort
 
 
 def pegar_dados_frontend(dado: dict) -> tuple[str, str, str, str, str]:
@@ -40,12 +41,14 @@ def gerar_campo_de_dados(dado: dict) -> CampoDeDados:
 def pegar_blocos_cnpj(json: dict) -> list[dict]:
     """Função que faz uma requisição a API da Casa dos Dados e
     retorna uma lista com dicionários que contem os dados dos CNPJs"""
-    resposta = ApiExtendidaLigação().fazer_a_requisição(json)
-    json = resposta.json()
-    return json["data"]["cnpj"]
+    try:
+        resposta = ApiExtendidaLigação().fazer_a_requisição(json)
+        json = resposta.json()
+        return json["data"]["cnpj"]
+    except Exception:
+        abort(500)
 
 
 def pegar_campos_de_dados_pagina(json: dict) -> list[CampoDeDados]:
     """Função que recebe um dicionário com dados de CNPJ e retorna uma lista de Campos de Dados"""
-    dados = pegar_blocos_cnpj(json)
-    return [gerar_campo_de_dados(dado) for dado in dados]
+    return [gerar_campo_de_dados(dado) for dado in pegar_blocos_cnpj(json)]

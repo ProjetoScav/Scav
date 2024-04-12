@@ -3,17 +3,23 @@ from app.objetos.requisição import Requisição
 from .auxiliares import gera_chave_cache_cards
 from .api import pegar_numero_cnpjs, pegar_numero_paginas, pegar_campos_de_dados_pagina
 from app.extensions import cache
+from flask import abort
 
 
 class HomeFront:
     """Classe que serve os dados pro template da rota Home"""
 
+    # TODO: Reduzir função
     def selecionar_requisição(self, requisição: Requisição):
         """Função que recebe uma Requisição e gera dados para uso próprio"""
-        self.requisição = requisição
-        self.numero_cnpjs = pegar_numero_cnpjs(self.requisição)
-        self.numero_paginas_api = pegar_numero_paginas(self.numero_cnpjs)
-        self.numero_paginas_tela: int = self.numero_de_paginas_tela()
+        try:
+            self.requisição = requisição
+            self.numero_cnpjs = pegar_numero_cnpjs(self.requisição)
+            self.numero_paginas_api = pegar_numero_paginas(self.numero_cnpjs)
+            self.numero_paginas_tela = self.numero_de_paginas_tela()
+        except Exception:
+            abort(500)
+        
 
     def numero_de_paginas_tela(self) -> int:
         """Função que gera o número de páginas de dados da home"""

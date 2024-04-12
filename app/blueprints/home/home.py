@@ -10,14 +10,16 @@ def rota_home(app):
     @app.route("/", methods=["GET"])
     def home():
         pagina = request.args.get("pagina", 1, type=int)
+        if request.args.get("erro", None, type=str):
+            return render_template("index.html", n_de_dados=0, n_paginas=0)
         front = HomeFront()
-
         # TODO: Transformar em função
         if session.get("_requisição"):
             front.selecionar_requisição(Requisição(**session.get("_requisição")))
         else:
             front.selecionar_requisição(Requisição())
 
+        # TODO: Reduzir
         cards_iniciais = front.gerar_dados_cards()
         começo_cards, fim_cards = gerar_faixa_de_cards(pagina)
         cards = cards_iniciais[começo_cards:fim_cards]
@@ -35,3 +37,10 @@ def rota_home(app):
         kwargs = formatar_dados_requisição(kwargs)
         session["_requisição"] = kwargs
         return redirect(url_for("home.home", pagina=1))
+
+    @app.errorhandler(500)
+    def error_handler(e):
+        session.pop("_requisição")
+        return redirect(
+            url_for("home.home", erro="requisição sem resultados", pagina=1)
+        ), 302
