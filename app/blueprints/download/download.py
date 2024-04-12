@@ -9,8 +9,7 @@ from .operador import Scav
 def rota_download(blueprint):
     @blueprint.route("/download", methods=["POST"])
     def download():
-        request.get_json()
-        email = request.args.get("pay-email", None, type=str)
+        email = request.get_json()["pay-email"]
         if session.get("_requisição"):
             req = Requisição(**session.get("_requisição"))
         else:

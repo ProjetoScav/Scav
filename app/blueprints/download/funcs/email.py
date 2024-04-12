@@ -6,8 +6,7 @@ from app.fila import fila
 
 
 def montar_email(email_destinatario: str) -> EmailMessage:
-    corpo = """Você está recebendo a planilha com as informações solicitadas na plataforma do Scav.\n
-               Qualquer problema com o envio das informações ou dúvida, basta responder este email."""
+    corpo = """Você está recebendo a planilha com as informações solicitadas na plataforma do Scav.\nQualquer problema com o envio das informações ou dúvida, basta responder este email."""
     msg = EmailMessage()
     msg["subject"] = "Seus dados chegaram!"
     msg["From"] = getenv("SCAV_EMAIL")
@@ -35,7 +34,7 @@ def pegar_binario_planilha(caminho: str):
 def enviar_email(email_destinatario: str, file_name: str):
     msg = montar_email(email_destinatario)
     senha = getenv("SCAV_SENHA")
-    caminho = f".//static//{file_name}"
+    caminho = f".//static//planilhas//{file_name}"
     dados = pegar_binario_planilha(caminho)
     msg.add_attachment(
         dados,
@@ -47,4 +46,4 @@ def enviar_email(email_destinatario: str, file_name: str):
         enviar_mensagem(msg, senha)
         return f"Email enviado com sucesso para {msg['To']}"
     except Exception as e:
-        raise e
+        return e
