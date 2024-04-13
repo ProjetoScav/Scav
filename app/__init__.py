@@ -15,7 +15,7 @@ def create_app():
         static_folder=Path("../static/"),
     )
     cache.init_app(app, config={"CACHE_TYPE": "simple"})
-    app.config["SECRET_KEY"] = os.urandom(20).hex()
+    app.config["SECRET_KEY"] = os.getenv("FLASK_KEY")
     CSRFProtect(app)
     configurar_blueprints(app)
     registrar_filtros(app)
