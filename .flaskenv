@@ -1,0 +1,6 @@
+REDIS_URL = "redis://default:PPXdjJihCioqHWdTcOXJxgHMkHKYhvxg@monorail.proxy.rlwy.net:54522"
+SCAV_EMAIL = "scav.contato@outlook.com"
+SCAV_SENHA = "cc.fodaviu22"
+API_CDD = "https://api.casadosdados.com.br/v2/public/cnpj/search"
+API_CNPJ_CDD = "https://casadosdados.com.br/solucao/cnpj/" 
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"

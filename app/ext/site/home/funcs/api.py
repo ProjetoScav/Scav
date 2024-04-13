@@ -1,8 +1,10 @@
-from app.conectores.conectores import ApiExtendidaLigação
-from app.objetos.requisição import Requisição
-from app.objetos.classes_de_dados import CampoDeDados
 import math
+
 from flask import abort
+
+from app.ext.api.conectores import ApiExtendidaLigação
+from app.objetos.classes_de_dados import CampoDeDados
+from app.objetos.requisição import Requisição
 
 
 def pegar_dados_frontend(dado: dict) -> tuple[str, str, str, str, str]:

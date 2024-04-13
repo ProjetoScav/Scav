@@ -1,6 +1,6 @@
 import random
 import string
-
+from pathlib import Path
 import pandas as pd
 
 from app.objetos.classes_de_dados import CNPJ
@@ -22,5 +22,5 @@ def exportar_dataframe(df: pd.DataFrame):
         )
         + ".xlsx"
     )
-    df.to_excel(f".//static//{caminho}", index=False, engine="openpyxl")
+    df.to_excel(Path("./static") / caminho, index=False, engine="openpyxl")
     return caminho

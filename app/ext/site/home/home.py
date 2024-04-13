@@ -10,9 +10,8 @@ def rota_home(app):
     @app.route("/", methods=["GET"])
     def home():
         pagina = request.args.get("pagina", 1, type=int)
-        if request.args.get("erro", None, type=str):
-            return render_template("index.html", n_de_dados=0, n_paginas=0)
         front = HomeFront()
+
         # TODO: Transformar em função
         if session.get("_requisição"):
             front.selecionar_requisição(Requisição(**session.get("_requisição")))
@@ -41,6 +40,4 @@ def rota_home(app):
     @app.errorhandler(500)
     def error_handler(e):
         session.pop("_requisição")
-        return redirect(
-            url_for("home.home", erro="requisição sem resultados", pagina=1)
-        ), 302
+        return render_template("index.html", n_de_dados=0, n_paginas=0)

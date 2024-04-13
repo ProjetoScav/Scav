@@ -1,18 +1,22 @@
+import os
+from pathlib import Path
+
 from flask.app import Flask
-from .blueprints import configurar_blueprints
-from .config import configurações
-from .extensions import cache, configurar_extensões
-from dotenv import load_dotenv
+from flask_wtf import CSRFProtect
+
+from .ext.cache.cache import cache
+from .ext.jinja import registrar_filtros
+from .ext.site import configurar_blueprints
 
 
 def create_app():
     app = Flask(
         __name__,
-        static_folder="../static/",
+        static_folder=Path("../static/"),
     )
-    load_dotenv()
     cache.init_app(app, config={"CACHE_TYPE": "simple"})
-    configurações(app)
+    app.config["SECRET_KEY"] = os.urandom(20).hex()
+    CSRFProtect(app)
     configurar_blueprints(app)
-    configurar_extensões(app)
+    registrar_filtros(app)
     return app

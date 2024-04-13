@@ -1,6 +1,18 @@
 from parsel import Selector, SelectorList
-from .auxiliares import gerar_string_de_lista, checar_e_remover
 from app.objetos.classes_de_dados import CNPJ
+from typing import Any
+
+
+def checar_e_remover(valor: Any, lista: list) -> None:
+    """Função que recebe um valor e uma lista e remove o valor se presente"""
+    if valor in lista:
+        lista.remove(valor)
+
+
+def gerar_string_de_lista(valores: list[str]) -> str:
+    """Função que recebe uma lista de strings e
+    as junta em uma string só para a planilha"""
+    return "".join(valor + ",  " for valor in valores)
 
 
 def extrair_valores_socios(bloco: SelectorList, seletor: SelectorList) -> list[str]:

@@ -2,7 +2,7 @@ import math
 from app.objetos.requisição import Requisição
 from .auxiliares import gera_chave_cache_cards
 from .api import pegar_numero_cnpjs, pegar_numero_paginas, pegar_campos_de_dados_pagina
-from app.extensions import cache
+from app.ext.cache.cache import cache
 from flask import abort
 
 
@@ -19,7 +19,6 @@ class HomeFront:
             self.numero_paginas_tela = self.numero_de_paginas_tela()
         except Exception:
             abort(500)
-        
 
     def numero_de_paginas_tela(self) -> int:
         """Função que gera o número de páginas de dados da home"""

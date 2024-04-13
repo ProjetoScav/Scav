@@ -1,11 +1,13 @@
-from app.blueprints.home.funcs.api import pegar_numero_cnpjs, pegar_numero_paginas
-from app.conectores.conectores import ApiCnpjLigação, ApiExtendidaLigação
+import itertools
+from multiprocessing.dummy import Pool
+
+from app.ext.api.conectores import ApiCnpjLigação, ApiExtendidaLigação
+from app.ext.site.home.funcs.api import pegar_numero_cnpjs, pegar_numero_paginas
+from .funcs.funcs import pegar_os_cnpjs
 from app.funcs.pagina import scrape_dos_dados
 from app.objetos.requisição import Requisição
-from multiprocessing.dummy import Pool
-from .funcs.funcs import pegar_os_cnpjs
+
 from .planillha import criar_dataframe, exportar_dataframe
-import itertools
 
 
 class Scav:
@@ -24,7 +26,12 @@ class Scav:
         numero_paginas = pegar_numero_paginas(pegar_numero_cnpjs(self.requisição))
         jsons = [self.requisição.gerar_json(i) for i in range(1, numero_paginas + 1)]
         with Pool(5) as workers:
-            respostas = workers.map(self.conector_extendida.fazer_a_requisição, jsons)
+            try:
+                respostas = workers.map(
+                    self.conector_extendida.fazer_a_requisição, jsons
+                )
+            except Exception:
+                pass
         cnpjs_listas = [pegar_os_cnpjs(resposta.json()) for resposta in respostas]
         return itertools.chain.from_iterable(cnpjs_listas)
 
@@ -32,7 +39,10 @@ class Scav:
         """Função que pega as páginas dos cnpjs na Casa de Dados
         e as salva no objeto"""
         with Pool(5) as workers:
-            respostas = workers.map(self.conector_cnpj.fazer_a_requisição, cnpjs)
+            try:
+                respostas = workers.map(self.conector_cnpj.fazer_a_requisição, cnpjs)
+            except Exception:
+                pass
         return [resposta.text for resposta in respostas]
 
     def puxar_dados(self):

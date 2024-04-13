@@ -1,5 +1,5 @@
 from app.funcs.pagina import scrape_dos_dados
-from app.conectores.conectores import ApiCnpjLigação
+from app.ext.api.conectores import ApiCnpjLigação
 
 
 class CNPJFront:

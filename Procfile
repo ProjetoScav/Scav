@@ -1,1 +1,2 @@
-web: gunicorn wsgi:scav_app && celery -A app.fila worker --loglevel=INFO
+web: gunicorn --workers=6 wsgi:scav_app 
+queue: celery -A app.ext.fila worker --loglevel=INFO

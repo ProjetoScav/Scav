@@ -1,8 +1,8 @@
 import smtplib
 from email.message import EmailMessage
 from os import getenv, remove
-
-from app.fila import fila
+from pathlib import Path
+# from app.ext.fila import fila
 
 
 def montar_email(email_destinatario: str) -> EmailMessage:
@@ -30,11 +30,11 @@ def pegar_binario_planilha(caminho: str):
     return dados
 
 
-@fila.task
+# @fila.task
 def enviar_email(email_destinatario: str, file_name: str):
     msg = montar_email(email_destinatario)
     senha = getenv("SCAV_SENHA")
-    caminho = f".//static//{file_name}"
+    caminho = Path("./static") / file_name
     dados = pegar_binario_planilha(caminho)
     msg.add_attachment(
         dados,

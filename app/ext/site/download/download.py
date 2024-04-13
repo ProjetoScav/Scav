@@ -16,5 +16,6 @@ def rota_download(blueprint):
             req = Requisição()
         scav = Scav(req)
         caminho = scav.exportar_os_dados()
-        enviar_email.delay(email, caminho)
+        print(caminho)
+        enviar_email(email, caminho)
         return redirect(url_for("home.home"))

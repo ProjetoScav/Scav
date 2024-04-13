@@ -1,6 +1,3 @@
-from typing import Any
-
-
 def formatar_cnpj(cnpj: str):
     return (
         cnpj[:2]
@@ -30,15 +27,3 @@ def definir_numero_de_pesquisa(n_dados: str):
     if n_dados > 1000:
         return 1000
     return n_dados
-
-
-def gerar_string_de_lista(valores: list[str]) -> str:
-    """Função que recebe uma lista de strings e
-    as junta em uma string só para a planilha"""
-    return "".join(valor + ",  " for valor in valores)
-
-
-def checar_e_remover(valor: Any, lista: list) -> None:
-    """Função que recebe um valor e uma lista e remove o valor se presente"""
-    if valor in lista:
-        lista.remove(valor)

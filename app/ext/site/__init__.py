@@ -7,3 +7,4 @@ def configurar_blueprints(app):
     app.register_blueprint(cnpj_blueprint)
     app.register_blueprint(home_blueprint)
     app.register_blueprint(download_blueprint)
+    
