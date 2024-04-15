@@ -69,5 +69,5 @@ const preventEnter = function (element) {
   });
 };
 
-preventEnter(inputsForm);
+inputsForm.forEach(preventEnter);
 preventEnter(form);

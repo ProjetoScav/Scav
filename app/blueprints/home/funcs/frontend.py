@@ -45,7 +45,7 @@ class HomeFront:
             json = self.requisição.gerar_json(i)
             cnpjs_pagina = pegar_campos_de_dados_pagina(json)
             cnpjs.append(cnpjs_pagina)
-        return itertools.chain.from_iterable(cnpjs)
+        return list(itertools.chain.from_iterable(cnpjs))
 
     def gerar_dados_cards(self) -> list[CampoDeDados]:
         """Função que gera os cards pra pagina da home com cache"""

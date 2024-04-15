@@ -3,7 +3,7 @@ from email.message import EmailMessage
 from os import getenv, remove
 from pathlib import Path
 
-# from app.ext.fila import fila
+from app.ext.fila import fila
 
 
 def montar_email(email_destinatario: str) -> EmailMessage:
@@ -30,7 +30,7 @@ def pegar_binario_planilha(caminho: str):
     return dados
 
 
-# @fila.task
+@fila.task
 def enviar_email(email_destinatario: str, file_name: str):
     print(f"Pedido de envio de planilha para {email_destinatario}")
     msg = montar_email(email_destinatario)
@@ -45,9 +45,9 @@ def enviar_email(email_destinatario: str, file_name: str):
     )
     try:
         enviar_mensagem(msg, senha)
-        # return f"Email enviado com sucesso para {msg['To']}"
-    except Exception as e:
-        # return e
-        print(e)
-    else:
         print(f"Email enviado com sucesso para {msg['To']}")
+    except Exception as e:
+        print(e)
+        raise e
+    else:
+        return f"Email enviado com sucesso para {msg['To']}"

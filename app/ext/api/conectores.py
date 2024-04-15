@@ -1,17 +1,22 @@
-import os
+# import os
 from time import sleep
 
 from requests import Response, get, post
 
 
+API_CDD = "https://api.casadosdados.com.br/v2/public/cnpj/search"
+API_CNPJ_CDD = "https://casadosdados.com.br/solucao/cnpj/"
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+
+
 class ApiExtendidaLigação:
     """Classe que faz a requisição a API extendida da Casa de Dados"""
 
-    URL = os.getenv("API_CDD")
+    URL = API_CDD
 
     headers = {
         "Content-Type": "application/json",
-        "User-Agent": os.getenv("USER_AGENT"),
+        "User-Agent": USER_AGENT,
     }
 
     def fazer_a_requisição(self, json: dict) -> Response:
@@ -26,6 +31,7 @@ class ApiExtendidaLigação:
             if not resposta.status_code == 200:
                 print(f"Problema no request: {resposta.status_code}")
                 print(resposta.text)
+                return None
             sleep(0.1)
             return resposta
 
@@ -33,9 +39,9 @@ class ApiExtendidaLigação:
 class ApiCnpjLigação:
     """Classe que faz a requisição a API de CNPJS da Casa de Dados"""
 
-    URL = os.getenv("API_CNPJ_CDD")
+    URL = API_CNPJ_CDD
 
-    headers = {"User-Agent": os.getenv("USER_AGENT")}
+    headers = {"User-Agent": USER_AGENT}
 
     def fazer_a_requisição(self, cnpj: str) -> Response | None:
         """Função que faz o request a API da Casa de Dados,
@@ -49,5 +55,6 @@ class ApiCnpjLigação:
             if not resposta.status_code == 200:
                 print(f"Problema no request: {resposta.status_code}")
                 print(resposta.text)
-            sleep(0.5)
+                return None
+            sleep(0.1)
             return resposta

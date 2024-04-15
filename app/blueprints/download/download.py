@@ -1,16 +1,13 @@
 from flask import request, session
 
-
-from .funcs.email import enviar_email
-from .operador import Scav
-
+from .operador import Scav, gerar_planilha
 
 def rota_download(blueprint):
     @blueprint.route("/download", methods=["POST"])
     def download():
+        email = request.get_json()["pay-email"]
         scav = Scav()
         scav.checar_cookies(session)
         print("Pedido o download da requisição:", scav.requisição)
-        caminho = scav.exportar_os_dados()
-        enviar_email(request.get_json()["pay-email"], caminho)
+        gerar_planilha.delay(scav, email)
         return "", 204
