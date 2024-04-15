@@ -1,6 +1,7 @@
 import random
 import string
 from pathlib import Path
+
 import pandas as pd
 
 from app.objetos.classes_de_dados import CNPJ
@@ -12,8 +13,8 @@ def criar_dataframe(linhas: list[CNPJ]) -> pd.DataFrame:
     return pd.DataFrame(linhas)
 
 
-def exportar_dataframe(df: pd.DataFrame):
-    """Função que recebe um dataframe e gera um arquivo Excel com ele"""
+def exportar_dataframe(df: pd.DataFrame) -> str:
+    """Função que recebe um dataframe, gera um arquivo Excel com ele e retorna o seu caminho"""
     caminho = (
         "".join(
             random.choices(

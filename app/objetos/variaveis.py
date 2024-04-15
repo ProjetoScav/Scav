@@ -1,7 +1,25 @@
-campos_booleanos = ["somente_mei", "excluir_mei", "com_email", "incluir_atividade_secundaria", 
- "com_contato_telefonico", "somente_fixo", "somente_celular", "somente_matriz", "somente_filial"]
+campos_booleanos = [
+    "somente_mei",
+    "excluir_mei",
+    "com_email",
+    "incluir_atividade_secundaria",
+    "com_contato_telefonico",
+    "somente_fixo",
+    "somente_celular",
+    "somente_matriz",
+    "somente_filial",
+]
 
-campos_lista = ["termo", "atividade_principal", "natureza_juridica", "uf", "municipio", "bairro", "cep", "ddd"]
+campos_lista = [
+    "termo",
+    "atividade_principal",
+    "natureza_juridica",
+    "uf",
+    "municipio",
+    "bairro",
+    "cep",
+    "ddd",
+]
 
 campos_mapper = {
     "CNPJ": "cnpj",

@@ -1,6 +1,7 @@
-from requests import post, get, Response
-from time import sleep
 import os
+from time import sleep
+
+from requests import Response, get, post
 
 
 class ApiExtendidaLigação:
@@ -25,6 +26,7 @@ class ApiExtendidaLigação:
             if not resposta.status_code == 200:
                 print(f"Problema no request: {resposta.status_code}")
                 print(resposta.text)
+            sleep(0.1)
             return resposta
 
 

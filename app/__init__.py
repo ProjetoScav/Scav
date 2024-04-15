@@ -4,9 +4,9 @@ from pathlib import Path
 from flask.app import Flask
 from flask_wtf import CSRFProtect
 
+from .blueprints import configurar_blueprints
 from .ext.cache.cache import cache
 from .ext.jinja import registrar_filtros
-from .ext.site import configurar_blueprints
 
 
 def create_app():

@@ -1,6 +1,7 @@
-from app.objetos.variaveis import campos_booleanos, campos_lista
-from app.objetos.requisição import Requisição
 import re
+
+from app.objetos.requisição import Requisição
+from app.objetos.variaveis import campos_booleanos, campos_lista
 
 
 def checar_numero_em_string(string: str) -> bool:
@@ -27,7 +28,6 @@ def formatar_campo_lista(valor: str) -> list:
     return []
 
 
-# TODO: Completar e dividir essa função
 def formatar_dados_requisição(kwargs: dict) -> dict:
     """Função que formata os dados do cookie para colocar na requisição"""
     kwargs.pop("csrf_token")
@@ -39,7 +39,7 @@ def formatar_dados_requisição(kwargs: dict) -> dict:
     return kwargs
 
 
-def gerar_faixa_de_cards(pagina: int):
+def gerar_faixa_de_cards(pagina: int) -> tuple[int, int]:
     """Função que recebe o número da pagina da home que deve ser exibida e retorna 2 valores
     que dão o começo e o fim do intervalo dos cards"""
     return (pagina * 10) - 10, pagina * 10

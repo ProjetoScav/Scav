@@ -2,11 +2,12 @@ import smtplib
 from email.message import EmailMessage
 from os import getenv, remove
 from pathlib import Path
+
 # from app.ext.fila import fila
 
 
 def montar_email(email_destinatario: str) -> EmailMessage:
-    corpo = """Você está recebendo a planilha com as informações solicitadas na plataforma do Scav.\nQualquer problema com o envio das informações ou dúvida, basta responder este email."""
+    corpo = """Você está recebendo a planilha com as informações solicitadas na plataforma do Scav.\n\nQualquer problema com o envio das informações ou dúvida, basta responder este email."""
     msg = EmailMessage()
     msg["subject"] = "Seus dados chegaram!"
     msg["From"] = getenv("SCAV_EMAIL")
@@ -25,13 +26,13 @@ def enviar_mensagem(msg: EmailMessage, senha: str) -> None:
 def pegar_binario_planilha(caminho: str):
     with open(caminho, "rb") as f:
         dados = f.read()
-        type(dados)
     remove(caminho)
     return dados
 
 
 # @fila.task
 def enviar_email(email_destinatario: str, file_name: str):
+    print(f"Pedido de envio de planilha para {email_destinatario}")
     msg = montar_email(email_destinatario)
     senha = getenv("SCAV_SENHA")
     caminho = Path("./static") / file_name
@@ -44,6 +45,9 @@ def enviar_email(email_destinatario: str, file_name: str):
     )
     try:
         enviar_mensagem(msg, senha)
-        return f"Email enviado com sucesso para {msg['To']}"
+        # return f"Email enviado com sucesso para {msg['To']}"
     except Exception as e:
-        return e
+        # return e
+        print(e)
+    else:
+        print(f"Email enviado com sucesso para {msg['To']}")

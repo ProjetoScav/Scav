@@ -1,6 +1,8 @@
 from flask.templating import render_template
-from .funcs.cnpj_front import CNPJFront
+
 from app.ext.cache.cache import cache
+
+from .funcs.cnpj_front import CNPJFront
 
 
 def rota_cnpj(blueprint):

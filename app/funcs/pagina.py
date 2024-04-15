@@ -1,6 +1,8 @@
-from parsel import Selector, SelectorList
-from app.objetos.classes_de_dados import CNPJ
 from typing import Any
+
+from parsel import Selector, SelectorList
+
+from app.objetos.classes_de_dados import CNPJ
 
 
 def checar_e_remover(valor: Any, lista: list) -> None:

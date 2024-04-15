@@ -6,6 +6,8 @@ from app.ext.api.conectores import ApiExtendidaLigação
 from app.objetos.classes_de_dados import CampoDeDados
 from app.objetos.requisição import Requisição
 
+api = ApiExtendidaLigação()
+
 
 def pegar_dados_frontend(dado: dict) -> tuple[str, str, str, str, str]:
     """Função que recebe um arquivo JSON e pega os dados que serão usados nos cards da homepage"""
@@ -20,7 +22,7 @@ def pegar_dados_frontend(dado: dict) -> tuple[str, str, str, str, str]:
 
 def pegar_numero_cnpjs(requisição: Requisição) -> int:
     """Função que recebe uma requisição e retorna o número de dados na requisição"""
-    resposta = ApiExtendidaLigação().fazer_a_requisição(requisição.gerar_json())
+    resposta = api.fazer_a_requisição(requisição.gerar_json())
     return int(resposta.json()["data"]["count"])
 
 
@@ -44,11 +46,11 @@ def pegar_blocos_cnpj(json: dict) -> list[dict]:
     """Função que faz uma requisição a API da Casa dos Dados e
     retorna uma lista com dicionários que contem os dados dos CNPJs"""
     try:
-        resposta = ApiExtendidaLigação().fazer_a_requisição(json)
+        resposta = api.fazer_a_requisição(json)
         json = resposta.json()
         return json["data"]["cnpj"]
     except Exception:
-        abort(500)
+        abort(500, "Não existem resultados pra pesquisa!")
 
 
 def pegar_campos_de_dados_pagina(json: dict) -> list[CampoDeDados]:

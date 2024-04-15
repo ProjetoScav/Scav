@@ -1,9 +1,8 @@
 import itertools
 from multiprocessing.dummy import Pool
 
+from app.blueprints.home.funcs.api import pegar_numero_cnpjs, pegar_numero_paginas
 from app.ext.api.conectores import ApiCnpjLigação, ApiExtendidaLigação
-from app.ext.site.home.funcs.api import pegar_numero_cnpjs, pegar_numero_paginas
-from .funcs.funcs import pegar_os_cnpjs
 from app.funcs.pagina import scrape_dos_dados
 from app.objetos.requisição import Requisição
 
@@ -14,11 +13,23 @@ class Scav:
     """Classe central da aplicação, responsável pelo manejo
     das API's internas e gerar os resultados do programa"""
 
-    def __init__(self, requisição: Requisição):
+    def __init__(self):
         self.conector_extendida = ApiExtendidaLigação()
         self.conector_cnpj = ApiCnpjLigação()
-        self.requisição = requisição
         self.paginas: list = []
+
+    def checar_cookies(self, session) -> None:
+        """Função que checa o cookie e seta a requisição a ser usada pela instância"""
+        if session.get("_requisição"):
+            self.requisição = Requisição(**session.get("_requisição"))
+        else:
+            self.requisição = Requisição()
+
+    def pegar_os_cnpjs(json: dict) -> list[str]:
+        """Função que recebe o JSON da Casa de Dados e retorna uma lista de CNPJ's"""
+        lista_de_cnpjs = json["data"]["cnpj"]
+        cnpjs = [cnpj["cnpj"] for cnpj in lista_de_cnpjs]
+        return cnpjs
 
     def fazer_requisições_cnpj(self):
         """Função que faz a requisição na API da Casa de Dados
@@ -30,9 +41,16 @@ class Scav:
                 respostas = workers.map(
                     self.conector_extendida.fazer_a_requisição, jsons
                 )
-            except Exception:
+            except Exception as e:
+                print(
+                    "Não foi possível fazer a requisição dos dados da API por motivo:",
+                    e,
+                )
+                workers.close()
                 pass
-        cnpjs_listas = [pegar_os_cnpjs(resposta.json()) for resposta in respostas]
+            else:
+                print("As requisições a API foram concluídas com sucesso")
+        cnpjs_listas = [self.pegar_os_cnpjs(resposta.json()) for resposta in respostas]
         return itertools.chain.from_iterable(cnpjs_listas)
 
     def fazer_requisições_dados(self, cnpjs: list):
@@ -41,8 +59,14 @@ class Scav:
         with Pool(5) as workers:
             try:
                 respostas = workers.map(self.conector_cnpj.fazer_a_requisição, cnpjs)
-            except Exception:
-                pass
+            except Exception as e:
+                print(
+                    "Não foi possível fazer a requisição dos dados de cnpj por motivo:",
+                    e,
+                )
+                workers.close()
+            else:
+                print("As requisições das páginas foram concluídas com sucesso")
         return [resposta.text for resposta in respostas]
 
     def puxar_dados(self):
@@ -56,4 +80,6 @@ class Scav:
         """Função que exporta os dados em um arquivo .xlxs"""
         cnpjs = scrape_dos_dados(paginas)
         df = criar_dataframe(cnpjs)
-        return exportar_dataframe(df)
+        caminho = exportar_dataframe(df)
+        print("Planilha criada com sucesso")
+        return caminho
