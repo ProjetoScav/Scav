@@ -8,4 +8,6 @@ fila = Celery(
     broker=getenv("REDIS_URL"),
     backend=getenv("REDIS_URL"),
 )
-fila.config_from_object({"CELERY_ACCEPT_CONTENT": ["pickle", "json"]})
+fila.config_from_object(
+    {"accept_content": ["pickle", "json"], "broker_connection_retry_on_startup": True}
+)
