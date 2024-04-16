@@ -76,6 +76,6 @@ def preencher_cnpj_obj(pagina: str) -> CNPJ:
 def scrape_dos_dados(paginas: str | list) -> list[CNPJ] | CNPJ:
     """Função que recebe uma lista de páginas de CNPJ ou um único,
     e retorna uma lista contendo os dados de um dos CNPJ's como dicionários"""
-    if isinstance(paginas, list):
+    if not isinstance(paginas, CNPJ):
         return [preencher_cnpj_obj(pagina) for pagina in paginas]
-    return preencher_cnpj_obj(paginas)
+    return preencher_cnpj_obj(next(paginas))

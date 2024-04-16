@@ -80,8 +80,70 @@ class Scav:
         return caminho
 
 
-@fila.task(serializer="pickle")
-def gerar_planilha(scav: Scav, email: str):
-    caminho = scav.exportar_os_dados()
+def pegar_os_cnpjs(json: dict) -> list[str]:
+    """Função que recebe o JSON da Casa de Dados e retorna uma lista de CNPJ's"""
+    lista_de_cnpjs = json["data"]["cnpj"]
+    cnpjs = [cnpj["cnpj"] for cnpj in lista_de_cnpjs]
+    return cnpjs
+
+
+def fazer_requisições_cnpj(requisição: dict):
+    """Função que faz a requisição na API da Casa de Dados
+    e salvas os cnpjs"""
+    copia = requisição.copy()
+    copia.update({"page": 1})
+    resposta = ApiExtendidaLigação().fazer_a_requisição(copia)
+    n_dados = int(resposta.json()["data"]["count"])
+    numero_paginas = pegar_numero_paginas(n_dados)
+    jsons = [requisição.copy() for i in range(numero_paginas)]
+    [json.update({"page": i}) for i, json in enumerate(jsons, 1)]
+    with Pool(3) as workers:
+        try:
+            respostas = workers.map(ApiExtendidaLigação().fazer_a_requisição, jsons)
+        except Exception as e:
+            print("Problema na requisição da API:", e)
+        else:
+            print("As requisições a API foram concluídas com sucesso")
+    cnpjs_listas = [
+        pegar_os_cnpjs(resposta.json()) for resposta in respostas if resposta
+    ]
+    return list(itertools.chain.from_iterable(cnpjs_listas))
+
+
+def fazer_requisições_dados(cnpjs: list):
+    """Função que pega as páginas dos cnpjs na Casa de Dados
+    e as salva no objeto"""
+    with Pool(3) as workers:
+        try:
+            respostas = workers.map(ApiCnpjLigação().fazer_a_requisição, cnpjs)
+        except Exception as e:
+            print("Problema na requisição dos CNPJs por motivo:", e)
+        else:
+            print("As requisições das páginas foram concluídas com sucesso")
+    return (resposta.text for resposta in respostas if resposta)
+
+
+def puxar_dados(requisição: dict):
+    """Função que pega os cnpjs e as páginas de cnpjs e
+    as salva no objeto"""
+    cnpjs = fazer_requisições_cnpj(requisição)
+    print(cnpjs)
+    return fazer_requisições_dados(cnpjs)
+
+
+def exportar_os_dados(requisição: dict):
+    paginas = puxar_dados(requisição)
+    """Função que exporta os dados em um arquivo .xlxs"""
+    cnpjs = scrape_dos_dados(paginas)
+    print(cnpjs)
+    df = criar_dataframe(cnpjs)
+    caminho = exportar_dataframe(df)
+    print("Planilha criada com sucesso")
+    return caminho
+
+
+@fila.task
+def gerar_planilha(requisição: dict, email: str):
+    caminho = exportar_os_dados(requisição)
     enviar_email.delay(email, caminho)
-    return f"Planilha gerada com sucesso: {scav.requisição}, {email}"
+    return f"Planilha gerada com sucesso: {requisição}, {email}"

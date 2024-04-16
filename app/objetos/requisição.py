@@ -70,3 +70,7 @@ class Requisição:
         recebe o parâmetro página e retorna o JSON"""
         json = {**self.query, **self.range_query, **self.extras, "page": pagina}
         return json
+
+    def as_dict(self):
+        """Método que transforma a classe em um dicionário"""
+        return {**self.query, **self.range_query, **self.extras}
