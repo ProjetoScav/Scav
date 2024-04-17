@@ -62,7 +62,7 @@ class Scav:
                 print("Problema na requisição dos CNPJs por motivo:", e)
             else:
                 print("As requisições das páginas foram concluídas com sucesso")
-        return [resposta.text for resposta in respostas if resposta]
+        return (resposta.text for resposta in respostas if resposta)
 
     def puxar_dados(self):
         """Função que pega os cnpjs e as páginas de cnpjs e
@@ -135,7 +135,6 @@ def exportar_os_dados(requisição: dict):
     paginas = puxar_dados(requisição)
     """Função que exporta os dados em um arquivo .xlxs"""
     cnpjs = scrape_dos_dados(paginas)
-    print(cnpjs)
     df = criar_dataframe(cnpjs)
     caminho = exportar_dataframe(df)
     print("Planilha criada com sucesso")

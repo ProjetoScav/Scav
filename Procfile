@@ -1,1 +1,0 @@
-web:  celery -A app.ext.fila worker --loglevel=info
