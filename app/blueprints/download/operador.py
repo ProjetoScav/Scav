@@ -127,14 +127,16 @@ def puxar_dados(requisição: dict):
     """Função que pega os cnpjs e as páginas de cnpjs e
     as salva no objeto"""
     cnpjs = fazer_requisições_cnpj(requisição)
-    print(cnpjs)
+    print("to com os cnpjs")
     return fazer_requisições_dados(cnpjs)
 
 
 def exportar_os_dados(requisição: dict):
-    paginas = puxar_dados(requisição)
     """Função que exporta os dados em um arquivo .xlxs"""
+    paginas = puxar_dados(requisição)
+    print("to com as páginas")
     cnpjs = scrape_dos_dados(paginas)
+    print("dados scrapeados")
     df = criar_dataframe(cnpjs)
     caminho = exportar_dataframe(df)
     print("Planilha criada com sucesso")
