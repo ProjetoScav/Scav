@@ -1,4 +1,4 @@
-def formatar_cnpj(cnpj: str):
+def formatar_cnpj(cnpj: str) -> str:
     """Função que recebe uma string de números e a retorna formatada como CNPJ"""
     return (
         cnpj[:2]
@@ -13,21 +13,45 @@ def formatar_cnpj(cnpj: str):
     )
 
 
-def formatar_numero(numero: str):
+def formatar_data(data: str) -> str:
+    """Função que recebe uma data em formato YYYY-MM-dd
+    e retorna em dd/MM/YYYY"""
+    try:
+        ano = data[:4]
+        mes = data[5:7]
+        dia = data[8:]
+        return f"{dia}/{mes}/{ano}"
+    except Exception:
+        return data
+
+
+def formatar_numero(numero: str) -> str:
     """Função que recebe um número em string e o retorna pontuado"""
     return ("{:,}".format(int(numero))).replace(",", ".")
 
 
-def formatar_razao_social(razao: str):
+def formatar_razao_social(razao: str) -> str:
     """Função que recebe uma string e se ela tiver mais de 59 caracteres ele a encerra com ..."""
-    if len(razao) > 59:
-        return razao[:59] + razao[59].strip(" ") + "..."
-    return razao
+    try:
+        if len(razao) > 59:
+            return razao[:59] + razao[59].strip(" ") + "..."
+        return razao
+    except Exception:
+        return razao
 
 
-def definir_numero_de_pesquisa(n_dados: str):
+# ! Será removida
+def definir_numero_de_pesquisa(n_dados: str) -> int:
     """Função que recebe um número em string e retorna o número de dados que podem ser baixados"""
     n_dados = int(n_dados)
-    if n_dados > 1000:
-        return 1000
+    if n_dados > 1_000_000:
+        return 1_000_000
     return n_dados
+
+
+def formatar_cep(cep: str) -> str:
+    """Função que coloca um . antes dos últimos 3 digitos de um CEP"""
+    if len(cep) < 8:
+        return cep
+    cep = cep[:8]
+    return f"{cep[:5]}.{cep[5:]}"

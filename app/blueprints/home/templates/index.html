@@ -24,6 +24,10 @@
       rel="stylesheet"
       href="{{  url_for('static', filename='css/home.css')  }}"
       />
+      <script src="https://kit.fontawesome.com/de0c4df738.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="{{  url_for('static', filename='js/checkout.css')  }}" />
+      <script src="https://js.stripe.com/v3/"></script>
+      <script src="{{  url_for('static', filename='js/checkout.js')  }}" defer></script>
     </head>
     <body>
       <main>
@@ -121,13 +125,13 @@
                 name="situacao_cadastral"
                 id="situacao_cadastral"
                 >
-                <option class="select_label" value="ATIVA">ATIVA</option>
-                <option class="select_label" value="BAIXADA">BAIXADA</option>
-                <option class="select_label" value="INAPTA">INAPTA</option>
-                <option class="select_label" value="SUSPENSA">
+                <option class="select_label" value="2">ATIVA</option>
+                <option class="select_label" value="8">BAIXADA</option>
+                <option class="select_label" value="4">INAPTA</option>
+                <option class="select_label" value="3">
                   SUSPENSA
                 </option>
-                <option class="select_label" value="NULA">NULA</option>
+                <option class="select_label" value="1">NULA</option>
               </select>
             </article>
               <article class="form_camp">
@@ -237,6 +241,7 @@
                     type="checkbox"
                     name="somente_mei"
                     id="somente_mei"
+                    value="S"
                     />
                     <label class="form_camp-check__label" for="somente_mei"
                     >Somente MEI</label
@@ -248,6 +253,7 @@
                     type="checkbox"
                     name="somente_matriz"
                     id="somente_matriz"
+                    value="1"
                     />
                     <label class="form_camp-check__label" for="somente_matriz"
                     >Somente Matriz</label
@@ -270,6 +276,7 @@
                     type="checkbox"
                     name="somente_fixo"
                     id="somente_fixo"
+                    value="fixo"
                   />
                   <label class="form_camp-check__label" for="somente_fixo"
                     >Somente fixo</label
@@ -292,6 +299,7 @@
                     type="checkbox"
                     name="excluir_mei"
                     id="excluir_mei"
+                    value="S"
                   />
                   <label class="form_camp-check__label" for="excluir_mei"
                     >Excluir MEI</label
@@ -303,6 +311,7 @@
                     type="checkbox"
                     name="somente_filial"
                     id="somente_filial"
+                    value="2"
                   />
                   <label class="form_camp-check__label" for="somente_filial"
                     >Somente filial</label
@@ -314,6 +323,7 @@
                     type="checkbox"
                     name="somente_celular"
                     id="somente_celular"
+                    value="movel"
                   />
                   <label class="form_camp-check__label" for="somente_celular"
                     >Somente celular</label
@@ -381,7 +391,7 @@
                       <div class="pricing__block">
                         <h2 class="pricing-title">Você está baixando <b class="n-dados">{{  n_de_dados|data_number|numero_format  }} </b>contatos da segmentação definida. 
                         <p class="pricing-total-value">Valor total</p>
-                        <p class="pricing-price">R$ 0,00</p>    
+                        <p class="pricing-price">R$ {{ preço }}</p>    
                       </div>
                       <div class="pricing__btns">
                         <p class="pricing__disclaimer">Esse é o nosso limite por download. Você poderá realizar novos downloads posteriormente alterando os filtros do seu pedido</p>
@@ -400,7 +410,18 @@
                       <i id="payment-pricing-arrow" class="fa-solid fa-arrow-left arrow-btn"></i>
                       <i class="fa-solid fa-x close"></i>
                     </div>
-                    <form class="payment__form" action="">
+                    <!-- <form id="payment-form">
+                      <div id="payment-element">
+                      </div>
+                      <button id="submit">
+                        <div class="spinner hidden" id="spinner"></div>
+                        <span id="button-text">Pay now</span>
+                      </button>
+                      <div id="payment-message" class="hidden"></div>
+                      <input id="token" type="hidden" name="csrf_token" value = "{{ csrf_token() }}" />  
+                    </form>
+                    <form class="payment__form" id="payment-form" name="payment-form" action="{{ url_for('download.download') }}" method="post"> -->
+                      <input id="token" type="hidden" name="csrf_token" value = "{{ csrf_token() }}" />  
                       <div class="payment__input-email">
                         <label class="payment__email-label" for="pay-email">Email</label>
                         <input id="pay-email" class="payment__email form_camp__input" type="text" name="pay-email" placeholder="Email"></input>
@@ -408,7 +429,7 @@
                       </div>
                       <div class="payment__bottom">
                         <p class="payment__disclaimer">Você receberá um arquivo no formato .xlsx. Ao confirmar, você está de acordo com os nossos <a target="_blank" href="https://docs.google.com/document/d/1JnnJBcxQFvwNYtmcp3nK9EPAcZ_fP6wD_kOSzbXKM4E/edit?usp=sharing">Termos de Uso e Política de Privacidade</a></p>
-                        <input class="payment__btn popup__btn btn" type="button" value="Confirmar">
+                        <input class="payment__btn popup__btn btn" type="submit" value="Confirmar" name="pay-btn" form="payment-form">
                       </div>
                     </form>
                   </div>
@@ -462,6 +483,7 @@
                         </g>
                       </svg>
                       {{ card.cnpj|cnpj_format }}
+                      
                     </p>
                     <p class="cnpj__city-state">
                       <svg
@@ -492,7 +514,7 @@
                       {{ card.municipio | title }} -{{ card.estado }}
                     </p>
                   </div>
-                  {% if card.cadastro == "ATIVA" %}
+                  {% if card.cadastro == "Ativa" %}
                   <div class="cnpj__state-block cnpj__state-block--green">
                     <p class="cnpj__state cnpj__state--green">
                       {{ card.cadastro | title }}
@@ -551,7 +573,6 @@
     </footer>
     <script src="{{  url_for('static', filename='js/home.js')  }}"></script>
     <script src="{{  url_for('static', filename='js/inputs.js')  }}"></script>
-    <script src="https://kit.fontawesome.com/de0c4df738.js" crossorigin="anonymous"></script>
-  
+
   </body>
 </html>

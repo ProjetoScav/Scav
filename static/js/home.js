@@ -50,16 +50,16 @@ const createChangeSectionEvent = function (element, from, to) {
 };
 
 // Popup - Envio de email
-const sendEmailData = function (email) {
-  fetch("download", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": document.querySelector("#token").value,
-    },
-    body: JSON.stringify({ "pay-email": email }),
-  }).then((response) => console.log(response));
-};
+// const sendEmailData = function (email) {
+//   fetch("download", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "X-CSRFToken": document.querySelector("#token").value,
+//     },
+//     body: JSON.stringify({ "pay-email": email }),
+//   }).then((response) => console.log(response));
+// };
 
 const changePaymentEnd = function (element, from, to) {
   element.addEventListener("click", function () {
@@ -72,7 +72,7 @@ const changePaymentEnd = function (element, from, to) {
         .classList.remove("color-red");
       document.querySelector(".payment__email-subtext").textContent =
         "*O arquivo será enviado para o email inserido";
-      sendEmailData(inputEmail.value);
+      // sendEmailData(inputEmail.value);
     } else {
       document.querySelector(".payment__email").classList.add("outline-red");
       document.querySelector(".payment__email").focus();
