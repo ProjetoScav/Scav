@@ -1,0 +1,125 @@
+<article class="filters">
+  <form name="form" id="form" class="filters__form" hx-post="{{  url_for('home.resultado', pagina=1)  }}"
+    hx-swap="outerHTML" hx-target=".results" @htmx:before-request="$dispatch('scroll-to-results')" x-data>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <article class="form_camp">
+      <label class="form_camp__label" for="termo">Razão social ou nome fantasia</label>
+      <input class="form_camp__input" name="termo" type="text" id="termo" placeholder="Razão social ou nome fantasia"
+        x-model="$store.pedido.termo" />
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="atividade_principal">Atividade principal(CNAE)</label>
+      <input class="form_camp__input" type="text" name="atividade_principal" id="atividade_principal"
+        placeholder="Código ou nome da atividade" x-model="$store.pedido.atividade_principal" />
+      <div class="atv_secondary">
+        <input class="atv_secondary__input" type="checkbox" name="incluir_atividade_secundaria"
+          id="incluir_atividade_secundaria" x-model="$store.pedido.incluir_atividade_secundaria" />
+        <label class="atv_secondary__label" for="incluir_atividade_secundaria">Incluir atividade secundária</label>
+      </div>
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="natureza_juridica">Natureza Jurídica</label>
+      <input class="form_camp__input" type="text" name="natureza_juridica" id="natureza_juridica"
+        placeholder="Código ou nome da natureza" x-model="$store.pedido.natureza_juridica" />
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="situacao_cadastral">Situação cadastral</label>
+      <select class="form_camp__input" name="situacao_cadastral" id="situacao_cadastral"
+        x-model="$store.pedido.situacao_cadastral">
+        <option class="select_label" value="2">ATIVA</option>
+        <option class="select_label" value="8">BAIXADA</option>
+        <option class="select_label" value="4">INAPTA</option>
+        <option class="select_label" value="3">SUSPENSA</option>
+        <option class="select_label" value="1">NULA</option>
+      </select>
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="uf">Estado (UF)</label>
+      <input class="form_camp__input" type="text" name="uf" id="uf" placeholder="Ex: sp, mg, go..."
+        x-model="$store.pedido.uf" />
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="municipio">Munícipio</label>
+      <input class="form_camp__input" type="text" name="municipio" id="municipio"
+        placeholder="Ex: sao paulo, rio de janeiro..." x-model="$store.pedido.municipio" />
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="bairro">Bairro</label>
+      <input class="form_camp__input" type="text" name="bairro" id="bairro"
+        placeholder="Ex: jardim industrial, jardim são dimas..." x-model="$store.pedido.bairro" />
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="cep">CEP</label>
+      <input class="form_camp__input" type="text" name="cep" id="cep" placeholder="Ex: 12227650, 75960970..."
+        x-model="$store.pedido.cep" />
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="ddd">DDD</label>
+      <input class="form_camp__input" type="text" name="ddd" id="ddd" placeholder="Ex: 12, 32, 55..."
+        x-model="$store.pedido.ddd" />
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="data_abertura_desde">Data de Abertura - A partir de</label>
+      <input class="form_camp__input" type="date" name="data_abertura_desde" id="data_abertura_desde"
+        placeholder="dd/mm/aaaa" x-model="$store.pedido.data_abertura_desde" />
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="data_abertura_ate">Data de Abertura - Até</label>
+      <input class="form_camp__input" type="date" name="data_abertura_ate" id="data_abertura_ate"
+        placeholder="dd/mm/aaaa" x-model="$store.pedido.data_abertura_ate" />
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="capital_social_desde">Capital Social - A partir de</label>
+      <input class="form_camp__input" type="text" name="capital_social_desde" id="capital_social_desde"
+        placeholder="A partir de" x-model="$store.pedido.capital_social_desde" />
+    </article>
+    <article class="form_camp">
+      <label class="form_camp__label" for="capital_social_ate">Capital Social - Até</label>
+      <input class="form_camp__input" type="text" name="capital_social_ate" id="capital_social_ate" placeholder="Até"
+        x-model="$store.pedido.capital_social_ate" />
+    </article>
+    <div class="form_camp-checks">
+      <article class="form_camp-check">
+        <input class="form_camp-check__input" type="checkbox" name="somente_mei" id="somente_mei" value="S"
+          x-model="$store.pedido.somente_mei" />
+        <label class="form_camp-check__label" for="somente_mei">Somente MEI</label>
+      </article>
+      <article class="form_camp-check">
+        <input class="form_camp-check__input" type="checkbox" name="somente_matriz" id="somente_matriz" value="1"
+          x-model="$store.pedido.somente_matriz" />
+        <label class="form_camp-check__label" for="somente_matriz">Somente Matriz</label>
+      </article>
+      <article class="form_camp-check com-telefone">
+        <input class="form_camp-check__input" type="checkbox" name="com_contato_telefonico" id="com_contato_telefonico"
+          x-model="$store.pedido.com_contato_telefonico" />
+        <label class="form_camp-check__label" for="com_contato_telefonico">Com contato de telefone</label>
+      </article>
+      <article class="form_camp-check">
+        <input class="form_camp-check__input" type="checkbox" name="somente_fixo" id="somente_fixo" value="fixo"
+          x-model="$store.pedido.somente_fixo" />
+        <label class="form_camp-check__label" for="somente_fixo">Somente fixo</label>
+      </article>
+      <article class="form_camp-check">
+        <input class="form_camp-check__input" type="checkbox" name="com_email" id="com_email"
+          x-model="$store.pedido.com_email" />
+        <label class="form_camp-check__label" for="com_email">Com e-mail</label>
+      </article>
+      <article class="form_camp-check">
+        <input class="form_camp-check__input" type="checkbox" name="excluir_mei" id="excluir_mei" value="S"
+          x-model="$store.pedido.excluir_mei" />
+        <label class="form_camp-check__label" for="excluir_mei">Excluir MEI</label>
+      </article>
+      <article class="form_camp-check">
+        <input class="form_camp-check__input" type="checkbox" name="somente_filial" id="somente_filial" value="2"
+          x-model="$store.pedido.somente_filial" />
+        <label class="form_camp-check__label" for="somente_filial">Somente filial</label>
+      </article>
+      <article class="form_camp-check so-celular">
+        <input class="form_camp-check__input" type="checkbox" name="somente_celular" id="somente_celular" value="movel"
+          x-model="$store.pedido.somente_celular" />
+        <label class="form_camp-check__label" for="somente_celular">Somente celular</label>
+      </article>
+    </div>
+    <button class="form_camp__btn btn" form="form">Pesquisar</button>
+  </form>
+</article>

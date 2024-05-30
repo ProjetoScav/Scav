@@ -10,8 +10,6 @@ campos_igualdade: list[str] = [
 campos_not_is: list[str] = ["com_contato_telefonico", "com_email", "excluir_mei"]
 
 campos_lista: list[str] = [
-    "termo",
-    "atividade_principal",
     "natureza_juridica",
     "uf",
     "municipio",

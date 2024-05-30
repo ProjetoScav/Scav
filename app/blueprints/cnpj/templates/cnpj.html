@@ -62,7 +62,7 @@
                 Data de Abertura
               </p>
               <p class="registro-campo__valor valor">
-                {{ cnpj.data_abertura|string|date_format }}
+                {{ cnpj.data_abertura|strftime('%d/%m/%Y') }}
               </p>
             </article>
             <article class="registro-campo campo">
@@ -216,9 +216,9 @@
               <ul class="sociedade-campo__list">
                 {% for atividade in cnpj.atividades_secundarias %}
                 <li class="sociedade-campo__valor valor">{{ atividade }}</li>
-                {% endfor %} 
+                {% endfor %}
                 </li>
-            {% endif %} 
+            {% endif %}
               </ul>
             </article>
           </section>

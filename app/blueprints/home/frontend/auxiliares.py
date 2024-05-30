@@ -15,11 +15,11 @@ def gera_chave_cache_cards(query):
 def gerar_cards_cnpj(resultados) -> list[Card]:
     return [
         Card(
-            cnpj=resultado[0],
-            municipio=resultado[3],
-            estado=resultado[2],
-            cadastro=situacao_cadastral[resultado[4]],
-            razao_social=resultado[1],
+            cnpj=resultado.cnpj_completo,
+            municipio=resultado.municipio.municipio,
+            estado=resultado.uf,
+            cadastro=situacao_cadastral[resultado.situacao_cadastral],
+            razao_social=resultado.empresa.razao_social,
         )
         for resultado in resultados
     ]

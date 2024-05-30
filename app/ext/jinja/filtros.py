@@ -40,15 +40,6 @@ def formatar_razao_social(razao: str) -> str:
         return razao
 
 
-# ! Será removida
-def definir_numero_de_pesquisa(n_dados: str) -> int:
-    """Função que recebe um número em string e retorna o número de dados que podem ser baixados"""
-    n_dados = int(n_dados)
-    if n_dados > 1_000_000:
-        return 1_000_000
-    return n_dados
-
-
 def formatar_cep(cep: str) -> str:
     """Função que coloca um . antes dos últimos 3 digitos de um CEP"""
     if len(cep) < 8:
