@@ -12,13 +12,13 @@ class Filtro(ABC):
 
 
 class FiltroTermo(Filtro):
-    def __init__(self, dados_formulario):
-        match dados_formulario:
-            case {"termo": valores}:
-                self.tem_termo = True
-                self.valores = valores
-            case _:
-                self.tem_termo = False
+    def __init__(self, dados_formulario: dict):
+        if dados_formulario.get("termo", None):
+            self.tem_termo = True
+            self.valores = dados_formulario["termo"]
+            print(self.valores, type(self.valores))
+        else:
+            self.tem_termo = False
 
     def filtrar(self, query):
         if self.tem_termo:
@@ -41,29 +41,27 @@ class FiltroTermo(Filtro):
 
 class FiltroAtividades(Filtro):
     def __init__(self, dados_formulario):
-        match dados_formulario:
-            case {"incluir_atividade_secundaria": _, "atividade_principal": valores}:
-                self.tem_atividade_secundaria = True
-                self.valores = valores
-            case {"atividade_principal": valores}:
-                self.tem_atividade_secundaria = False
-                self.tem_atividade_principal = True
-                self.valores = valores
-            case _:
-                self.tem_atividade_principal = False
-                self.tem_atividade_secundaria = False
+        incluir_atividades_secundarias = dados_formulario.get("incluir_atividade_secundaria", None)
+        atividade_primaria = dados_formulario.get("atividade_principal", None)
+        if incluir_atividades_secundarias and atividade_primaria:
+            self.tem_atividade_secundaria = True
+        else:
+            self.tem_atividade_secundaria = False
+        self.valores = atividade_primaria
+        print(self.valores)
+
 
     def filtrar(self, query):
-        atividade_principal = Estabelecimento.atividade_principal_id
-        if self.tem_atividade_secundaria:
-            atividades_secundarias = Estabelecimento.atividades_secundarias_ids
-            condicionais = []
-            for valor in self.valores:
-                condicional_sec = atividades_secundarias.contains(valor)
-                condicional_prin = atividade_principal == int(valor)
-                condicionais.extend([condicional_prin, condicional_sec])
-                return query.where(or_(*condicionais))
-        elif self.tem_atividade_principal:
+        if self.valores:
+            atividade_principal = Estabelecimento.atividade_principal_id
+            if self.tem_atividade_secundaria:
+                atividades_secundarias = Estabelecimento.atividades_secundarias_ids
+                condicionais = []
+                for valor in self.valores:
+                    condicional_sec = atividades_secundarias.contains(valor)
+                    condicional_prin = atividade_principal == int(valor)
+                    condicionais.extend([condicional_prin, condicional_sec])
+                    return query.where(or_(*condicionais))
             return query.where(atividade_principal.in_(self.valores))
         return query
 
@@ -193,10 +191,12 @@ class FiltroDataDeAbertura(Filtro):
                 self.data_desde = data_desde
                 self.data_ate = data_ate
             case {"data_abertura_ate": data_ate}:
+                self.tem_data_desde_ate = False
                 self.tem_data_ate = True
                 self.tem_data_desde = False
                 self.data = data_ate
             case {"data_abertura_desde": data_desde}:
+                self.tem_data_desde_ate = False
                 self.tem_data_desde = True
                 self.tem_data_ate = False
                 self.data = data_desde
@@ -232,10 +232,12 @@ class FiltroCapitalSocial(Filtro):
                 self.capital_desde = capital_desde
                 self.capital_ate = capital_ate
             case {"capital_social_ate": capital_ate}:
+                self.tem_capital_desde_ate = False
                 self.tem_capital_ate = True
                 self.tem_capital_desde = False
                 self.capital = capital_ate
             case {"capital_social_desde": capital_desde}:
+                self.tem_capital_desde_ate = False
                 self.tem_capital_desde = True
                 self.tem_capital_ate = False
                 self.capital = capital_desde

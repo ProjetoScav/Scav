@@ -1,5 +1,5 @@
 from flask import Flask
-
+from datetime import datetime
 from . import filtros as f
 
 
@@ -10,3 +10,4 @@ def registrar_filtros(app: Flask) -> None:
     app.jinja_env.filters["razao_format"] = f.formatar_razao_social
     app.jinja_env.filters["date_format"] = f.formatar_data
     app.jinja_env.filters["cep_format"] = f.formatar_cep
+    app.jinja_env.filters["strftime"] = datetime.strftime

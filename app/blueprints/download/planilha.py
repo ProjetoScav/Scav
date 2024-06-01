@@ -21,7 +21,7 @@ class Planilhador:
             self.query = Query(campos, self.db)
         else:
             self.query = Query({"situacao_cadastral": 2}, self.db)
-        self.query.gerar_query_filtrada()
+        self.query.filtrar_query()
 
     def gerar_nome_planilha(self, tipo_de_arquivo: str) -> str:
         """Função que gera o nome da planilha de dados"""
@@ -58,7 +58,8 @@ class Planilhador:
 
     def pegar_os_dados(self):
         antes = datetime.now()
-        iterador = self.db.session.scalars(self.query.query)
+        iterador = self.query.query.yield_per(1)
+        print(iterador, type(iterador), dir(iterador))
         print(f"Tempo de query: {datetime.now() - antes}")
         antes_2 = datetime.now()
         linhas = [

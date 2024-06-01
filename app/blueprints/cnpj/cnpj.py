@@ -10,4 +10,4 @@ def rota_cnpj(blueprint):
     def cnpj(cnpj):
         front = CNPJFront(db, cnpj)
         cnpj = front.montar_pagina_de_cnpj()
-        return render_template("cnpj.html", cnpj=cnpj)
+        return render_template("cnpj.jinja.html", cnpj=cnpj)

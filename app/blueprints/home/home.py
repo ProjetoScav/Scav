@@ -16,7 +16,7 @@ def rota_home(app):
         cards = front.gerar_cards()
         print("Gerei os cards")
         return render_template(
-            "index.html",
+            "index.jinja.html",
             cards=cards,
             n_de_dados=front.query.numero_cnpjs,
             n_paginas=front.gerar_n_de_paginas(),
@@ -36,7 +36,7 @@ def rota_home(app):
         front.checar_cookies(session)
         cards = front.gerar_cards(pagina)
         return render_template(
-            "componentes/resultados.html",
+            "componentes/resultados.jinja.html",
             cards=cards,
             n_de_dados=front.query.numero_cnpjs,
             n_paginas=front.gerar_n_de_paginas(),

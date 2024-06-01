@@ -1,20 +1,18 @@
+from decimal import Decimal
+
+from flask_sqlalchemy import SQLAlchemy
+
+from app.ext.db.filtros import lista_de_filtros
+from app.ext.db.models import Estabelecimento
+
 from .auxiliares import (
-    transformar_maiscula_sem_acento,
     formatar_campo_lista,
+    transformar_maiscula_sem_acento,
 )
 from .listas import (
-    campos_de_range,
-    campos_igualdade,
     campos_lista,
-    campos_not_is,
     campos_numero,
 )
-from sqlalchemy import or_
-from flask_sqlalchemy import SQLAlchemy
-from app.objetos.mappers import campo_atributo
-from decimal import Decimal
-from app.ext.db.models import Estabelecimento
-from app.ext.db.filtros import lista_de_filtros
 
 
 class Query:
@@ -38,8 +36,10 @@ class Query:
     def limpar_dados(self):
         "Função que faz a limpeza dos dados do form"
         for chave, valor in self.form.items():
+            print(chave, valor)
             if chave in campos_lista:
                 self.form[chave] = formatar_campo_lista(valor)
+                print(self.form[chave], type(self.form[chave]))
                 if chave in ["municipio", "uf"]:
                     self.form[chave] = transformar_maiscula_sem_acento(self.form[chave])
                 elif chave in ["natureza_juridica", "atividade_principal"]:
@@ -52,4 +52,6 @@ class Query:
         for filtro in lista_de_filtros:
             self.query = filtro(self.form).filtrar(self.query)
         self.gerar_n_de_cnpjs()
+        print("n_cnpjs")
         self.gerar_preço()
+        print("preço")

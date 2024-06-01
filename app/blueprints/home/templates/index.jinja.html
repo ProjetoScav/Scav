@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-{% include 'componentes/cabeçalho.html' %}
-
+{% include 'componentes/cabeçalho.jinja.html' %}
 <body>
   <main>
     <section id="section-1">
@@ -11,13 +9,13 @@
         <p class="scav__sub-title">
           Encontre e baixe empresas de todo o Brasil
         </p>
-        {% include 'componentes/barra-de-pesquisa.html' %}
+        {% include 'componentes/barra-de-pesquisa.jinja.html' %}
       </article>
     </section>
     <section id="section-2">
       <div class="app">
-        {% include 'componentes/formulario.html' %}
-        {% include 'componentes/resultados.html' %}
+        {% include 'componentes/formulario.jinja.html' %}
+        {% include 'componentes/resultados.jinja.html' %}
       </div>
     </section>
     <section id="section-3">
