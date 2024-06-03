@@ -1,4 +1,4 @@
-from flask import redirect, request, session, url_for
+from flask import request, session
 from flask.templating import render_template
 
 from app.ext.db.db import db

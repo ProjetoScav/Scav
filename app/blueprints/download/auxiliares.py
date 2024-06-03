@@ -1,8 +1,5 @@
 import random
 import string
-from typing import Optional
-
-from app.objetos.classes_de_dados import CNPJ
 
 
 def gerar_nome_planilha(tipo_de_arquivo: str) -> str:
@@ -12,5 +9,3 @@ def gerar_nome_planilha(tipo_de_arquivo: str) -> str:
     complemento = "".join(sorteado)
     arquivo = f"planilha{complemento}.{tipo_de_arquivo}"
     return arquivo
-
-

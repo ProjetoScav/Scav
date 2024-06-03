@@ -3,7 +3,6 @@ from pathlib import Path
 from flask import send_file, session
 
 from app.ext.db.db import db
-from app.ext.db.models import Pedido
 
 from .planilha import Planilhador
 

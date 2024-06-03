@@ -39,8 +39,8 @@ class Planilhador:
         return df
 
     def exportar_dataframe(self, df: pd.DataFrame):
-        antes = datetime.now()
         """Função que recebe um dataframe, gera um arquivo Excel com ele e retorna o seu caminho"""
+        antes = datetime.now()
         if len(df) > 1_000_00:
             arquivo = gerar_nome_planilha("csv")
             caminho = Path("./static") / arquivo

@@ -5,10 +5,12 @@ from sqlalchemy import or_
 
 class Filtro(ABC):
     @abstractmethod
-    def __init__(self): ...
+    def __init__(self):
+        ...
 
     @abstractmethod
-    def filtrar(self, query): ...
+    def filtrar(self, query):
+        ...
 
 
 class FiltroTermo(Filtro):
@@ -41,7 +43,9 @@ class FiltroTermo(Filtro):
 
 class FiltroAtividades(Filtro):
     def __init__(self, dados_formulario):
-        incluir_atividades_secundarias = dados_formulario.get("incluir_atividade_secundaria", None)
+        incluir_atividades_secundarias = dados_formulario.get(
+            "incluir_atividade_secundaria", None
+        )
         atividade_primaria = dados_formulario.get("atividade_principal", None)
         if incluir_atividades_secundarias and atividade_primaria:
             self.tem_atividade_secundaria = True
@@ -49,7 +53,6 @@ class FiltroAtividades(Filtro):
             self.tem_atividade_secundaria = False
         self.valores = atividade_primaria
         print(self.valores)
-
 
     def filtrar(self, query):
         if self.valores:

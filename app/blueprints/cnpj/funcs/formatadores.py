@@ -2,13 +2,13 @@ from app.objetos.mappers import mei
 
 
 # TODO: Type hint
-def montar_telefone(ddd, numero) -> str | None:
+def montar_telefone(ddd: str, numero: str) -> str | None:
     """Função que recebe DDD e número e retorna um número
     de telefone formatado"""
     try:
         if numero and ddd:
-            numero, ddd = str(numero), str(ddd)
-            return f"({ddd}) {numero}"
+            telefone = f"({ddd}) {numero}"
+            return telefone
     except Exception:
         return None
 

@@ -1,3 +1,3 @@
 import stripe
 
-stripe.api_key = 'sk_test_51PDnRKI0MO5skub59qPQVj5Z30yjnAJh2QdVEzsWbqHIISshfqS2xL72Y4dqQ9uI4IyLatdGxtshRkVmJoHn9CfX008kwNdsWM'
+stripe.api_key = "sk_test_51PDnRKI0MO5skub59qPQVj5Z30yjnAJh2QdVEzsWbqHIISshfqS2xL72Y4dqQ9uI4IyLatdGxtshRkVmJoHn9CfX008kwNdsWM"

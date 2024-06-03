@@ -15,7 +15,7 @@ def create_app():
         __name__,
         static_folder=Path("../static/"),
     )
-    app.config['SQLALCHEMY_ECHO'] = True
+    app.config["SQLALCHEMY_ECHO"] = True
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("POSTGRE_SQL_URL")
     app.config["SECRET_KEY"] = os.getenv("FLASK_KEY")
     cache.init_app(app, config={"CACHE_TYPE": "simple"})

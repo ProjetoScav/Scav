@@ -1,4 +1,4 @@
-from app.ext.db.models import MEI, Empresa, Estabelecimento, Municipio
+from app.ext.db.models import Estabelecimento
 
 situacao_cadastral = {1: "Nula", 2: "Ativa", 3: "Suspensa", 4: "Inapta", 8: "Baixada"}
 
