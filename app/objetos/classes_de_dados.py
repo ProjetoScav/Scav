@@ -4,7 +4,7 @@ from typing import Optional
 
 @dataclass
 class CNPJ:
-    cn: str | None = None
+    cnpj: str | None = None
     razao_social: str | None = None
     nome_fantasia: str | None = None
     tipo: str | None = None
