@@ -1,6 +1,0 @@
-bandit
-isort
-mypy
-pip-autoremove
-pre-commit
-ruff
