@@ -1,6 +1,8 @@
-from abc import abstractmethod, ABC
-from app.ext.db.models import Estabelecimento, Empresa, Municipio, MEI
+from abc import ABC, abstractmethod
+
 from sqlalchemy import or_
+
+from app.ext.db.models import MEI, Empresa, Estabelecimento, Municipio
 
 
 class Filtro(ABC):

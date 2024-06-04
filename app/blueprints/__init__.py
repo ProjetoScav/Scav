@@ -1,6 +1,6 @@
 from .cnpj import cnpj_blueprint
-from .home import home_blueprint
 from .download import download_blueprint
+from .home import home_blueprint
 
 
 def configurar_blueprints(app):

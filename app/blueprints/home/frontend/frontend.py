@@ -1,10 +1,10 @@
 import math
+
 from flask_sqlalchemy import SQLAlchemy
+
 from app.ext.db.query.query import Query
-from .auxiliares import (
-    gerar_cards_cnpj,
-    gerar_faixa_de_cards,
-)
+
+from .auxiliares import gerar_cards_cnpj, gerar_faixa_de_cards
 
 
 class HomeFront:

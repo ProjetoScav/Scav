@@ -1,6 +1,8 @@
+from flask_sqlalchemy import SQLAlchemy
+
 from app.ext.db.models import Estabelecimento
 from app.objetos.classes_de_dados import CNPJ
-from flask_sqlalchemy import SQLAlchemy
+
 from .funcs.auxiliares import transformar_em_cnpj
 
 

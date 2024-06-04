@@ -1,5 +1,6 @@
-from unidecode import unidecode
 import re
+
+from unidecode import unidecode
 
 
 def checar_numero_em_string(string: str) -> bool:

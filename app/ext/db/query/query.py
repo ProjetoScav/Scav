@@ -5,20 +5,14 @@ from flask_sqlalchemy import SQLAlchemy
 from app.ext.db.filtros import lista_de_filtros
 from app.ext.db.models import Estabelecimento
 
-from .auxiliares import (
-    formatar_campo_lista,
-    transformar_maiscula_sem_acento,
-)
-from .listas import (
-    campos_lista,
-    campos_numero,
-)
+from .auxiliares import formatar_campo_lista, transformar_maiscula_sem_acento
+from .listas import campos_lista, campos_numero
 
 
 class Query:
     def __init__(
         self,
-        formulario: dict[str, str],
+        formulario: dict[str, str | int],
         db: SQLAlchemy,
     ):
         self.form = {k: v for k, v in formulario.items() if v}

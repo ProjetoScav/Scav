@@ -9,6 +9,7 @@ def montar_telefone(ddd: str, numero: str) -> str | None:
         if numero and ddd:
             telefone = f"({ddd}) {numero}"
             return telefone
+        return None
     except Exception:
         return None
 
