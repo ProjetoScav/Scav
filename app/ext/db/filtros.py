@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
-
 from sqlalchemy import or_
-
 from app.ext.db.models import MEI, Empresa, Estabelecimento, Municipio
 
 
