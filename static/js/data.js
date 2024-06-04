@@ -1,3 +1,4 @@
+'strict';
 document.addEventListener("alpine:init", () => {
   console.log("bolado");
   Alpine.store("pedido", {
