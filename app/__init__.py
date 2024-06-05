@@ -9,11 +9,13 @@ from .ext.cache.cache import cache
 from .ext.db.db import db
 from .ext.jinja import registrar_filtros
 
+caminho_static = Path("../static/")
 
-def create_app():
+
+def create_app() -> Flask:
     app = Flask(
         __name__,
-        static_folder=Path("../static/"),
+        static_folder=caminho_static,
     )
     app.config["SQLALCHEMY_ECHO"] = True
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("POSTGRE_SQL_URL")
@@ -21,6 +23,6 @@ def create_app():
     cache.init_app(app, config={"CACHE_TYPE": "simple"})
     db.init_app(app)
     CSRFProtect(app)
-    configurar_blueprints(app)
+    app = configurar_blueprints(app)
     registrar_filtros(app)
     return app

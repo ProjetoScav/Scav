@@ -1,12 +1,12 @@
 <div class="cnpjs-indexes" x-data>
     {% if n_paginas %}
-    {% for i in range(1, n_paginas + 1) %}
-    {% if i == pagina %}
-    <a class="cnpjs-indexes__index cnpjs-indexes__index--purple disabled">{{ i }}</a>
-    {% else %}
-    <a class="cnpjs-indexes__index" hx-get="{{  url_for('home.resultado', pagina=i)  }}" hx-swap="outerHTML"
-        hx-target=".results" @click="$refs.results.scrollIntoView({behavior: 'smooth'})" x-data>{{ i }}</a>
-    {% endif %}
-    {% endfor %}
+        {% for i in range(1, n_paginas + 1) %}
+            {% if i == pagina %}
+                <a class="cnpjs-indexes__index cnpjs-indexes__index--purple disabled">{{ i }}</a>
+            {% else %}
+                 <a class="cnpjs-indexes__index" hx-get="{{  url_for('home.resultado', pagina=i)  }}" hx-swap="outerHTML"
+                    hx-target=".results" @click="$refs.results.scrollIntoView({behavior: 'smooth'})" x-data>{{ i }}</a>
+            {% endif %}
+        {% endfor %}
     {% endif %}
 </div>

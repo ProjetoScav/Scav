@@ -1,4 +1,4 @@
-from flask import request, session
+from flask import Blueprint, request, session
 from flask.templating import render_template
 
 from app.ext.db.db import db
@@ -6,15 +6,15 @@ from app.ext.db.db import db
 from .frontend.frontend import HomeFront
 
 
-def rota_home(app):
-    @app.route("/", methods=["GET"])
+def home_rotas(bp: Blueprint) -> Blueprint:
+    """Função que registra as rotas da
+    Homepage no Blueprint"""
+
+    @bp.route("/", methods=["GET"])
     def home():
-        print("cheguei na HOME")
         front = HomeFront(db)
         front.checar_cookies(session)
-        print("chequei os cookies")
         cards = front.gerar_cards()
-        print("Gerei os cards")
         return render_template(
             "index.jinja.html",
             cards=cards,
@@ -24,7 +24,7 @@ def rota_home(app):
             preço=front.query.preço,
         )
 
-    @app.route("/resultados", methods=["GET", "POST"])
+    @bp.route("/resultados", methods=["GET", "POST"])
     def resultado():
         if request.method == "POST":
             campos = request.form.to_dict()
@@ -43,3 +43,5 @@ def rota_home(app):
             pagina=pagina,
             preço=front.query.preço,
         )
+
+    return bp

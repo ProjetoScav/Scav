@@ -1,7 +1,6 @@
 from app.objetos.mappers import mei
 
 
-# TODO: Type hint
 def montar_telefone(ddd: str, numero: str) -> str | None:
     """Função que recebe DDD e número e retorna um número
     de telefone formatado"""

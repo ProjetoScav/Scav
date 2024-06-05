@@ -16,6 +16,7 @@ Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.1
 flower==2.0.1
 greenlet==3.0.3
+gunicorn==22.0.0
 humanize==4.9.0
 identify==2.5.36
 itsdangerous==2.2.0
@@ -24,6 +25,7 @@ kombu==5.3.7
 MarkupSafe==2.1.5
 nodeenv==1.9.0
 numpy==1.26.4
+packaging==24.0
 pandas==2.2.2
 pip-autoremove==0.10.0
 platformdirs==4.2.2

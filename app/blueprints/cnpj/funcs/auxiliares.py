@@ -14,8 +14,9 @@ from .formatadores import (
 )
 
 
-# TODO: Documentar essa função
-def transformar_em_cnpj(estabelecimento):
+def transformar_em_cnpj(estabelecimento) -> CNPJ:
+    """Função que recebe uma entidade Estabelecimento e
+    retorna um objeto CNPJ"""
     return CNPJ(
         cnpj=estabelecimento.cnpj_completo,
         razao_social=estabelecimento.empresa.razao_social,

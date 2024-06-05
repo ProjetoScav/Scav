@@ -11,7 +11,7 @@ class CNPJFront:
     organiza pra consumo do template
     """
 
-    def __init__(self, db: SQLAlchemy, cnpj: str):
+    def __init__(self, db: SQLAlchemy, cnpj: str) -> None:
         self.db = db
         self.query = db.session.query(Estabelecimento).where(
             Estabelecimento.cnpj_completo == cnpj
