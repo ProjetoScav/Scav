@@ -20,6 +20,13 @@ repos:
     hooks:
     - id: mypy
       args: [--ignore-missing-imports]
+  - repo: https://github.com/djlint/djlint
+    rev: v1.34.1
+    hooks:
+    - id: djlint-reformat-jinja
+      args: [static/templates, --format-attribute-template-tags, --quiet]
+    - id: djlint-jinja
+      args: [static/templates, --ignore=H008, --quiet]
   - repo: local
     hooks:
      - id: requirements

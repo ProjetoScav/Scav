@@ -1,0 +1,15 @@
+<form class="scav__form"
+      name="search-bar"
+      hx-post="{{ url_for('home.busca', pagina=1) }}"
+      hx-target=".results"
+      hx-swap="outerHTML"
+      @htmx:before-request="$dispatch('scroll-to-results')"
+      x-data>
+    <input id="token" type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <input class="scav__form-search-bar"
+           name="termo"
+           type="text"
+           id="search-bar"
+           placeholder="Pesquise por razão social..." />
+    <button class="scav__form-btn btn" for="search-bar">Pesquisar</button>
+</form>

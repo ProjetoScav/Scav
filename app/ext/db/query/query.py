@@ -16,21 +16,23 @@ class Query:
         db: SQLAlchemy,
     ):
         self.form = {k: v for k, v in formulario.items() if v}
-        self.db = db
-        self.query = db.session.query(Estabelecimento)
+        self.limpar_dados()
+        self.query = self.filtrar_query(db.session.query(Estabelecimento))
+        self.n_de_cnpjs = self.gerar_n_de_cnpjs()
+        self.preço = self.gerar_preço()
 
-    def gerar_n_de_cnpjs(self):
-        "Função que cria o atributo n_cnpjs dentro da Query"
-        self.numero_cnpjs = self.query.count()
+    def gerar_n_de_cnpjs(self) -> int:
+        "Método que cria o atributo n_cnpjs dentro da Query"
+        return self.query.count()
 
-    def gerar_preço(self):
-        "Função que cria o atributo preço dentro da Query"
-        self.preço = round(Decimal(self.numero_cnpjs) * Decimal("0.001"), 2)
+    def gerar_preço(self) -> Decimal:
+        "Método que cria o atributo preço dentro da Query"
+        preço = round(Decimal(self.n_de_cnpjs) * Decimal(0.001), 2)
+        return preço
 
     def limpar_dados(self):
-        "Função que faz a limpeza dos dados do form"
+        "Método que faz a limpeza dos dados do form"
         for chave, valor in self.form.items():
-            print(chave, valor)
             if chave in campos_lista:
                 self.form[chave] = formatar_campo_lista(valor)
                 print(self.form[chave], type(self.form[chave]))
@@ -41,11 +43,8 @@ class Query:
             if chave in campos_numero:
                 self.form[chave] = int(valor)
 
-    def filtrar_query(self):
-        self.limpar_dados()
+    # TODO: Type Hint
+    def filtrar_query(self, query):
         for filtro in lista_de_filtros:
-            self.query = filtro(self.form).filtrar(self.query)
-        self.gerar_n_de_cnpjs()
-        print("n_cnpjs")
-        self.gerar_preço()
-        print("preço")
+            query = filtro(self.form).filtrar(query)
+        return query

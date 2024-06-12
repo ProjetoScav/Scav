@@ -1,0 +1,53 @@
+{# CARD #}
+{% macro card(card) %}
+    <a class="cnpj-link-wrapper"
+       href="{{ url_for('cnpj.cnpj', cnpj=card.cnpj) }}"
+       target="_blank">
+        <article class="cnpj">
+            <div class="cnpj__infos">
+                <h3 class="cnpj__razao-social">{{ card.razao_social|razao_format }}</h3>
+                <p class="cnpj__cnpj">
+                    <img src="{{ url_for('static', filename='imgs/apartment.svg') }}"
+                         width="20px"
+                         height="20px"
+                         alt="icone-apartamentos">
+                    {{ card.cnpj|cnpj_format }}
+                </p>
+                <p class="cnpj__city-state">
+                    <img src="{{ url_for('static', filename='imgs/distance.svg') }}"
+                         width="20px"
+                         height="20px"
+                         alt="icone-localização">
+                    {{ card.municipio|title }} -{{ card.estado }}
+                </p>
+            </div>
+            {% if card.cadastro == "Ativa" %}
+                {% set color = "green" -%}
+            {% else %}
+                {% set color = "grey" -%}
+            {% endif %}
+            <div class="cnpj__state-block cnpj__state-block--{{ color }}">
+                <p class="cnpj__state cnpj__state--{{ color }}">{{ card.cadastro|title }}</p>
+            </div>
+        </article>
+    </a>
+{%- endmacro %}
+{% macro pagination(n_pages, page) %}
+    {# Paginação #}
+    <div class="cnpjs-indexes" x-data>
+        {% if n_pages %}
+            {% for i in range(1, n_pages + 1) %}
+                {% if i == page %}
+                    <a class="cnpjs-indexes__index cnpjs-indexes__index--purple disabled">{{ i }}</a>
+                {% else %}
+                    <a class="cnpjs-indexes__index"
+                       hx-get="{{ url_for('componentes.resultado', pagina=i) }}"
+                       hx-swap="outerHTML"
+                       hx-target=".results"
+                       @click="$refs.results.scrollIntoView({behavior: 'smooth'})"
+                       x-data>{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}

@@ -23,7 +23,7 @@ inputEmail.addEventListener("input", function () {
   isEmail = validateEmail(inputEmail.value);
 });
 
-// Formulário - Remoção de valores inválidos
+// form - Remoção de valores inválidos
 const dddInput = document.querySelector("#ddd");
 const cepInput = document.querySelector("#cep");
 const cpAteInput = document.querySelector("#capital_social_ate");

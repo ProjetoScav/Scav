@@ -1,0 +1,30 @@
+{% import "components/result/components-result.j2" as components %}
+<article class="results" x-ref="results" hx-ext="alpine-morph" x-data>
+    <article class="search-results">
+        <div class="search-results__summary">
+            <h2 class="search-results__title">Resultados da pesquisa...</h2>
+            <p class="search-results__text">
+                <span class="n-cnpjs">{{ n_de_dados|numero_format }}</span> empresas
+                encontradas
+            </p>
+        </div>
+        <div x-data>
+            {% if n_de_dados > 0 %}
+                <button class="baixar-btn btn" @click="$dispatch('popup')">
+                    Baixar
+                    <img src="{{ url_for('static', filename='imgs/download.svg') }}"
+                         width="13.33px"
+                         height="13.33px"
+                         alt="icone-download">
+                </button>
+            {% endif %}
+            {% include "components/result/popup.j2" %}
+        </div>
+    </article>
+    <article class="cnpjs">
+        {% if cards %}
+            {% for card in cards %}{{ components.card(card) }}{% endfor %}
+            {{ components.pagination(n_paginas, pagina) }}
+        {% endif %}
+    </article>
+</article>
