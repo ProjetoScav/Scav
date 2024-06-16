@@ -1,0 +1,123 @@
+{% extends "pages/base.j2" %}
+{% block title %}
+    {{ cnpj.razao_social }}
+{% endblock title %}
+{% block extensions %}
+    <link rel="icon"
+          type="image/png"
+          href="{{ url_for('static', filename='icons/icons.png') }}" />
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/cnpj.css') }}" />
+{% endblock extensions %}
+{% macro data_block(name, value, section) %}
+    <article class="{{ section }}-campo campo">
+        <p class="{{ section }}-campo__categoria campo-categoria">{{ name }}</p>
+        <p class="{{ section }}-campo__valor valor">{{ value|default("Não informado", true) }}</p>
+    </article>
+{% endmacro %}
+{% block content %}
+    <main>
+        <div class="title-wrapper">
+            <h1 class="title">{{ cnpj.razao_social }} - {{ cnpj.cnpj|cnpj_format }}</h1>
+        </div>
+        <section class="data-block">
+            <section class="registro">
+                <div class="title-wrapper">
+                    <h2 class="section-title">Registro</h2>
+                </div>
+                <section class="data-registro">
+                    <article class="registro-campo campo">
+                        <p class="registro-campo__categoria campo-categoria">CNPJ</p>
+                        <p class="registro-campo__valor valor">{{ cnpj.cnpj|cnpj_format }}</p>
+                    </article>
+                    {{ data_block("Razão Social", cnpj.razao_social, "registro") }}
+                    {{ data_block("Nome Fantasia", cnpj.nome_fantasia, "registro") }}
+                    {{ data_block("Tipo", cnpj.tipo, "registro") }}
+                    <article class="registro-campo campo">
+                        <p class="registro-campo__categoria campo-categoria">Data de Abertura</p>
+                        <p class="registro-campo__valor valor">{{ cnpj.data_abertura|strftime("%d/%m/%Y") }}</p>
+                    </article>
+                    {{ data_block("Situação Cadastral", cnpj.cadastro, "registro") }}
+                    <article class="registro-campo campo">
+                        <p class="registro-campo__categoria campo-categoria">Data da situação cadastral</p>
+                        <p class="registro-campo__valor valor">{{ cnpj.data_cadastro|string|date_format }}</p>
+                    </article>
+                    <article class="registro-campo campo">
+                        <p class="registro-campo__categoria campo-categoria">Capital Social</p>
+                        <p class="registro-campo__valor valor">R$ {{ cnpj.capital_social|numero_format }}</p>
+                    </article>
+                    {{ data_block("MEI", cnpj.mei, "registro") }}
+                    {{ data_block("Natureza Jurídica", cnpj.natureza_juridica, "registro") }}
+                </section>
+            </section>
+            <section class="localização">
+                <div class="title-wrapper">
+                    <h2 class="section-title">Localização</h2>
+                </div>
+                <section class="data-localização">
+                    {{ data_block("Logradouro", cnpj.logradouro, "localização") }}
+                    {{ data_block("Número", cnpj.numero, "localização") }}
+                    {{ data_block("Complemento", cnpj.complemento, "localização") }}
+                    <article class="localização-campo campo">
+                        <p class="localização-campo__categoria campo-categoria">CEP</p>
+                        <p class="localização-campo__valor valor">
+                            {{ cnpj.cep|cep_format|default("Não informado", true)
+                            }}
+                        </p>
+                    </article>
+                    {{ data_block("Bairro", cnpj.bairro, "localização") }}
+                    {{ data_block("Município", cnpj.municipio, "localização") }}
+                    {{ data_block("UF", cnpj.estado, "localização") }}
+                </section>
+            </section>
+            <section class="contato">
+                <div class="title-wrapper">
+                    <h2 class="section-title">Contato</h2>
+                </div>
+                <section class="data-contato">
+                    <article class="contato-campo campo">
+                        <p class="contato-campo__categoria campo-categoria">Telefone</p>
+                        {% if not cnpj.telefones[0] and not cnpj.telefones[1] %}
+                            <p class="contato-campo__valor valor">Não informado</p>
+                        {% endif %}
+                        {% for telefone in cnpj.telefones %}
+                            {% if telefone %}<p class="contato-campo__valor valor">{{ telefone }}</p>{% endif %}
+                        {% endfor %}
+                    </article>
+                    {{ data_block("Email", cnpj.email, "contato") }}
+                </section>
+            </section>
+            <section class="sociedade">
+                <div class="title-wrapper">
+                    <h2 class="section-title">Sociedade e Atividade-s</h2>
+                </div>
+                <section class="data-sociedade">
+                    {% if cnpj.quadro_societario %}
+                        <article class="sociedade-campo campo">
+                            <p class="sociedade-campo__categoria campo-categoria">Quadro Societário</p>
+                            <ul class="sociedade-campo__list">
+                                {% for socio in cnpj.quadro_societario %}<li class="sociedade-campo__valor valor">{{ socio }}</li>{% endfor %}
+                            </ul>
+                        </article>
+                    {% endif %}
+                    <article class="sociedade-campo campo">
+                        <p class="sociedade-campo__categoria campo-categoria">Atividades primárias</p>
+                        <ul class="sociedade-campo__list">
+                            <li class="sociedade-campo__valor valor">{{ cnpj.atividade_principal }}</li>
+                        </ul>
+                    </article>
+                    {% if cnpj.atividades_secundarias %}
+                        <article class="sociedade-campo campo">
+                            <p class="sociedade-campo__categoria campo-categoria">Atividades secundárias</p>
+                            <ul class="sociedade-campo__list">
+                                {% for atividade in cnpj.atividades_secundarias %}
+                                    <li class="sociedade-campo__valor valor">{{ atividade }}</li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </article>
+                </section>
+            </section>
+        </section>
+    </main>
+{% endblock content %}

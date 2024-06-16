@@ -1,0 +1,24 @@
+{% extends "pages/base.j2" %}
+{% block extensions %}
+    <script src="https://kit.fontawesome.com/de0c4df738.js"
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"
+            integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+            crossorigin="anonymous"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/alpine-morph.js"
+            defer></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
+    {# CSS and JS #}
+    <script src="{{  url_for('static', filename='js/home.js')  }}" defer></script>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/home.css') }}" />
+    {# <script src="{{  url_for('static', filename='js/inputs.js')  }}" defer></script> #}
+{% endblock extensions %}
+{% block content %}
+    <main>
+        {% include "layouts/home/section-1.j2" %}
+        {% include "layouts/home/section-2.j2" %}
+        {% include "layouts/home/section-3.j2" %}
+    </main>
+{% endblock content %}

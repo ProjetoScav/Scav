@@ -26,7 +26,7 @@ repos:
     - id: djlint-reformat-jinja
       args: [static/templates, --format-attribute-template-tags, --quiet]
     - id: djlint-jinja
-      args: [static/templates, --ignore=H008, --quiet]
+      args: [static/templates, '--ignore=H008,H031', --quiet]
   - repo: local
     hooks:
      - id: requirements
@@ -35,3 +35,4 @@ repos:
        language: system
        pass_filenames: false
        stages: [commit]
+default_stages: [pre-push]
