@@ -10,6 +10,8 @@ class CNPJ:
 
     def extrair_propriedades(self):
         self.__setattr__()
+
+
         ...
 
     def transformar_em_dicionario(self) -> dict[str, str]:
