@@ -5,7 +5,7 @@ from app.ext.db.db import db
 from app.obj.controllers.resultado.gerador import ResultadoGerador
 
 
-def home_rotas(bp: Blueprint) -> Blueprint:
+def home_routes(bp: Blueprint) -> Blueprint:
     """Função que registra as rotas da
     Homepage no Blueprint"""
 
@@ -27,6 +27,6 @@ def home_rotas(bp: Blueprint) -> Blueprint:
         campos = request.form.to_dict()
         campos.pop("csrf_token")
         session["query"] = campos
-        return redirect("componentes.resultado")
+        return redirect("results")
 
     return bp

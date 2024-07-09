@@ -54,7 +54,6 @@ class Planilhador:
         """Função que busca os dados na DB e transforma
         eles em planilha"""
         iterador = self.query.query.yield_per(10)
-        print(next(iterador))
         linhas = [
             transformar_em_cnpj(resultado).ajustar_dados_pra_download()
             for resultado in iterador

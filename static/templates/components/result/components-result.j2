@@ -26,8 +26,8 @@
             {% else %}
                 {% set color = "grey" -%}
             {% endif %}
-            <div class="cnpj__state-block cnpj__state-block--{{ color }}">
-                <p class="cnpj__state cnpj__state--{{ color }}">{{ card.cadastro|title }}</p>
+            <div class="cnpj__state-block bg--{{ color }}-light">
+                <p class="cnpj__state color--{{ color }}">{{ card.cadastro|title }}</p>
             </div>
         </article>
     </a>
@@ -44,10 +44,17 @@
                        hx-get="{{ url_for('componentes.resultado', pagina=i) }}"
                        hx-swap="outerHTML"
                        hx-target=".results"
+                       hx-indicator=".loader, .loaded-content"
                        @click="$refs.results.scrollIntoView({behavior: 'smooth'})"
                        x-data>{{ i }}</a>
                 {% endif %}
             {% endfor %}
         {% endif %}
     </div>
+{% endmacro %}
+{% macro button() %}
+    <button class="baixar-btn btn"
+            @click="logged ? $dispatch('popup') : $dispatch('login')"
+            :disabled="disabled"
+            :class="disabled ? 'btn--grey':''">Baixar</button>
 {% endmacro %}

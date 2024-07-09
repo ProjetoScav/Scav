@@ -8,6 +8,7 @@ from .bp import register_blueprints
 from .ext.cache.cache import cache
 from .ext.db.db import db
 from .ext.jinja.config import jinja_config
+from .ext.login.login import login_manager
 
 caminho_static = Path("../static/")
 caminho_templates = Path("../static/templates/")
@@ -23,6 +24,7 @@ def create_app() -> Flask:
     app.config["SECRET_KEY"] = os.getenv("FLASK_KEY")
     cache.init_app(app, config={"CACHE_TYPE": "simple"})
     db.init_app(app)
+    login_manager.init_app(app)
     CSRFProtect(app)
     app = register_blueprints(app)
     app = jinja_config(app)

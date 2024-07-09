@@ -1,6 +1,7 @@
 import datetime as dt
 from typing import List
 
+from flask_login import UserMixin
 from sqlalchemy import BigInteger, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -149,9 +150,11 @@ class AtividadeSecundaria(db.Model):
         return f"AtividadeSecundaria(atividade_id={self.atividade_id}, cnpj_basico={self.cnpj_completo})"
 
 
-class Pedido(db.Model):
-    __tablename__ = "pedidos"
-    pedido_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+class Lista(db.Model):
+    __tablename__ = "lists"
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.user_id"), nullable=False)
+    user: Mapped["User"] = relationship(back_populates="listas")
+    list_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     email: Mapped[str] = mapped_column(nullable=False)
     termo: Mapped[str] = mapped_column(nullable=True)
     atividade_principal: Mapped[str] = mapped_column(nullable=True)
@@ -173,9 +176,25 @@ class Pedido(db.Model):
     excluir_mei: Mapped[str] = mapped_column(nullable=True)
     somente_filial: Mapped[str] = mapped_column(nullable=True)
     somente_celular: Mapped[str] = mapped_column(nullable=True)
-    valor: Mapped[int] = mapped_column(nullable=False)
+    valor: Mapped[float] = mapped_column(nullable=False)
+    quantidade: Mapped[int] = mapped_column(nullable=False)
     horario: Mapped[dt.datetime] = mapped_column(nullable=False)
-    estado: Mapped[str] = mapped_column(nullable=False)
+    status: Mapped[str] = mapped_column(nullable=False)
 
     def __repr__(self) -> str:
         return f"Pedido(pedido_id={self.pedido_id}, email={self.email})"
+
+
+class User(db.Model, UserMixin):
+    __tablename__ = "users"
+    user_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    email: Mapped[str] = mapped_column(String(156), nullable=False)
+    # name: Mapped[str] = mapped_column(String(156), nullable=False)
+    password: Mapped[str] = mapped_column(String(156), nullable=False)
+    listas: Mapped[List["Lista"]] = relationship(back_populates="user")
+
+    def __repr__(self) -> str:
+        return f"User(user_id={self.user_id}, email={self.email}, listas={self.listas})"
+
+    def get_id(self):
+        return self.user_id

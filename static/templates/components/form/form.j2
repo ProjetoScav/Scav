@@ -6,9 +6,10 @@
           hx-post='{{ url_for("home.busca") }}'
           hx-swap="outerHTML"
           hx-target=".results"
+          hx-indicator=".loader--result, .loaded-content--results"
           @htmx:before-request='$dispatch("scroll-to-results")'
+          hx-ext="alpine-morph"
           x-data>
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
         {{ components.input_text('termo', 'Razão social ou nome fantasia', 'Razão social ou nome fantasia') }}
         {{ components.input_text('atividade_principal', 'Código ou nome da atividade', 'Atividade principal(CNAE)') }}
         {{ components.input_text('natureza_juridica', 'Código ou nome da natureza', 'Natureza Jurídica') }}

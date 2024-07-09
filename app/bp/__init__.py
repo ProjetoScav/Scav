@@ -4,6 +4,7 @@ from .cnpj.blueprint import cnpj_blueprint
 from .componentes.blueprint import componentes_blueprint
 from .download.blueprint import download_blueprint
 from .home.blueprint import home_blueprint
+from .login.blueprint import login_blueprint
 
 
 def register_blueprints(app: Flask) -> Flask:
@@ -13,4 +14,5 @@ def register_blueprints(app: Flask) -> Flask:
     app.register_blueprint(home_blueprint)
     app.register_blueprint(download_blueprint)
     app.register_blueprint(componentes_blueprint)
+    app.register_blueprint(login_blueprint)
     return app

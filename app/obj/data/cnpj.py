@@ -10,8 +10,6 @@ class CNPJ:
 
     def extrair_propriedades(self):
         self.__setattr__()
-
-
         ...
 
     def transformar_em_dicionario(self) -> dict[str, str]:
@@ -29,7 +27,7 @@ class CNPJ:
     def ajustar_dados_pra_download(self) -> Optional[str]:
         "Método que ajusta os dados pra inserção na planilha"
         cnpj = self.transformar_em_dicionario()
-        for chave in ["telefones", "quadro_societario", "atividades_secundarias"]:
-            if cnpj[chave]:
-                cnpj[chave] = self.__lista_to_string(cnpj[chave])
+        for chave in ("telefones", "quadro_societario", "atividades_secundarias"):
+            if valor := cnpj[chave]:
+                cnpj[chave] = self.__lista_to_string(valor)
         return cnpj

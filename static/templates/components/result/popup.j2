@@ -1,18 +1,18 @@
 <dialog class="popup"
         @popup.window="$el.showModal()"
         x-ref="popup"
-        x-data="{tela: 0}">
+        x-data="{ tela: 0 }">
     <section class="popup__section--pricing popup__section" x-show="tela === 0">
         <div class="pricing popup__section-wrapper">
-            <div class="pricing__icons" @click="$refs.popup.close()">
-                <img class="logo-icon"
-                     src="{{ url_for('static', filename='imgs/icon.png') }}"
-                     alt="Scav logo"
-                     height="40px"
-                     width="40px">
-                <i class="fa-solid fa-x close modal-close"></i>
-            </div>
             <div class="pricing-wrapper">
+                <div>
+                    <img class="arrow-left"
+                         src="{{ url_for('static', filename='imgs/arrow-left.svg') }}"
+                         alt="seta-a-esquerda"
+                         width="20px"
+                         height="20px"
+                         @click="$refs.popup.close();">
+                </div>
                 <div class="pricing__block">
                     <h2 class="pricing-title">
                         Você está baixando <b class="n-dados">
@@ -23,23 +23,31 @@
                 <p class="pricing-price">R$ {{ preço }}</p>
             </div>
             <div class="pricing__btns">
-                <p class="pricing__disclaimer">
-                    Esse é o nosso limite por download. Você poderá realizar novos
-                    downloads
-                    posteriormente alterando os filtros do seu pedido
-                </p>
-                <button class="pricing__first-btn popup__btn btn" @click="tela = 1">Baixar</button>
+                <button class="pricing__first-btn popup__btn btn" @click="tela = 1">Baixar contatos</button>
+                <a href="#" class="pre-visualization" @click.prevent="tela = 3">Pré-visualização</a>
             </div>
         </div>
     </div>
 </section>
+<section class="popup__section" x-show="tela === 3">
+    <div>
+        <img class="arrow-left"
+             src="{{ url_for('static', filename='imgs/arrow-left.svg') }}"
+             alt="seta-a-esquerda"
+             width="20px"
+             height="20px"
+             @click="tela = 0">
+    </div>
+</section>
 <section class="popup__section--payment popup__section" x-show="tela === 1">
     <div class="payment popup__section-wrapper">
-        <div class="payment__icons">
-            <i id="payment-pricing-arrow"
-               class="fa-solid fa-arrow-left arrow-btn"
-               @click="tela = 0"></i>
-            <i class="fa-solid fa-x close" @click="$refs.popup.close()"></i>
+        <div>
+            <img class="arrow-left"
+                 src="{{ url_for('static', filename='imgs/arrow-left.svg') }}"
+                 alt="seta-a-esquerda"
+                 width="20px"
+                 height="20px"
+                 @click="tela = 0">
         </div>
         <div class="payment__bottom">
             <form class="payment-form"
@@ -48,11 +56,8 @@
                   hx-post="{{ url_for("download.download") }}"
                   hx-swap="none">
                 <input id="token" type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                <a target="_blank"
-                   href="https://docs.google.com/document/d/1JnnJBcxQFvwNYtmcp3nK9EPAcZ_fP6wD_kOSzbXKM4E/edit?usp=sharing">
-                    Termos de Uso e Política de Privacidade
-                </a>
-                <input class="payment__btn popup__btn btn"
+                <input hx-post="{{ url_for("download.download") }}"
+                       class="payment__btn popup__btn btn"
                        type="submit"
                        value="Confirmar"
                        name="pay-btn"
@@ -65,15 +70,11 @@
 <section class="popup__section--end popup__section" x-show="tela === 2">
     <div class="end popup__section-wrapper">
         <div class="end__block">
-            <img src="{{ url_for('static', filename='imgs/ok.png') }}"
+            <img src="{{ url_for('static', filename='imgs/ok.svg') }}"
                  alt="Envio confirmado!"
                  width="136px"
                  height="136px">
-            <p class="end__text">
-                Informações enviadas
-                <br>
-                com sucesso!
-            </p>
+            <p class="end__text">Informações enviadas com sucesso!</p>
         </div>
         <button class="end__btn popup__btn btn"
                 @click="$refs.popup.close(); tela = 0">Fechar</button>
