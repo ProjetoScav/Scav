@@ -1,0 +1,68 @@
+<section class="lists-aside">
+    <article class="list__scav">
+        <img class="svg"
+             src="{{ url_for('static', filename='imgs/scav.svg') }}"
+             alt="Scav-logo"
+             width="50px"
+             height="50px">
+    </article>
+    <section class="lists-block">
+        <article class="list__item"
+                 hx-get="{{ url_for('componentes.scav') }}"
+                 hx-target=".view"
+                 hx-swap="outerHTML"
+                 hx-indicator=".loader, .loaded-content">
+            <img class="mini-list"
+                 src="{{ url_for('static', filename='imgs/list-icon.svg') }}"
+                 alt="icone-de-lista"
+                 height="32px"
+                 width="32px">
+            <p>Nova Lista</p>
+            <img class="mini-arrow svg"
+                 src="{{ url_for('static', filename='imgs/open-icon.svg') }}"
+                 alt="seta-de-abertura"
+                 width="34px"
+                 height="34px">
+        </article>
+        <article class="list__item"
+                 hx-get="{{ url_for('componentes.lists') }}"
+                 hx-target=".view"
+                 hx-swap="outerHTML"
+                 x-data="{ open: true }"
+                 @click="open = !open">
+            <img class="mini-list"
+                 src="{{ url_for('static', filename='imgs/list-icon.svg') }}"
+                 alt="icone-de-lista"
+                 height="32px"
+                 width="32px">
+            <p>Listas</p>
+            <img class="mini-arrow mini-arrow-down svg"
+                 :class="open ? 'rotate-down' : ''"
+                 src="{{ url_for('static', filename='imgs/open-icon.svg') }}"
+                 alt="seta-de-abertura"
+                 width="34px"
+                 height="34px">
+        </article>
+        <div class="lists">
+        {% for lists in current_user.lists %}
+          {# <article></article> #}
+        {% endfor %}
+        </div>
+    </section>
+    <article class="help"
+             hx-get="{{ url_for('componentes.faq') }}"
+             hx-target=".view"
+             hx-swap="outerHTML">
+        <img class="mini-list"
+             src="{{ url_for('static', filename='imgs/buoy.svg') }}"
+             alt="icone-de-ajuda"
+             height="32px"
+             width="32px">
+        <p>Ajuda</p>
+        <img class="mini-arrow svg"
+             src="{{ url_for('static', filename='imgs/open-icon.svg') }}"
+             alt="seta-de-abertura"
+             width="34px"
+             height="34px">
+    </article>
+</section>

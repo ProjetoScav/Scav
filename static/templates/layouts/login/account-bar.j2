@@ -1,0 +1,28 @@
+<section class="login">
+    <nav class="login__header">
+        <article>
+            <form class="login__search-bar" hx-post="{{ url_for('home.busca') }}" hx-target=".results"
+                hx-swap="outerHTML" hx-indicator=".loader--result, .loaded-content"
+                @htmx:before-request="$dispatch('scroll-to-results')">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <input class="input--search login__input" type="text" placeholder="Pesquisar">
+            </form>
+        </article>
+        <article class="account">
+            <div class="account__img">
+                <p class="account__letter">T</p>
+            </div>
+            <div>
+                <p class="account__p">{{ current_user.name }}</p>
+                <p class="account__p">{{ current_user.email }}</p>
+            </div>
+            <div class="login__exit-icon">
+                <a href="{{ url_for('login.logout') }}">
+                    <img class="svg" src="{{ url_for('static', filename='imgs/exit.svg') }}" alt="icone-de-saida"
+                        height="32px" width="32px">
+                </a>
+            </div>
+        </article>
+    </nav>
+    {% include "layouts/login/features.j2" %}
+</section>

@@ -1,0 +1,44 @@
+{% import 'components/loading.j2' as components %}
+<section class="view--lists-table view">
+    {{ components.loader("loader--lists") }}
+    <section class="table__header loaded-content">
+        <article>
+            <h2>Todas as listas</h2>
+        </article>
+        <article class="table__search">
+            <form action="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <input class="input--search table__input" type="text" placeholder="Pesquisar">
+            </form>
+        </article>
+    </section>
+    <section class="table-block loaded-content">
+        {% if current_user.lists %}
+        <table class="table">
+            <tr>
+                <th class="table__col" scope="col">Nome</th>
+                <th class="table__col" scope="col">Data</th>
+                <th class="table__col" scope="col">Quantidade</th>
+                <th class="table__col" scope="col">Download</th>
+            </tr>
+            {% for list in current_user.lists %}
+            <tr>
+                <td class="table__row" scope="row">{{ list.list_id }}</td>
+                <td class="table__row" scope="row">{{ list.status }}</td>
+                <td class="table__row" scope="row">{{ list.quantidade }}</td>
+                <td class="table__row" scope="row" hx-post="{{ url_for('download', list_id=list.list_id) }}">
+                    <img class="download-button svg" src="{{ url_for('static', filename='imgs/download-icon.svg') }}"
+                        alt="botão-de-download" width="32px" height="32px">
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <section class="no-lists">
+                <img src="{{ url_for('static', filename='imgs/walking-purple.png') }}" alt="rapaz-andando-com-celular"
+                    width="222px" height="337px">
+                <h3>Você não possui listas para visualizar</h3>
+            </section>
+            {% endif %}
+        </table>
+    </section>
+</section>

@@ -5,10 +5,11 @@ from flask.app import Flask
 from flask_wtf import CSRFProtect
 
 from .bp import register_blueprints
-from .ext.cache.cache import cache
+from .ext.bcrypt import bcrypt
+from .ext.cache import cache
 from .ext.db.db import db
 from .ext.jinja.config import jinja_config
-from .ext.login.login import login_manager
+from .ext.login import login_manager
 
 caminho_static = Path("../static/")
 caminho_templates = Path("../static/templates/")
@@ -26,6 +27,7 @@ def create_app() -> Flask:
     db.init_app(app)
     login_manager.init_app(app)
     CSRFProtect(app)
+    bcrypt.init_app(app)
     app = register_blueprints(app)
     app = jinja_config(app)
     return app

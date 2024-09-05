@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, request, session
+from flask import Blueprint, redirect, request, session, url_for
 from flask.templating import render_template
 
 from app.ext.db.db import db
@@ -20,6 +20,7 @@ def home_routes(bp: Blueprint) -> Blueprint:
             n_paginas=card_generator.gerar_n_de_paginas(),
             pagina=1,
             preço=card_generator.query.preço,
+            messages={"login": "", "name": "", "email": "", "password": ""},
         )
 
     @bp.route("/", methods=["POST"])
@@ -27,6 +28,6 @@ def home_routes(bp: Blueprint) -> Blueprint:
         campos = request.form.to_dict()
         campos.pop("csrf_token")
         session["query"] = campos
-        return redirect("results")
+        return redirect(url_for("componentes.resultado"))
 
     return bp

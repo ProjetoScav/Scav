@@ -1,0 +1,95 @@
+.arrow-btn {
+  color: var(--purple);
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.baixar-btn {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  width: 193px;
+  height: 40px;
+  @media (min-width: 43.75rem) {
+    margin-top: 0.4rem;
+  }
+}
+
+.btn {
+  background-color: var(--purple);
+  border: none;
+  border-radius: 0.5rem;
+  color: #EEEDEE;
+  padding: 0.7rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.5s;
+
+  &:not([disabled="disabled"]):hover {
+    background-color: var(--dark-purple);
+    cursor: pointer;
+  }
+}
+
+.btn--grey {
+  background-color: #cbc8cb;
+  color: #564e56;
+}
+
+.btn--secondary {
+  background-color: var(--purple);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.5s;
+  &:hover {
+    background-color: var(--dark-purple);
+    cursor: pointer;
+  }
+}
+
+.close {
+  background-color: var(--purple);
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  display: block;
+  padding: 1rem;
+  max-width: 2.9rem;
+  margin-bottom: 2rem;
+}
+
+.pricing__btns {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.popup__btn {
+  font-size: 1rem;
+  min-height: 2.7rem;
+  width: 100%;
+}
+
+.scav__form-btn {
+  height: min(9vw, 2.5rem);
+  width: min(40vw, 20rem);
+}
+
+.pricing__second-btn {
+  border: 1px solid var(--purple);
+  border-radius: 4px;
+  background-color: white;
+  color: var(--purple);
+  &:hover {
+    background-color: white;
+    color: var(--purple);
+    opacity: 0.7;
+  }
+}

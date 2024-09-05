@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+  color: var(--black);
+  font-family: "Poppins";
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+}
+
+input:focus-within {
+  outline-color: var(--purple);
+  color: var(--purple);
+}
+
+select:focus-within {
+  outline-color: var(--purple);
+}
+
+button,
+input[type="button"] {
+  display: block;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--purple);
+}
+
+img {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  transition: color 0.5s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+ul {
+  text-decoration: none;
+  list-style: none;
+}
+
+dialog {
+  border: none;
+  border-radius: 1rem;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+
+  &::backdrop {
+    background-color: rgb(0 0 0 /0.2);
+    backdrop-filter: blur(3px);
+  }
+}
+
+.loader {
+  display: none;
+}
+
+.htmx-request .loader {
+  display: flex;
+}
+
+.htmx-request.loader {
+  display: flex;
+}
+
+/* Hide previously loaded content during HTMX request */
+.htmx-request .loader {
+  display: none;
+}
+
+.htmx-request {
+  &.loaded-content {
+    display: none;
+  }
+  &.loaded-content--results {
+    display: none;
+  }
+  &.loaded-content--lists-table {
+    display: none;
+  }
+}

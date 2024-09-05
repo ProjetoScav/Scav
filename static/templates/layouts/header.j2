@@ -1,0 +1,76 @@
+{% macro dropdown_link(name, link) %}
+    <div class="dropdown__row" @click="dropped = false;">
+        <a href="{{ link }}">
+            <p>{{ name }}</p>
+            <img src="{{ url_for('static', filename='imgs/arrow-right-3.svg') }}"
+                 alt="seta"
+                 width="24px"
+                 height="24px">
+        </a>
+    </div>
+{% endmacro %}
+<header>
+    <nav class="navbar" x-data="{dropped: false}">
+        <div class="dropdown-menu" x-show="dropped" x-cloak>
+            <div class="dropdown-wrapper">
+                <div>
+                    <a class="navbar__scav-logo">Scav<span class="purple">.</span></a>
+                    <img class="dropdown-close-btn"
+                         src="{{ url_for('static', filename='imgs/x.svg') }}"
+                         alt="fechar"
+                         width="24px"
+                         height="24px"
+                         @click="dropped = false">
+                </div>
+                <div class="dropdown__links">
+                    {{ dropdown_link('Buscar empresas', '#section-2') }}
+                    {{ dropdown_link('Preço', '#section-3') }}
+                    {{ dropdown_link('Perguntas frequentes', '#section-4') }}
+                    {{ dropdown_link('Login', '') }}
+                </div>
+            </div>
+        </div>
+        <div class="dropdown-logo-block">
+            <img class="dropdown-btn"
+                 src="{{ url_for('static', filename='imgs/btn-3.svg') }}"
+                 alt="botão-hamburguer"
+                 width="24px"
+                 height="24px"
+                 @click="dropped = true">
+            <a href="{{ url_for('home.home') }}" class="navbar__scav-logo">Scav<span class="purple">.</span></a>
+        </div>
+        <div>
+            <ul class="navbar__links">
+                <li>
+                    <a href="#section-2">Buscar empresas</a>
+                </li>
+                <li>
+                    <a href="#section-3">Preço</a>
+                </li>
+                <li>
+                    <a href="#section-4">Perguntas frequentes</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar__login" @click="$dispatch('login')">
+            <ul>
+                <li>
+                    <div class="account-icon">
+                        <img src="{{ url_for('static', filename='imgs/user-circle.svg') }}"
+                             alt="simbolo-de-usuário"
+                             width="32px"
+                             height="32px">
+                    </div>
+                </li>
+                <li class="login-li">Login</li>
+                <li>
+                    <img class="login-arrow"
+                         src="{{ url_for('static', filename='imgs/arrow-right.svg') }}"
+                         alt="seta-pra-direita"
+                         width="24px"
+                         height="24px">
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

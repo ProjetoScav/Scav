@@ -1,0 +1,142 @@
+.popup {
+  height: min(80%, 650px);
+  width: max(35%, 400px);
+}
+
+
+.arrow-left {
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  height: 2rem;
+  width: 2rem;
+}
+
+/* Modal window */
+.popup__section {
+  padding: 5%;
+  height: 100%;
+  width: 100%;
+}
+
+.popup__section-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  width: inherit;
+}
+
+/* Popup - Pricing */
+.pricing-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.pre-visualization {
+  color: var(--purple);
+  margin-top: 1rem;
+}
+
+/* Popup */
+.pricing-title {
+  color: var(--grey-3);
+  font-size: 1.5rem;
+  line-height: 130%;
+  letter-spacing: 0.18px;
+}
+
+.pricing-price {
+  color: var(--grey-3);
+  font-size: 2rem;
+  line-height: 120%;
+}
+
+.n-dados {
+  color: inherit;
+  font-weight: 600;
+}
+
+.pricing-total-value {
+  color: #858185;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 130%;
+  letter-spacing: 0.14px;
+  margin-top: 1.75rem;
+}
+
+/* Popup - Payment */
+.payment {
+  display: flex;
+  flex-direction: column;
+  width: inherit;
+  height: inherit;
+}
+
+.payment__icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment__form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.payment__input-email {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment__bottom {
+  margin-top: auto;
+}
+
+.payment__email-subtext {
+  color: var(--purple);
+  font-size: 0.8rem;
+  line-height: 1;
+  margin-top: 0.25rem;
+}
+
+.payment__disclaimer {
+  color: rgba(26, 22, 26, 0.4);
+  font-size: 0.8rem;
+  margin-bottom: 0.7rem;
+  text-align: center;
+}
+
+.payment__email-label {
+  font-size: 1.2rem;
+}
+
+/* Popup - Last section */
+.end {
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  width: inherit;
+}
+
+.end__block {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.end__text {
+  color: #4e474e;
+  font-size: 1.5rem;
+  letter-spacing: 0.14px;
+  line-height: 130%;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.end__btn {
+  margin-top: auto;
+}

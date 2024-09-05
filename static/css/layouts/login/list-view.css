@@ -1,0 +1,54 @@
+/* Componente */
+.table__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table__col {
+  font-weight: 600;
+}
+
+.table__row {
+  font-family: 500;
+}
+
+.table__search {
+  & form {
+    display: flex;
+  }
+  margin-bottom: 2rem;
+}
+
+.table {
+  width: 100%;
+}
+
+.table__input {
+  height: 2.5rem;
+  text-indent: 2rem;
+}
+
+.table__col,
+.table__row {
+  font-size: 1rem;
+  line-height: 130%;
+  letter-spacing: 0.14px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.no-lists {
+  margin-top: 5rem;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  gap: 1rem;
+
+  & h3 {
+    color: var(--grey-2);
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 120%;
+    text-align: center;
+  }
+}

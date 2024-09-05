@@ -1,0 +1,8 @@
+{% import 'components/loading.j2' as components %}
+<section id="section-2">
+    <div class="app loaded-content--scav" x-ref="app">
+        {% include "components/form/form.j2" %}
+        {% include "components/result/result.j2" %}
+        {{ components.loader("loader--result") }}
+    </div>
+</section>

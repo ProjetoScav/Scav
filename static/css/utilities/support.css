@@ -1,0 +1,28 @@
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.purple {
+  color: var(--purple) !important;
+}
+
+.caixa-alta {
+  font-size: clamp(2rem, 8vw, 5.85rem);
+}
+
+.bg--green-light {
+  background-color: #b0e1cf;
+}
+
+.bg--grey-light {
+  background-color: #eeedee;
+}
+
+.color--green {
+  color: #008f5c;
+}
+
+.color--grey {
+  color: #4e474e;
+}

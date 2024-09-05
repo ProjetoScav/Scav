@@ -1,0 +1,73 @@
+login {
+  display: flex;
+  flex-direction: column;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.login__header {
+  align-items: center;
+  background-color: white;
+  border-radius: 0.875rem;
+  display: flex;
+  justify-content: space-between;
+  padding-block: 0.5rem;
+  padding-inline: 1rem 2rem;
+  margin-left: auto;
+  width: 95%;
+
+  & form {
+    display: flex;
+  }
+
+  & .login__input {
+    padding: 1rem;
+    min-width: 43.75rem;
+
+    &:focus-within {
+      background-image: none;
+      text-indent: 0;
+    }
+
+    &::placeholder {
+      font-size: 0.875rem;
+    }
+  }
+
+  & .account__img {
+    background-color: var(--purple);
+    border-radius: 100px;
+    padding: 0.5rem 1rem;
+  }
+
+  & .account__letter {
+    color: white;
+    font-size: 1rem;
+  }
+}
+
+.account {
+  align-items: center;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.login__exit-icon {
+  margin-top: auto;
+}
+
+.login__input {
+  min-height: inherit;
+}
+
+.login-features {
+  display: flex;
+  flex-direction: column;
+}
+
+.account__p {
+  color: var(--grey-3);
+  font-size: 0.875rem;
+  line-height: 130%;
+  letter-spacing: 0.12px;
+}

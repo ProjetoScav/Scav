@@ -1,8 +1,9 @@
 <form class="scav__form"
       name="search-bar"
-      hx-post="{{ url_for('home.busca', pagina=1) }}"
+      hx-post="{{ url_for('home.busca') }}"
       hx-target=".results"
       hx-swap="outerHTML"
+      hx-indicator=".loader--result, .loaded-content"
       @htmx:before-request="$dispatch('scroll-to-results')"
       x-data>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />

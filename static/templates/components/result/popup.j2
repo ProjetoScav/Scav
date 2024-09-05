@@ -53,11 +53,11 @@
             <form class="payment-form"
                   id="payment-form"
                   name="payment-form"
-                  hx-post="{{ url_for("download.download") }}"
-                  hx-swap="none">
+                  action="{{ url_for('download.download') }}"
+                  method="post"
+                >
                 <input id="token" type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                <input hx-post="{{ url_for("download.download") }}"
-                       class="payment__btn popup__btn btn"
+                <input class="payment__btn popup__btn btn"
                        type="submit"
                        value="Confirmar"
                        name="pay-btn"

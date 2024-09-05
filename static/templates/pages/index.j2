@@ -1,27 +1,15 @@
 {% extends "pages/base.j2" %}
 {% block extensions %}
-    <script src="https://kit.fontawesome.com/de0c4df738.js"
-            crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.12"
-            integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
-            crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/alpine-morph.js"
-            defer></script>
-    ,<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
-    {# CSS and JS #}
-    <script src="{{  url_for('static', filename='js/home.js')  }}" defer></script>
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/pages/home.css') }}" />
+{{ super() }}
+<script src="{{  url_for('static', filename='js/home.js')  }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home.css') }}" />
 {% endblock extensions %}
 {% block content %}
-    <main>
+<main>
         {% include "components/login-popup.j2" %}
         {% include "layouts/home/search.j2" %}
         {% include "layouts/home/scav.j2" %}
         {% include "layouts/home/pricing.j2" %}
         {% include "layouts/home/faq.j2" %}
-    </main>
+</main>
 {% endblock content %}

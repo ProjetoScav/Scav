@@ -1,0 +1,25 @@
+<dialog class="login-popup" @login.window="$el.showModal()" x-data="{ method: 'get'}">
+    <section class="popup-block" x-data="{ state: 'login' }">
+        <article class="login__aside">
+            <p>Scav.</p>
+            <p>Sua plataforma de Pesquisa Empresarial</p>
+            <p>Encontre e baixe as informações desejadas de CNPJs de todo Brasil</p>
+        </article>
+        <div class="login">
+            <article x-show="state === 'login'">
+                <h2>Olá, que bom te ver aqui!</h2>
+                {% include "components/forms/login_form.j2" %}
+                <p>
+                    Ainda não tem conta? <a class="change-section purple" @click="state = 'create'">Criar conta</a>
+                </p>
+            </article>
+            <article class="account-create" x-show="state === 'create'">
+                <h2>Criar conta</h2>
+                {% include "components/forms/register_form.j2" %}
+                <p>
+                    Já possui conta? <a class="change-section purple" @click="state = 'login'">Fazer login</a>
+                </p>
+            </article>
+        </div>
+    </section>
+</dialog>

@@ -1,0 +1,10 @@
+{% import 'components/loading.j2' as components %}
+<section class="view view--faq">
+    {{ components.loader("loader--lists") }}
+    <section class="loaded-content">
+        <article>
+            <h2>Ajuda</h2>
+        </article>
+    </section>
+    <div class="loaded-content faq--login">{% include "components/faq.j2" %}</div>
+</section>

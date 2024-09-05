@@ -3,7 +3,7 @@
 const flaskToken = document.querySelector("#token").value;
 
 document.addEventListener("scroll-to-results", () => {
-  document.querySelector(".results").scrollIntoView({ behavior: "smooth" });
+  document.querySelector(".app").scrollIntoView({ behavior: "smooth" });
 });
 
 document.addEventListener("alpine:init", function () {

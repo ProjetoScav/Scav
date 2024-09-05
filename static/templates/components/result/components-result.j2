@@ -44,8 +44,8 @@
                        hx-get="{{ url_for('componentes.resultado', pagina=i) }}"
                        hx-swap="outerHTML"
                        hx-target=".results"
-                       hx-indicator=".loader, .loaded-content"
-                       @click="$refs.results.scrollIntoView({behavior: 'smooth'})"
+                       hx-indicator=".loader--result, .loaded-content"
+                       @click="$refs.app.scrollIntoView({behavior: 'smooth'})"
                        x-data>{{ i }}</a>
                 {% endif %}
             {% endfor %}
