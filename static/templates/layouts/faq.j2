@@ -1,0 +1,59 @@
+{% import 'components/loading.j2' as components %}
+
+{%- macro drop_card(question, response) -%}
+<article class="faq-question" x-data="{ open: false }" @click="open = !open">
+    <div>
+        <h3>{{ question }}</h3>
+        <p x-show="open" x-collapse>{{ response }}</p>
+    </div>
+    <div>
+        <img :src="open ?  &quot;{{ url_for('static', filename='imgs/minus.svg') }}&quot;:&quot;{{ url_for('static', filename='imgs/plus.svg') }}&quot;"
+            alt="simbolo-de-soma" height="24" width="24">
+    </div>
+</article>
+{% endmacro %}
+{%- set question_1 = "Os dados das empresas são confiáveis?" -%}
+{%- set response_1 = 'Sim. Trabalhamos com o relatório de CNPJs oficial da Receita Federal.
+Todas as informações são de origem confiável e validadas pelos registros do Governo Federal.' -%}
+{%- set question_2 = "Os dados são atualizados?" -%}
+{%- set response_2 = 'Utilizamos sempre o último relatório de CNPJs disponibilizado pela Receita Federal.
+Por isso, pode haver uma defasagem de até 45 dias nas informações.' -%}
+{%- set question_3 = "Como receberei as informações baixadas?" -%}
+{%- set response_3 = 'Após a confirmação do pagamento, uma planilha com os dados solicitados
+será baixada automaticamente em seu navegador.' -%}
+{%- set question_4 = "Onde posso acessar minhas planilhas?" -%}
+{%- set response_4 = 'Através da nossa área logada você poderá consultar e baixar a qualquer
+momento todos os seus dados comprados. Se por algum motivo os dados não foram baixados logo após a
+confirmação do pagamento, basta acessar esta área e baixá-los através do nosso painel.' -%}
+{%- set question_5 = "Scav é uma plataforma segura?" -%}
+{%- set response_5 = 'Sim. Trabalhamos com dados oficiais do Governo Federal e possuímos uma
+estrutura de tecnologia robusta para garantir que os nossos clientes recebam os dados solicitados
+com sucesso. No caso de qualquer problema ou dúvida, é possível
+nos contatar através do email scav.contato@gmail.com.' -%}
+{%- set questions = [(question_1, response_1), (question_2, response_2), (question_3, response_3), (question_4,
+response_4), (question_5, response_5)] -%}
+
+{% set faq %}
+{% for question in questions %}{{ drop_card(question[0], question[1]) }}{% endfor %}
+{% endset %}
+
+{% if tipo == 'user_area' %}
+<section class="view view--faq">
+    {{ components.loader("loader--lists") }}
+    <section class="loaded-content">
+        <article>
+            <h2>Ajuda</h2>
+        </article>
+    </section>
+    <div class="loaded-content faq--login">{{ faq }}</div>
+</section>
+{% else %}
+<section id="section-4">
+    <div class="faq">
+        <div>
+            <h2>Perguntas frequentes</h2>
+        </div>
+        <div>{{ faq }}</div>
+    </div>
+</section>
+{% endif %}

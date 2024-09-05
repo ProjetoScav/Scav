@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Área de usuários logados do Scav">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+    {# Favicon #}
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='imgs/icon.png') }}" />
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="{{ url_for('static', filename='icons/apple-touch-icon.png') }}" />
+    <link rel="manifest" href="{{ url_for('static', filename='icons/site.webmanifest') }}" />
+    <link rel="mask-icon" href="{{ url_for('static', filename='icons/safari-pinned-tab.svg') }}" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <title>Scav - Área Logada</title>
+    <script src="https://kit.fontawesome.com/de0c4df738.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"
+        integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+        crossorigin="anonymous"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/login.css') }}" />
+</head>
+
+<body>
+    <section class="lists-aside">
+        <article class="list__scav">
+            <img class="svg" src="{{ url_for('static', filename='imgs/scav.svg') }}" alt="Scav-logo" width="50px"
+                height="50px">
+        </article>
+        <section class="lists-block">
+            <article class="list__item" hx-get="{{ url_for('componentes.scav', tipo='login') }}" hx-target=".view"
+                hx-swap="outerHTML" hx-indicator=".loader, .loaded-content">
+                <img class="mini-list" src="{{ url_for('static', filename='imgs/list-icon.svg') }}" alt="icone-de-lista"
+                    height="32px" width="32px">
+                <p>Nova Lista</p>
+                <img class="mini-arrow svg" src="{{ url_for('static', filename='imgs/open-icon.svg') }}"
+                    alt="seta-de-abertura" width="34px" height="34px">
+            </article>
+            <article class="list__item" hx-get="{{ url_for('componentes.lists') }}" hx-target=".view"
+                hx-swap="outerHTML" x-data="{ open: true }" @click="open = !open">
+                <img class="mini-list" src="{{ url_for('static', filename='imgs/list-icon.svg') }}" alt="icone-de-lista"
+                    height="32px" width="32px">
+                <p>Listas</p>
+                <img class="mini-arrow mini-arrow-down svg" :class="open ? 'rotate-down' : ''"
+                    src="{{ url_for('static', filename='imgs/open-icon.svg') }}" alt="seta-de-abertura" width="34px"
+                    height="34px">
+            </article>
+            <div class="lists">
+                {% for lists in current_user.lists %}
+                <article class="list__item" hx-get="{{ url_for('componentes.scav') }}" hx-target=".view"
+                    hx-swap="outerHTML" hx-indicator=".loader, .loaded-content">
+                    <img class="mini-list" src="{{ url_for('static', filename='imgs/list-icon.svg') }}"
+                        alt="icone-de-lista" height="32px" width="32px">
+                    <p>Lista {{ loop.index }}</p>
+                    <img class="mini-arrow svg" src="{{ url_for('static', filename='imgs/open-icon.svg') }}"
+                        alt="seta-de-abertura" width="34px" height="34px">
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        <article class="help" hx-get="{{ url_for('componentes.faq', tipo='user_area') }}" hx-target=".view" hx-swap="outerHTML">
+            <img class="mini-list" src="{{ url_for('static', filename='imgs/buoy.svg') }}" alt="icone-de-ajuda"
+                height="32px" width="32px">
+            <p>Ajuda</p>
+            <img class="mini-arrow svg" src="{{ url_for('static', filename='imgs/open-icon.svg') }}"
+                alt="seta-de-abertura" width="34px" height="34px">
+        </article>
+    </section>
+    <section class="login">
+        <nav class="login__header">
+            <article>
+                <form class="login__search-bar" hx-post="{{ url_for('home.busca') }}" hx-target=".results"
+                    hx-swap="outerHTML" hx-indicator=".loader--result, .loaded-content"
+                    @htmx:before-request="$dispatch('scroll-to-results')">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <input class="input--search login__input" type="text" placeholder="Pesquisar">
+                </form>
+            </article>
+            <article class="account">
+                <div class="account__img">
+                    <p class="account__letter">T</p>
+                </div>
+                <div>
+                    <p class="account__p">{{ current_user.name }}</p>
+                    <p class="account__p">{{ current_user.email }}</p>
+                </div>
+                <div class="login__exit-icon">
+                    <a href="{{ url_for('login.logout') }}">
+                        <img class="svg" src="{{ url_for('static', filename='imgs/exit.svg') }}" alt="icone-de-saida"
+                            height="32px" width="32px">
+                    </a>
+                </div>
+            </article>
+        </nav>
+        <section class="functionalities">
+            <div>
+                <a class="feature__name" hx-get="{{ url_for('componentes.lists') }}" hx-target=".view"
+                    hx-swap="outerHTML">Listas</a>
+            </div>
+            <hr class="horizontal-line">
+        </section>
+    </section>
+    {% include "layouts/login/lists-table.j2" %}
+</body>
+
+</html>

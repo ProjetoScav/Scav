@@ -1,0 +1,89 @@
+{% macro input_text(name, placeholder, name_in_form) %}
+    <article class="form_field">
+        <label class="form_field__label" for="{{ name }}">{{ name_in_form }}</label>
+        <input class="form_field__input"
+               name="{{ name }}"
+               type="text"
+               id="{{ name }}"
+               placeholder="{{ placeholder }}" />
+    </article>
+{% endmacro %}
+
+{% macro input_check(name, value, name_in_form, two_columns_input = false) %}
+    {% if two_columns_input == true %}
+        {% set field_class = "form_field-check two-columns-field" %}
+    {% else %}
+        {% set field_class = "form_field-check" %}
+    {% endif %}
+    <article class="{{ field_class }}">
+        <input class="form_field-check__input"
+               type="checkbox"
+               name="{{ name }}"
+               id="{{ name }}"
+               value="{{ value }}" />
+        <label class="form_field-check__label" for="{{ name }}">{{ name_in_form }}</label>
+    </article>
+{% endmacro %}
+{% macro input_date(name, placeholder, name_in_form) %}
+    <article class="form_field">
+        <label class="form_field__label" for="{{ name }}">{{ name_in_form }}</label>
+        <input class="form_field__input"
+               type="date"
+               name="{{ name }}"
+               id="{{ name }}"
+               placeholder="{{ placeholder }}" />
+    </article>
+{% endmacro %}
+{% macro input_select() %}
+    <article class="form_field">
+        <label class="form_field__label" for="situacao_cadastral">Situação cadastral</label>
+        <select class="form_field__input"
+                name="situacao_cadastral"
+                id="situacao_cadastral">
+            <option value="2">ATIVA</option>
+            <option value="8">BAIXADA</option>
+            <option value="4">INAPTA</option>
+            <option value="3">SUSPENSA</option>
+            <option value="1">NULA</option>
+        </select>
+    </article>
+{% endmacro %}
+
+<article class="filters">
+    <form name="form"
+          id="form"
+          class="filters__form"
+          hx-post="{{ url_for('home.busca') }}"
+          hx-swap="outerHTML"
+          hx-target=".results"
+          hx-indicator=".loader--result, .loaded-content"
+          @htmx:before-request="document.querySelector('.app').scrollIntoView({behavior: 'smooth', block: 'start', inline: 'start'})"
+          hx-ext="alpine-morph"
+          x-data>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        {{ input_text('termo', 'Razão social ou nome fantasia', 'Razão social ou nome fantasia') }}
+        {{ input_text('atividade_principal', 'Código ou nome da atividade', 'Atividade principal(CNAE)') }}
+        {{ input_text('natureza_juridica', 'Código ou nome da natureza', 'Natureza Jurídica') }}
+        {{ input_select() }}
+        {{ input_text('uf', 'Ex: sp, mg, go...', 'Estado (UF)') }}
+        {{ input_text('municipio', 'Ex: sao paulo, rio de janeiro...', 'Munícipio') }}
+        {{ input_text('bairro', 'Ex: jardim industrial, jardim são dimas...', 'Bairro') }}
+        {{ input_text('cep', 'Ex: 12227650, 75960970...', 'CEP') }}
+        {{ input_text('ddd', 'Ex: 12, 32, 55...', 'DDD') }}
+        {{ input_date('data_abertura_desde', 'dd/mm/aaaa', 'Data de Abertura - A partir de') }}
+        {{ input_date('data_abertura_ate', 'dd/mm/aaaa', 'Data de Abertura - Até') }}
+        {{ input_text('capital_social_desde', 'A partir de', 'Capital Social - A partir de') }}
+        {{ input_text('capital_social_ate', 'Até', 'Capital Social - Até') }}
+        <div class="form_field-checks">
+            {{ input_check('somente_mei', 'S', 'Somente MEI') }}
+            {{ input_check('somente_matriz', '1', 'Somente Matriz') }}
+            {{ input_check('com_contato_telefonico', 'True', 'Com contato de telefone', true) }}
+            {{ input_check('somente_fixo', 'fixo', 'Somente fixo') }}
+            {{ input_check('com_email', 'True', 'Com e-mail') }}
+            {{ input_check('excluir_mei', 'S', 'Excluir MEI') }}
+            {{ input_check('somente_filial', '2', 'Somente filial') }}
+            {{ input_check('somente_celular', 'movel', 'Somente celular') }}
+        </div>
+        <button class="form_field__btn btn" form="form">Pesquisar</button>
+    </form>
+</article>
