@@ -7,12 +7,10 @@ from app.ext.db.models import MEI, Empresa, Estabelecimento, Municipio
 
 class Filtro(ABC):
     @abstractmethod
-    def __init__(self):
-        ...
+    def __init__(self): ...
 
     @abstractmethod
-    def filtrar(self, query):
-        ...
+    def filtrar(self, query): ...
 
 
 class FiltroTermo(Filtro):

@@ -2,20 +2,23 @@ import datetime as dt
 from typing import List
 
 from flask_login import UserMixin
-from sqlalchemy import BigInteger, ForeignKey, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import ForeignKey, String, create_engine
+from sqlalchemy.orm import Mapped, Session, mapped_column, relationship
 
 from .db import db
+
+engine = create_engine("sqlite:///instance/database.db", echo=True)
+session = Session(engine)
 
 
 class Empresa(db.Model):
     __tablename__ = "empresas"
-    cnpj_basico: Mapped[str] = mapped_column(String(8), primary_key=True)
+    cnpj: Mapped[int] = mapped_column(primary_key=True)
+    razao_social: Mapped[str] = mapped_column(nullable=False)
     natureza_juridica_id: Mapped[int] = mapped_column(
         ForeignKey("naturezas.natureza_id"), nullable=False
     )
-    razao_social: Mapped[str] = mapped_column(nullable=False)
-    capital_social: Mapped[int] = mapped_column(BigInteger(), nullable=False)
+    capital_social: Mapped[float] = mapped_column(nullable=False)
     socios: Mapped[List["Socio"]] = relationship()
     estabelecimentos: Mapped[List["Estabelecimento"]] = relationship(
         back_populates="empresa"
@@ -24,33 +27,34 @@ class Empresa(db.Model):
     mei: Mapped["MEI"] = relationship()
 
     def __repr__(self) -> str:
-        return f"Empresa(cnpj={self.cnpj_basico}, razao_social={self.razao_social})"
+        return f"Empresa(cnpj={self.cnpj}, razao_social={self.razao_social})"
 
 
 class Estabelecimento(db.Model):
     __tablename__ = "estabelecimentos"
-    cnpj_completo: Mapped[str] = mapped_column(String(14), primary_key=True)
-    cnpj_basico: Mapped[str] = mapped_column(
-        String(8), ForeignKey("empresas.cnpj_basico"), nullable=False
+    estabelecimento_id: Mapped[int] = mapped_column(
+        primary_key=True, autoincrement=True
     )
+    cnpj_completo: Mapped[int] = mapped_column(nullable=False, unique=True)
+    cnpj: Mapped[int] = mapped_column(ForeignKey("empresas.cnpj"), nullable=False)
     nome_fantasia: Mapped[str] = mapped_column(nullable=True)
     matriz_filial: Mapped[int] = mapped_column(nullable=True)
     situacao_cadastral: Mapped[int] = mapped_column(nullable=True)
     data_situacao_cadastral: Mapped[dt.date] = mapped_column(nullable=True)
     data_abertura: Mapped[dt.date] = mapped_column(nullable=True)
     email: Mapped[str] = mapped_column(nullable=True)
-    telefone_1: Mapped[str] = mapped_column(nullable=True)
-    telefone_2: Mapped[str] = mapped_column(nullable=True)
-    tipo_de_telefone_1: Mapped[str] = mapped_column(String(5), nullable=True)
-    tipo_de_telefone_2: Mapped[str] = mapped_column(String(5), nullable=True)
-    ddd_1: Mapped[str] = mapped_column(nullable=True)
-    ddd_2: Mapped[str] = mapped_column(nullable=True)
-    cidade_id: Mapped[int] = mapped_column(
+    telefone_1: Mapped[int] = mapped_column(nullable=True)
+    telefone_2: Mapped[int] = mapped_column(nullable=True)
+    tipo_de_telefone_1: Mapped[str] = mapped_column(nullable=True)
+    tipo_de_telefone_2: Mapped[str] = mapped_column(nullable=True)
+    ddd_1: Mapped[int] = mapped_column(nullable=True)
+    ddd_2: Mapped[int] = mapped_column(nullable=True)
+    municipio_id: Mapped[int] = mapped_column(
         ForeignKey("municipios.municipio_id"), nullable=True
     )
     uf: Mapped[str] = mapped_column(String(2), nullable=True)
     bairro: Mapped[str] = mapped_column(nullable=True)
-    cep: Mapped[str] = mapped_column(String(9), nullable=True)
+    cep: Mapped[int] = mapped_column(nullable=True)
     tipo_logradouro: Mapped[str] = mapped_column(nullable=True)
     logradouro: Mapped[str] = mapped_column(nullable=True)
     numero: Mapped[str] = mapped_column(nullable=True)
@@ -58,10 +62,7 @@ class Estabelecimento(db.Model):
     atividade_principal_id: Mapped[int] = mapped_column(
         ForeignKey("atividades.atividade_id"), nullable=True
     )
-    atividades_secundarias_ids: Mapped[str] = mapped_column(nullable=True)
-    atividades_secundarias: Mapped[List["Atividade"]] = relationship(
-        secondary="atividades_secundarias", back_populates="estabelecimentos"
-    )
+    atividades_secundarias: Mapped[str] = mapped_column(nullable=True)
     atividade_principal: Mapped["Atividade"] = relationship()
     empresa: Mapped["Empresa"] = relationship(back_populates="estabelecimentos")
     municipio: Mapped["Municipio"] = relationship()
@@ -72,28 +73,25 @@ class Estabelecimento(db.Model):
 
 class Socio(db.Model):
     __tablename__ = "socios"
-    cnpj_basico: Mapped[str] = mapped_column(
-        String(8), ForeignKey("empresas.cnpj_basico"), primary_key=True
-    )
-    socio: Mapped[str] = mapped_column(primary_key=True)
+    socio_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    cnpj: Mapped[int] = mapped_column(ForeignKey("empresas.cnpj"))
+    socio: Mapped[str] = mapped_column(nullable=False)
     qualificacao_socio: Mapped[int] = mapped_column(
-        ForeignKey("qualificacoes.qualificacao_id"), primary_key=True
+        ForeignKey("qualificacoes.qualificacao_id")
     )
     qualificacao: Mapped["Qualificacao"] = relationship()
 
     def __repr__(self) -> str:
-        return f"Socio(socio={self.socio}, cnpj={self.cnpj_basico})"
+        return f"Socio(socio={self.socio}, cnpj={self.cnpj})"
 
 
 class MEI(db.Model):
     __tablename__ = "meis"
-    cnpj_basico: Mapped[str] = mapped_column(
-        ForeignKey("empresas.cnpj_basico"), primary_key=True
-    )
-    mei: Mapped[str] = mapped_column(primary_key=True)
+    cnpj: Mapped[int] = mapped_column(ForeignKey("empresas.cnpj"), primary_key=True)
+    mei: Mapped[str] = mapped_column(nullable=False)
 
     def __repr__(self) -> str:
-        return f"MEI(cnpj={self.cnpj_basico}, mei={self.mei})"
+        return f"MEI(cnpj={self.cnpj}, mei={self.mei})"
 
 
 class Municipio(db.Model):
@@ -109,9 +107,6 @@ class Atividade(db.Model):
     __tablename__ = "atividades"
     atividade_id: Mapped[int] = mapped_column(primary_key=True)
     atividade: Mapped[str] = mapped_column(nullable=False)
-    estabelecimentos: Mapped[List["Estabelecimento"]] = relationship(
-        secondary="atividades_secundarias", back_populates="atividades_secundarias"
-    )
 
     def __repr__(self) -> str:
         return f"Atividade(atividade={self.atividade}, id={self.atividade_id})"
@@ -137,64 +132,19 @@ class Natureza(db.Model):
         return f"Natureza(qualificação={self.natureza}, id={self.natureza_id})"
 
 
-class AtividadeSecundaria(db.Model):
-    __tablename__ = "atividades_secundarias"
-    atividade_id: Mapped[int] = mapped_column(
-        ForeignKey("atividades.atividade_id"), primary_key=True
-    )
-    cnpj_completo: Mapped[str] = mapped_column(
-        String(14), ForeignKey("estabelecimentos.cnpj_completo"), primary_key=True
-    )
-
-    def __repr__(self) -> str:
-        return f"AtividadeSecundaria(atividade_id={self.atividade_id}, cnpj_basico={self.cnpj_completo})"
-
-
-class Lista(db.Model):
-    __tablename__ = "lists"
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.user_id"), nullable=False)
-    user: Mapped["User"] = relationship(back_populates="listas")
-    list_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    email: Mapped[str] = mapped_column(nullable=False)
-    termo: Mapped[str] = mapped_column(nullable=True)
-    atividade_principal: Mapped[str] = mapped_column(nullable=True)
-    natureza_juridica: Mapped[str] = mapped_column(nullable=True)
-    situacao_cadastral: Mapped[int] = mapped_column(nullable=True)
-    uf: Mapped[str] = mapped_column(nullable=True)
-    municipio: Mapped[str] = mapped_column(nullable=True)
-    bairro: Mapped[str] = mapped_column(nullable=True)
-    cep: Mapped[str] = mapped_column(nullable=True)
-    ddd: Mapped[str] = mapped_column(nullable=True)
-    data_abertura_desde: Mapped[dt.date] = mapped_column(nullable=True)
-    data_abertura_ate: Mapped[dt.date] = mapped_column(nullable=True)
-    somente_mei: Mapped[str] = mapped_column(nullable=True)
-    somente_matriz: Mapped[str] = mapped_column(nullable=True)
-    com_contato_telefonico: Mapped[str] = mapped_column(nullable=True)
-    incluir_atividade_secundaria: Mapped[str] = mapped_column(nullable=True)
-    somente_fixo: Mapped[str] = mapped_column(nullable=True)
-    com_email: Mapped[str] = mapped_column(nullable=True)
-    excluir_mei: Mapped[str] = mapped_column(nullable=True)
-    somente_filial: Mapped[str] = mapped_column(nullable=True)
-    somente_celular: Mapped[str] = mapped_column(nullable=True)
-    valor: Mapped[float] = mapped_column(nullable=False)
-    quantidade: Mapped[int] = mapped_column(nullable=False)
-    horario: Mapped[dt.datetime] = mapped_column(nullable=False)
-    status: Mapped[str] = mapped_column(nullable=False)
-
-    def __repr__(self) -> str:
-        return f"Pedido(pedido_id={self.pedido_id}, email={self.email})"
-
-
 class User(db.Model, UserMixin):
     __tablename__ = "users"
     user_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     email: Mapped[str] = mapped_column(String(156), nullable=False, unique=True)
     name: Mapped[str] = mapped_column(String(50), nullable=False)
     password: Mapped[str] = mapped_column(String(256), nullable=False)
-    listas: Mapped[List["Lista"]] = relationship(back_populates="user")
 
     def __repr__(self) -> str:
         return f"User(user_id={self.user_id}, email={self.email}, listas={self.listas})"
 
     def get_id(self):
         return self.user_id
+
+
+# db.Model.metadata.drop_all(engine)
+# db.Model.metadata.create_all(engine)

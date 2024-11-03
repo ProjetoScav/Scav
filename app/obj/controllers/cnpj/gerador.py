@@ -69,7 +69,7 @@ def montar_atividade_principal(atividade: Atividade) -> str:
 
 
 def montar_atividades_secundarias(
-    estabelecimento: Estabelecimento
+    estabelecimento: Estabelecimento,
 ) -> Optional[list[str]]:
     """Função que recebe a entidade Estabelecimento e formata os atributos
     das atividades secundárias em uma string"""

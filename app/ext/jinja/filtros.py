@@ -1,5 +1,6 @@
-def formatar_cnpj(cnpj: str) -> str:
+def formatar_cnpj(cnpj: int) -> str:
     """Função que recebe uma string de números e a retorna formatada como CNPJ"""
+    cnpj = str(cnpj)
     return (
         cnpj[:2]
         + "."

@@ -21,7 +21,7 @@ def create_app() -> Flask:
         __name__, static_folder=caminho_static, template_folder=caminho_templates
     )
     app.config["SQLALCHEMY_ECHO"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("POSTGRE_SQL_URL")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("TEST_DB")
     app.config["SECRET_KEY"] = os.getenv("FLASK_KEY")
     cache.init_app(app, config={"CACHE_TYPE": "simple"})
     db.init_app(app)

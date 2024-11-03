@@ -26,6 +26,7 @@ class ResultadoGerador:
         return (pagina * 10) - 10, pagina * 10
 
     def __gerar_cards_cnpj(self, resultados) -> list[Card]:
+        print(resultados, resultados[0].empresa)
         return [
             Card(
                 cnpj=resultado.cnpj_completo,
