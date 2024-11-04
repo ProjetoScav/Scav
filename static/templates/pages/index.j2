@@ -1,15 +1,106 @@
-{% extends "pages/base.j2" %}
-{% block extensions %}
-{{ super() }}
-<script src="{{  url_for('static', filename='js/home.js')  }}" defer></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home.css') }}" />
-{% endblock extensions %}
-{% block content %}
-<main>
+{% macro fonts_and_favicon() %}
+{# Fonts #}
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+{# Favicon #}
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='imgs/icon.png') }}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='icons/apple-touch-icon.png') }}" />
+<link rel="manifest" href="{{ url_for('static', filename='icons/site.webmanifest') }}" />
+<link rel="mask-icon" href="{{ url_for('static', filename='icons/safari-pinned-tab.svg') }}" color="#5bbad5" />
+<meta name="msapplication-TileColor" content="#da532c" />
+<meta name="theme-color" content="#ffffff" />
+{% endmacro %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    {# Title #}
+    <title>
+        Scav - Encontre e baixe empresas de todo o Brasil
+    </title>
+    {# Metadata #}
+    <meta charset="UTF-8">
+    <meta name="keywords" content="dados, cnpj" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Pesquise por CNPJs e acesse as infomações de todas as empresas cadastradas na Receita Federal." />
+    {# Fonts and favicons #}
+    {{ fonts_and_favicon() }}
+    {# Extensions #}
+    <script src="https://kit.fontawesome.com/de0c4df738.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/alpine-morph.js" defer></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"
+        integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="{{  url_for('static', filename='js/home.js')  }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home.css') }}" />
+</head>
+
+<body x-data="{ logged: false }">
+    {% include "layouts/header.j2" %}
+    <main>
         {% include "components/login-popup.j2" %}
-        {% include "layouts/home/search.j2" %}
+        <section id="section-1">
+            <article class="scav">
+                <h1 class="scav__title">
+                    Scav<span class="purple">.</span>
+                </h1>
+                <p class="scav__sub-title">Encontre e baixe empresas de todo o Brasil</p>
+                <form class="scav__form" name="search-bar" hx-post="{{ url_for('home.busca') }}" hx-target=".results"
+                    hx-swap="outerHTML" hx-indicator=".loader--result, .loaded-content"
+                    @htmx:before-request="$dispatch('scroll-to-results')" x-data>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <input class="scav__form-search-bar" name="termo" type="text" id="search-bar"
+                        placeholder="Pesquise por razão social..." />
+                    <button class="scav__form-btn btn" for="search-bar">Pesquisar</button>
+                </form>
+            </article>
+        </section>
         {% include "layouts/home/scav.j2" %}
-        {% include "layouts/home/pricing.j2" %}
+        <section id="section-3">
+            <article>
+                <div>
+                    <p>R$ 0,01</p>
+                    <p>Por empresa</p>
+                    <p>
+                        Baixe e pague através do pix ou no cartão de crédito
+                        com parcelamento em até 6 vezes
+                    </p>
+                </div>
+                <div>
+                    <img src="{{ url_for('static', filename='imgs/pricing-img.png') }}" alt="rapaz-com-celular-na-mão"
+                        width="450px" height="450px">
+                </div>
+            </article>
+        </section>
         {% include "layouts/home/faq.j2" %}
-</main>
-{% endblock content %}
+    </main>
+    <footer>
+        <article>
+            <p>Scav.</p>
+            <p>®Todos os direitos reservados</p>
+            <p>Encontre e baixe empresas de todo Brasil</p>
+            <div class="social-media-icons">
+                <i class="fa-brands fa-whatsapp"></i>
+                <i class="fa-brands fa-linkedin"></i>
+                <i class="fa-brands fa-instagram"></i>
+            </div>
+        </article>
+        <article class="footer__links">
+            <a href="#section-2">Pesquisar</a>
+            <a href="#section-3">Perguntas frequentes</a>
+            <a href="https://docs.google.com/document/d/1JnnJBcxQFvwNYtmcp3nK9EPAcZ_fP6wD_kOSzbXKM4E/edit?usp=sharing">Política
+                de privacidade</a>
+            <a href="https://docs.google.com/document/d/1JnnJBcxQFvwNYtmcp3nK9EPAcZ_fP6wD_kOSzbXKM4E/edit?usp=sharing">Termos
+                de uso</a>
+        </article>
+    </footer>
+</body>
+
+</html>
