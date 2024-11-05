@@ -51,6 +51,7 @@ class CNPJ:
 
 @dataclass
 class Card:
+    estabelecimento_id: int
     cnpj: str
     municipio: str
     estado: str

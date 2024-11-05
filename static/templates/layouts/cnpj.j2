@@ -9,9 +9,14 @@
 
 <section class="cnpj-page loaded-content">
     <div class="cnpj-title-block">
-        <i :hx-get="target === '.view' ? &quot;{{ url_for('componentes.scav', tipo='login') }}&quot; : &quot;{{ url_for('componentes.scav', tipo='home') }}&quot;"
-            :hx-target="target" hx-swap="outerHTML show:.app:top" class="fa-solid fa-arrow-left cnpj__exit" hx-indicator=".loader--cnpj, .loaded-content"></i>
-        <h1 class="title">{{ cnpj.razao_social }} - {{ cnpj.cnpj|cnpj_format }}</h1>
+        {% if page == "home" %}
+        <i class="fa-solid fa-arrow-left cnpj__exit" hx-get="{{ url_for('components.scav', tipo='home') }}"
+            hx-target="main" hx-swap="outerHTML show:.app:top" hx-indicator=".loader--cnpj, .loaded-content"></i>
+        {% else %}
+        <i class="fa-solid fa-arrow-left cnpj__exit" hx-get="{{ url_for('components.scav', tipo='login') }}"
+            hx-target=".app" hx-swap="outerHTML show:.app:top" hx-indicator=".loader--cnpj, .loaded-content"></i>
+        {% endif %}
+        <h1 class="cnpj-title">{{ cnpj.razao_social }} - {{ cnpj.cnpj|cnpj_format }}</h1>
     </div>
     <section class="data-block">
         <section class="cnpj__section registro">

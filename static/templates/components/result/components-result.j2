@@ -1,8 +1,10 @@
 {# CARD #}
 {% macro card(card) %}
     <a class="cnpj-link-wrapper"
-       href="{{ url_for('cnpj.cnpj', cnpj=card.cnpj) }}"
-       target="_blank">
+       hx-get="{{ url_for('cnpj.cnpj', estabelecimento_id=card.estabelecimento_id, page='home') }}"
+       hx-swap="innerHTML"
+       hx-target="main"
+       >
         <article class="cnpj">
             <div class="cnpj__infos">
                 <h3 class="cnpj__razao-social">{{ card.razao_social|razao_format }}</h3>
@@ -41,7 +43,7 @@
                     <a class="cnpjs-indexes__index cnpjs-indexes__index--purple disabled">{{ i }}</a>
                 {% else %}
                     <a class="cnpjs-indexes__index"
-                       hx-get="{{ url_for('componentes.resultado', pagina=i) }}"
+                       hx-get="{{ url_for('components.resultado', pagina=i) }}"
                        hx-swap="outerHTML"
                        hx-target=".results"
                        hx-indicator=".loader--result, .loaded-content"

@@ -28,6 +28,6 @@ def home_routes(bp: Blueprint) -> Blueprint:
         campos = request.form.to_dict()
         campos.pop("csrf_token")
         session["query"] = campos
-        return redirect(url_for("componentes.resultado"))
+        return redirect(url_for("components.resultado"))
 
     return bp

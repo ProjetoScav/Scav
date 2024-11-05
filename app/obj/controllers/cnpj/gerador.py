@@ -125,10 +125,10 @@ class CNPJFront:
     """Classe que faz a busca dos dados
     e os organiza pra consumo do template"""
 
-    def __init__(self, db: SQLAlchemy, cnpj: str) -> None:
+    def __init__(self, db: SQLAlchemy, estabelecimento_id: int) -> None:
         self.db = db
         self.query = db.session.query(Estabelecimento).where(
-            Estabelecimento.cnpj_completo == cnpj
+            Estabelecimento.estabelecimento_id == estabelecimento_id
         )
 
     def criar_cnpj(self) -> CNPJ:

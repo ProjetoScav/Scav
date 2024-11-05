@@ -1,7 +1,7 @@
 {% if n_de_dados > 0 %}
-    {% set disabled = "false" %}
+{% set disabled = "false" %}
 {% else %}
-    {% set disabled = "true" %}
+{% set disabled = "true" %}
 {% endif %}
 {% import "components/result/components-result.j2" as components %}
 <article class="results loaded-content" hx-ext="alpine-morph">
@@ -17,10 +17,18 @@
     </article>
     <article class="cnpjs">
         {% if n_de_dados > 0 %}
-            {% for card in cards %}{{ components.card(card) }}{% endfor %}
-            {{ components.pagination(n_paginas, pagina) }}
-        </article>
+        {% for card in cards %}{{ components.card(card) }}{% endfor %}
+        {{ components.pagination(n_paginas, pagina) }}
+    </article>
     {% else %}
-        {% include "components/result/no-result.j2" %}
+    <section class="no-result">
+        <div>
+            <img src="{{ url_for('static', filename='imgs/walking.svg') }}" alt="homem-caminhando" width="221px"
+                height="336px">
+        </div>
+        <div>
+            <p>Não foram encontrados resultados para a sua pesquisa</p>
+        </div>
+    </section>
     {% endif %}
 </article>

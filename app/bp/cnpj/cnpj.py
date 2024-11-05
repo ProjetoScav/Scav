@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from flask.templating import render_template
 
 from app.ext.cache import cache
@@ -11,11 +11,12 @@ def cnpj_rota(bp: Blueprint) -> Blueprint:
     """Função que registra as rotas de
     CNPJ no Blueprint"""
 
-    @bp.route("/cnpj/<cnpj>")
+    @bp.route("/cnpj/<int:estabelecimento_id>")
     @cache.memoize(120)
-    def cnpj(cnpj: str):
-        front: CNPJFront = CNPJFront(db, cnpj)
-        cnpj_obj: CNPJ = front.criar_cnpj()
-        return render_template("pages/cnpj.j2", cnpj=cnpj_obj)
+    def cnpj(estabelecimento_id: int):
+        page = request.args.get("page", "home")
+        front: CNPJFront = CNPJFront(db, estabelecimento_id)
+        cnpj: CNPJ = front.criar_cnpj()
+        return render_template("layouts/cnpj.j2", cnpj=cnpj, page=page)
 
     return bp

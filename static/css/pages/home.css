@@ -11,7 +11,7 @@
 @import "../layouts/home/pricing.css";
 @import "../components/buttons.css";
 @import "../components/components.css";
-@import "../pages/cnpj.css";
+@import "../layouts/cnpj.css";
 
 body {
   background-color: var(--off-white);
