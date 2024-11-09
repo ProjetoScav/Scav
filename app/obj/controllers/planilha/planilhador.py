@@ -16,10 +16,10 @@ class Planilhador:
 
     def __init__(self, session, db: SQLAlchemy) -> None:
         self.db = db
-        self.query = self.checar_cookies(session)
+        self.query = self.check_cookie(session)
 
     # TODO: Documentar
-    def checar_cookies(self, session) -> Query:
+    def check_cookie(self, session) -> Query:
         filtros = session.get("query", {"situacao_cadastral": 2})
         return Query(filtros, self.db)
 

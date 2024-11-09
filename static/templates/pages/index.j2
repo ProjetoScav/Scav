@@ -44,6 +44,7 @@
 
 <body x-data="{ logged: false }">
     {% include "layouts/header.j2" %}
+    {% block content%}
     <main>
         {% include "components/login-popup.j2" %}
         <section id="section-1">
@@ -81,6 +82,7 @@
         </section>
         {% include "layouts/home/faq.j2" %}
     </main>
+    {% endblock  %}
     <footer>
         <article>
             <p>Scav.</p>

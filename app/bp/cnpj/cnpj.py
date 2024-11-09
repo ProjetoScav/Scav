@@ -14,9 +14,9 @@ def cnpj_rota(bp: Blueprint) -> Blueprint:
     @bp.route("/cnpj/<int:estabelecimento_id>")
     @cache.memoize(120)
     def cnpj(estabelecimento_id: int):
-        page = request.args.get("page", "home")
+        where = request.args.get("where", "home")
         front: CNPJFront = CNPJFront(db, estabelecimento_id)
         cnpj: CNPJ = front.criar_cnpj()
-        return render_template("layouts/cnpj.j2", cnpj=cnpj, page=page)
+        return render_template("layouts/cnpj.j2", cnpj=cnpj, where=where)
 
     return bp

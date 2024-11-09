@@ -16,11 +16,11 @@
                 <div class="pricing__block">
                     <h2 class="pricing-title">
                         Você está baixando <b class="n-dados">
-                        {{ n_de_dados|numero_format }}
+                        {{ result.n_cnpjs|numero_format }}
                     </b>contatos da segmentação definida.
                 </h2>
                 <p class="pricing-total-value">Valor total</p>
-                <p class="pricing-price">R$ {{ preço }}</p>
+                <p class="pricing-price">R$ {{ result.price }}</p>
             </div>
             <div class="pricing__btns">
                 <button class="pricing__first-btn popup__btn btn" @click="tela = 1">Baixar contatos</button>

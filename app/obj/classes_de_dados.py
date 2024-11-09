@@ -28,17 +28,18 @@ class CNPJ:
     atividades_secundarias: str | list | None = None
     data_consulta: str | None = None
 
-    def transformar_em_dicionario(self) -> dict[str, str]:
-        "Método que transforma a classe em um dicionário"
-        return {k: str(v) for k, v in asdict(self).items()}
-
-    def __lista_to_string(self, lista: list) -> Optional[str]:
+    @staticmethod
+    def __lista_to_string(lista: list) -> Optional[str]:
         """Método que converte uma lista em uma string pra planilha"""
         try:
             lista = [f"{item}," for item in lista if item]
             return "".join(lista)[:-1]
         except Exception:
             return None
+
+    def transformar_em_dicionario(self) -> dict[str, str]:
+        "Método que transforma a classe em um dicionário"
+        return {k: str(v) for k, v in asdict(self).items()}
 
     def ajustar_dados_pra_download(self):
         "Método que ajusta os dados pra inserção na planilha"
@@ -57,3 +58,11 @@ class Card:
     estado: str
     cadastro: str
     razao_social: str
+
+
+@dataclass
+class SearchResult:
+    n_cnpjs: int
+    price: float
+    page: int
+    cards: list[Card]

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, session
-
+from jinja2_fragments.flask import render_block
 from app.ext.db.db import db
 from app.obj.controllers.resultado.gerador import ResultadoGerador
 
@@ -10,30 +10,28 @@ def components_routes(bp: Blueprint) -> Blueprint:
 
     @bp.route("/results", methods=["GET", "POST"])
     def resultado():
-        pagina = request.args.get("pagina", 1, int)
+        page = request.args.get("pagina", 1, int)
         front = ResultadoGerador(session, db)
-        cards = front.gerar_cards(pagina)
-        return render_template(
-            "components/result/result.j2",
-            cards=cards,
-            n_de_dados=front.query.n_de_cnpjs,
-            n_paginas=front.gerar_n_de_paginas(),
-            pagina=pagina,
-            preço=front.query.preço,
-        )
+        result = front.generate_search_result(page)
+        return render_template("components/result/result.j2", result=result)
 
     @bp.route("/scav", methods=["GET"])
     def scav():
-        pagina = request.args.get("pagina", 1, int)
+        n_page = request.args.get("pagina", 1, int)
         front = ResultadoGerador(session, db)
-        cards = front.gerar_cards(pagina)
+        result = front.generate_search_result(n_page)
+        where = request.args.get("page", "home", str)
+        if where == "home":
+            return render_block(
+                "pages/index.j2",
+                "content",
+                result=result,
+                messages={"login": "", "name": "", "email": "", "password": ""},
+            )
         return render_template(
-            "layouts/login/scav-login.j2",
-            cards=cards,
-            n_de_dados=front.query.n_de_cnpjs,
-            n_paginas=front.gerar_n_de_paginas(),
-            pagina=pagina,
-            preço=front.query.preço,
+            "layouts/scav.j2",
+            result=result,
+            where=where,
         )
 
     @bp.route("/faq", methods=["GET"])

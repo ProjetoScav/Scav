@@ -12,14 +12,10 @@ def home_routes(bp: Blueprint) -> Blueprint:
     @bp.route("/", methods=["GET"])
     def home():
         card_generator = ResultadoGerador(session, db)
-        cards = card_generator.gerar_cards()
+        result = card_generator.generate_search_result()
         return render_template(
             "pages/index.j2",
-            cards=cards,
-            n_de_dados=card_generator.query.n_de_cnpjs,
-            n_paginas=card_generator.gerar_n_de_paginas(),
-            pagina=1,
-            preço=card_generator.query.preço,
+            result=result,
             messages={"login": "", "name": "", "email": "", "password": ""},
         )
 
