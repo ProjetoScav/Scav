@@ -84,3 +84,7 @@
 .sociedade-campo__list {
   margin-left: 1.5rem;
 }
+
+.cnpj-page + .loader {
+  padding-block: 20%;
+}

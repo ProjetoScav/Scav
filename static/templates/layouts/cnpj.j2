@@ -9,13 +9,8 @@
 
 <section class="cnpj-page loaded-content">
     <div class="cnpj-title-block">
-        {% if where == "home" %}
-        <i class="fa-solid fa-arrow-left cnpj__exit" hx-get="{{ url_for('components.scav', tipo='home') }}"
+        <i class="fa-solid fa-arrow-left cnpj__exit" hx-get="{{ url_for('components.scav', tipo='{{ where }}') }}"
             hx-target="main" hx-swap="innerHTML show:.app:top" hx-indicator=".loader--cnpj, .loaded-content"></i>
-        {% else %}
-        <i class="fa-solid fa-arrow-left cnpj__exit" hx-get="{{ url_for('components.scav', tipo='login') }}"
-            hx-target=".app" hx-swap="innerHTML show:.app:top" hx-indicator=".loader--cnpj, .loaded-content"></i>
-        {% endif %}
         <h1 class="cnpj-title">{{ cnpj.razao_social }} - {{ cnpj.cnpj|cnpj_format }}</h1>
     </div>
     <section class="data-block">
