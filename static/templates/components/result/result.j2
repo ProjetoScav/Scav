@@ -16,7 +16,7 @@
         {% for card in result.cards %}
         <a class="cnpj-link-wrapper"
             hx-get="{{ url_for('cnpj.cnpj', estabelecimento_id=card.estabelecimento_id, page='home') }}"
-            hx-swap="innerHTML" hx-target="main">
+            hx-swap="innerHTML show:.cnpj-page:top" hx-target="main">
             <article class="cnpj">
                 <div class="cnpj__infos">
                     <h3 class="cnpj__razao-social">{{ card.razao_social|razao_format }}</h3>
