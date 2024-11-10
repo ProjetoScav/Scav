@@ -8,7 +8,7 @@
         {# Botão de download #}
         <div>
             <button class="baixar-btn btn" @click="logged ? $dispatch('popup') : $dispatch('login')">Baixar</button>
-            {% include "components/result/popup.j2" %}
+            {% include "components/popup.j2" %}
         </div>
     </article>
     <article class="cnpjs">

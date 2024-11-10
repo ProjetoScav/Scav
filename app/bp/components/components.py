@@ -9,6 +9,16 @@ def components_routes(bp: Blueprint) -> Blueprint:
     """Função que registra as rotas de Componentes
     no Blueprint"""
 
+    @bp.route("/popup", methods=["GET"])
+    def download_popup():
+        block = request.args.get("block", "first", str)
+        return render_block("components/popup.j2", block_name=block)
+
+    @bp.route("/login-popup", methods=["GET"])
+    def login_popup():
+        block = request.args.get("block", "first", str)
+        return render_block("components/login-popup.j2", block_name=block)
+
     @bp.route("/results", methods=["GET", "POST"])
     def resultado():
         page = request.args.get("pagina", 1, int)
@@ -16,6 +26,7 @@ def components_routes(bp: Blueprint) -> Blueprint:
         result = front.generate_search_result(page)
         return render_template("components/result/result.j2", result=result)
 
+    # TODO: refatorar
     @bp.route("/scav", methods=["GET"])
     def scav():
         n_page = request.args.get("pagina", 1, int)
