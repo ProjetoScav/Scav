@@ -1,8 +1,10 @@
 import math
 from typing import Any
+
 from flask_sqlalchemy import SQLAlchemy
+
 from app.ext.db.query.query import Query
-from app.obj.classes_de_dados import Card, SearchResult
+from app.obj.classes import Card, SearchResult
 from app.obj.data.mappers import situacao_cadastral
 
 
@@ -19,7 +21,6 @@ class ResultadoGerador:
 
     @staticmethod
     def __gerar_cards_cnpj(resultados) -> list[Card]:
-        print(resultados, resultados[0].empresa)
         return [
             Card(
                 estabelecimento_id=resultado.estabelecimento_id,
@@ -32,7 +33,7 @@ class ResultadoGerador:
             for resultado in resultados
         ]
 
-    def gerar_n_de_paginas(self) -> int:
+    def generate_n_pages(self) -> int:
         """Função que gera o número de páginas de dados da home"""
         max_pages = 100
         min_page = 10
@@ -60,5 +61,6 @@ class ResultadoGerador:
             n_cnpjs=self.query.n_cnpjs,
             price=self.query.price,
             page=n_page,
+            n_pages=self.generate_n_pages(),
             cards=self.generate_cards(n_page),
         )

@@ -59,10 +59,20 @@ class Card:
     cadastro: str
     razao_social: str
 
+    def __post_init__(self):
+        if self.cadastro == "Ativa":
+            self.cadastro_color = "green"
+        else:
+            self.cadastro_color = "grey"
+
 
 @dataclass
 class SearchResult:
     n_cnpjs: int
-    price: float
     page: int
+    n_pages: int
+    price: float
     cards: list[Card]
+
+    def __post_init__(self):
+        self.has_cnpjs = self.n_cnpjs > 0

@@ -3,7 +3,7 @@ from flask.templating import render_template
 
 from app.ext.cache import cache
 from app.ext.db.db import db
-from app.obj.classes_de_dados import CNPJ
+from app.obj.classes import CNPJ
 from app.obj.controllers.cnpj.gerador import CNPJFront
 
 

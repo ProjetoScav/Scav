@@ -147,7 +147,8 @@ class AtividadeSecundaria(db.Model):
     )
 
     def __repr__(self) -> str:
-        return f"AtividadeSecundaria(atividade_id={self.atividade_id}, cnpj_basico={self.cnpj_completo})"
+        return f"""AtividadeSecundaria(atividade_id={self.atividade_id},
+    cnpj_basico={self.cnpj_completo})"""
 
 
 class Lista(db.Model):
@@ -198,6 +199,3 @@ class User(db.Model, UserMixin):
 
     def get_id(self):
         return self.user_id
-
-
-db.Model.metadata.drop_all(engine)

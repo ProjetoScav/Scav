@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, session
 from jinja2_fragments.flask import render_block
+
 from app.ext.db.db import db
 from app.obj.controllers.resultado.gerador import ResultadoGerador
 

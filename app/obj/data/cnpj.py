@@ -9,14 +9,15 @@ class CNPJ:
     estabelecimento: Estabelecimento
 
     def extrair_propriedades(self):
-        self.__setattr__()
+        # self.__setattr__()
         ...
 
     def transformar_em_dicionario(self) -> dict[str, str]:
         "Método que transforma a classe em um dicionário"
         return {k: str(v) for k, v in asdict(self).items()}
 
-    def __lista_to_string(self, lista: list) -> Optional[str]:
+    @staticmethod
+    def __lista_to_string(lista: list) -> Optional[str]:
         """Método que converte uma lista em uma string pra planilha"""
         try:
             lista = [f"{item}," for item in lista if item]

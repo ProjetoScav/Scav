@@ -1,18 +1,13 @@
-{% import "components/result/components-result.j2" as components %}
 <article class="results loaded-content" hx-ext="alpine-morph">
+    {% if result.n_cnpjs > 0 %}
     <article class="search-results">
         <div class="search-results__summary">
             <h2 class="search-results__title">Resultados da pesquisa...</h2>
             <p class="search-results__text">{{ result.n_cnpjs|numero_format }} empresas encontradas</p>
         </div>
         {# Botão de download #}
-        {% if result.n_cnpjs > 0 %}
-        {% set disabled = "false" %}
-        {% else %}
-        {% set disabled = "true" %}
-        {% endif %}
-        <div x-data="{ disabled: {{ disabled }} }">
-            {{ components.button() }}
+        <div>
+            <button class="baixar-btn btn" @click="logged ? $dispatch('popup') : $dispatch('login')">Baixar</button>
             {% include "components/result/popup.j2" %}
         </div>
     </article>
@@ -36,22 +31,16 @@
                         {{ card.municipio|title }} -{{ card.estado }}
                     </p>
                 </div>
-                {% if card.cadastro == "Ativa" %}
-                {% set color = "green" -%}
-                {% else %}
-                {% set color = "grey" -%}
-                {% endif %}
-                <div class="cnpj__state-block bg--{{ color }}-light">
-                    <p class="cnpj__state color--{{ color }}">{{ card.cadastro|title }}</p>
+                <div class="cnpj__state-block bg--{{ card.cadastro_color }}-light">
+                    <p class="cnpj__state color--{{ card.cadastro_color }}">{{ card.cadastro|title }}</p>
                 </div>
             </article>
         </a>
         {% endfor %}
         {# Paginação #}
         <div class="cnpjs-indexes" x-data>
-            {% if n_pages %}
-            {% for i in range(1, n_pages + 1) %}
-            {% if i == page %}
+            {% for i in range(1, result.n_pages + 1) %}
+            {% if i == result.page %}
             <a class="cnpjs-indexes__index cnpjs-indexes__index--purple disabled">{{ i }}</a>
             {% else %}
             <a class="cnpjs-indexes__index" hx-get="{{ url_for('components.resultado', pagina=i) }}" hx-swap="outerHTML"
@@ -59,10 +48,10 @@
                 @click="$refs.app.scrollIntoView({behavior: 'smooth'})" x-data>{{ i }}</a>
             {% endif %}
             {% endfor %}
-            {% endif %}
         </div>
     </article>
     {% else %}
+    {# Tela de ausência de resultados #}
     <section class="no-result">
         <div>
             <img src="{{ url_for('static', filename='imgs/walking.svg') }}" alt="homem-caminhando" width="221px"

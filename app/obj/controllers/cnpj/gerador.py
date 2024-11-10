@@ -4,7 +4,7 @@ from typing import Optional
 from flask_sqlalchemy import SQLAlchemy
 
 from app.ext.db.models import Atividade, Empresa, Estabelecimento
-from app.obj.classes_de_dados import CNPJ
+from app.obj.classes import CNPJ
 from app.obj.data.mappers import matriz_filial, mei, situacao_cadastral
 
 
@@ -22,7 +22,7 @@ def transformar_em_cnpj(estabelecimento: Estabelecimento) -> CNPJ:
         capital_social=estabelecimento.empresa.capital_social,
         natureza_juridica=montar_natureza_juridica(estabelecimento.empresa),
         mei=montar_mei(estabelecimento),
-        logradouro=montar_endereço(estabelecimento),
+        logradouro=join_adress(estabelecimento),
         numero=estabelecimento.numero,
         complemento=estabelecimento.complemento,
         cep=estabelecimento.cep,
@@ -84,7 +84,7 @@ def montar_atividades_secundarias(
         return None
 
 
-def montar_endereço(estabelecimento: Estabelecimento) -> Optional[str]:
+def join_adress(estabelecimento: Estabelecimento) -> Optional[str]:
     """Função que retorna o endereço da entidade Estabelecimento"""
     if estabelecimento.tipo_logradouro and estabelecimento.logradouro:
         return estabelecimento.tipo_logradouro + " " + estabelecimento.logradouro
