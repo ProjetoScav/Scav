@@ -42,7 +42,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home.css') }}" />
 </head>
 
-<body x-data="{ logged: false }">
+<body x-data="{ logged: true }">
+    <div class="backdrop"></div>
     {% include "layouts/header.j2" %}
     {% block content%}
     <main>
@@ -82,7 +83,7 @@
         </section>
         {% include "layouts/home/faq.j2" %}
     </main>
-    {% endblock  %}
+    {% endblock %}
     <footer>
         <article>
             <p>Scav.</p>

@@ -1,69 +1,78 @@
-<dialog class="popup" @popup.window="$el.showModal()" x-ref="popup" x-data="{ tela: 0 }">
-    {# Tela inicial #}
-    {% block first %}
-    <section class="popup__section--pricing popup__section" x-show="tela === 0">
-        <div class="pricing popup__section-wrapper">
-            <div class="pricing-wrapper">
-                <div>
-                    <img class="arrow-left" src="{{ url_for('static', filename='imgs/arrow-left.svg') }}"
-                        alt="seta-a-esquerda" width="20px" height="20px" @click="$refs.popup.close();">
-                </div>
-                <div class="pricing__block">
-                    <h2 class="pricing-title">
-                        Você está baixando <b class="n-dados">
-                            {{ result.n_cnpjs|numero_format }}
-                        </b>contatos da segmentação definida.
-                    </h2>
-                    <p class="pricing-total-value">Valor total</p>
-                    <p class="pricing-price">R$ {{ result.price }}</p>
-                </div>
-                <div class="pricing__btns">
-                    <button class="pricing__first-btn popup__btn btn" @click="tela = 1">Baixar contatos</button>
-                    <a href="#" class="pre-visualization" @click.prevent="tela = 3">Pré-visualização</a>
-                </div>
+{# Tela inicial #}
+{% block first %}
+<section class="popup__section--pricing popup__section">
+    <div class="pricing popup__section-wrapper">
+        <div class="pricing-wrapper">
+            <div>
+                <img class="arrow-left" src="{{  url_for('static', filename='imgs/arrow-left.svg')  }}"
+                    alt="seta-a-esquerda" width="20px" height="20px"
+                    hx-get="{{  url_for('components.delete_html')  }}" hx-target=".popup__section"
+                    hx-swap="delete">
+            </div>
+            <div class="pricing__block">
+                <h2 class="pricing-title">
+                    Você está baixando <b class="n-dados">
+                        {{ n_cnpjs|numero_format }}
+                    </b>contatos da segmentação definida.
+                </h2>
+                <p class="pricing-total-value">Valor total</p>
+                <p class="pricing-price">R$ {{ price }}</p>
+            </div>
+            <div class="pricing__btns">
+                <button class="pricing__first-btn popup__btn btn"
+                    hx-get="{{  url_for('components.download_popup', block='payment')  }}" hx-target=".popup__section"
+                    hx-swap="outerHTML">Baixar
+                    contatos</button>
+                <a href="#" class="pre-visualization"
+                    hx-get="{{  url_for('components.download_popup', block='preview')  }}" hx-target=".popup__section"
+                    hx-swap="outerHTML">Pré-visualização</a>
             </div>
         </div>
-    </section>
-    {% endblock %}
-    {# Tela de preview#}
-    {% block preview %}
-    <section class="popup__section" x-show="tela === 3">
+    </div>
+</section>
+{% endblock %}
+{# Tela de preview#}
+{% block preview %}
+<section class="popup__section">
+    <div>
+        <img class="arrow-left" src="{{  url_for('static', filename='imgs/arrow-left.svg')  }}" alt="seta-a-esquerda"
+            width="20px" height="20px" hx-get="{{  url_for('components.download_popup', block='first')  }}"
+            hx-target=".popup__section" hx-swap="outerHTML">
+    </div>
+</section>
+{% endblock %}
+{# Tela de pagamento #}
+{% block payment %}
+<section class="popup__section--payment popup__section">
+    <div class="payment popup__section-wrapper">
         <div>
             <img class="arrow-left" src="{{ url_for('static', filename='imgs/arrow-left.svg') }}" alt="seta-a-esquerda"
-                width="20px" height="20px" @click="tela = 0">
+                width="20px" height="20px" hx-get="{{  url_for('components.download_popup', block='first')  }}"
+                hx-target=".popup__section" hx-swap="outerHTML">
         </div>
-    </section>
-    {% endblock %}
-    {# Tela de pagamento #}
-    {% block payment %}
-    <section class="popup__section--payment popup__section" x-show="tela === 1">
-        <div class="payment popup__section-wrapper">
-            <div>
-                <img class="arrow-left" src="{{ url_for('static', filename='imgs/arrow-left.svg') }}"
-                    alt="seta-a-esquerda" width="20px" height="20px" @click="tela = 0">
-            </div>
-            <div class="payment__bottom">
-                <form class="payment-form" id="payment-form" name="payment-form"
-                    action="{{ url_for('download.download') }}" method="post">
-                    <input id="token" type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                    <input class="payment__btn popup__btn btn" type="submit" value="Confirmar" name="pay-btn"
-                        form="payment-form" @click="tela = 2">
-                </form>
-            </div>
+        <div class="payment__bottom">
+            <form class="payment-form" id="payment-form" name="payment-form" action="{{ url_for('download.download') }}"
+                method="post">
+                <input id="token" type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <input class="payment__btn popup__btn btn" type="submit" value="Confirmar" name="pay-btn"
+                    form="payment-form" hx-get="{{  url_for('components.download_popup', block='confirmation')  }}"
+                    hx-target=".popup__section" hx-swap="outerHTML">
+            </form>
         </div>
-    </section>
-    {% endblock %}
-    {# Tela de confirmação #}
-    {% block confirmation %}
-    <section class="popup__section--end popup__section" x-show="tela === 2">
-        <div class="end popup__section-wrapper">
-            <div class="end__block">
-                <img src="{{ url_for('static', filename='imgs/ok.svg') }}" alt="Envio confirmado!" width="136px"
-                    height="136px">
-                <p class="end__text">Informações enviadas com sucesso!</p>
-            </div>
-            <button class="end__btn popup__btn btn" @click="$refs.popup.close(); tela = 0">Fechar</button>
+    </div>
+</section>
+{% endblock %}
+{# Tela de confirmação #}
+{% block confirmation %}
+<section class="popup__section--end popup__section">
+    <div class="end popup__section-wrapper">
+        <div class="end__block">
+            <img src="{{ url_for('static', filename='imgs/ok.svg') }}" alt="Envio confirmado!" width="136px"
+                height="136px">
+            <p class="end__text">Informações enviadas com sucesso!</p>
         </div>
-    </section>
-    {% endblock %}
-</dialog>
+        <button class="end__btn popup__btn btn" hx-get="{{  url_for('components.delete_html')  }}"
+            hx-target=".popup__section" hx-swap="delete">Fechar</button>
+    </div>
+</section>
+{% endblock %}

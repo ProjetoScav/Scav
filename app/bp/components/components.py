@@ -9,12 +9,14 @@ def components_routes(bp: Blueprint) -> Blueprint:
     """Função que registra as rotas de Componentes
     no Blueprint"""
 
-    @bp.route("/popup", methods=["GET"])
+    @bp.get("/popup")
     def download_popup():
         block = request.args.get("block", "first", str)
-        return render_block("components/popup.j2", block_name=block)
+        return render_block(
+            "components/popup.j2", block_name=block, n_cnpjs=1_000_00, price=1.21
+        )
 
-    @bp.route("/login-popup", methods=["GET"])
+    @bp.get("/login-popup")
     def login_popup():
         block = request.args.get("block", "first", str)
         return render_block("components/login-popup.j2", block_name=block)
@@ -27,7 +29,7 @@ def components_routes(bp: Blueprint) -> Blueprint:
         return render_template("components/result/result.j2", result=result)
 
     # TODO: refatorar
-    @bp.route("/scav", methods=["GET"])
+    @bp.get("/scav")
     def scav():
         n_page = request.args.get("pagina", 1, int)
         front = ResultadoGerador(session, db)
@@ -46,12 +48,16 @@ def components_routes(bp: Blueprint) -> Blueprint:
             where=where,
         )
 
-    @bp.route("/faq", methods=["GET"])
+    @bp.get("/faq")
     def faq():
         return render_template("layouts/login/faq.j2")
 
-    @bp.route("/lists", methods=["GET"])
+    @bp.get("/lists")
     def lists():
         return render_template("layouts/login/lists-table.j2")
+
+    @bp.get("/delete-html")
+    def delete_html():
+        return '', 204
 
     return bp
