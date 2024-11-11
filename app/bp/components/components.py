@@ -58,6 +58,6 @@ def components_routes(bp: Blueprint) -> Blueprint:
 
     @bp.get("/delete-html")
     def delete_html():
-        return '', 204
+        return "<h1>Item genérico</h1>"
 
     return bp
