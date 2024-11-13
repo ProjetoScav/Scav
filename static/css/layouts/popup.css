@@ -1,5 +1,4 @@
 .popup__section {
-  backdrop-filter: blur(1px);
   background-color: #fafafa;
   border-radius: 10px;
   padding: 1.5%;

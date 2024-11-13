@@ -76,3 +76,16 @@ class SearchResult:
 
     def __post_init__(self):
         self.has_cnpjs = self.n_cnpjs > 0
+
+
+@dataclass
+class LoginErrorMessages:
+    invalid_email: str
+    invalid_password: str
+
+
+@dataclass
+class RegisterErrorMessages:
+    invalid_name: str
+    invalid_email: str
+    invalid_password: str

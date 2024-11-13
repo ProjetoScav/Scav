@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from app.ext.bcrypt import bcrypt
 from app.ext.db.models import User
+from app.obj.classes import LoginErrorMessages, RegisterErrorMessages
 
 MAX_LEN_PASSWORD = 20
 MIN_LEN_PASSWORD = 8
@@ -14,14 +15,23 @@ class LoginController:
         self.messages = {"name": "", "email": [], "login": "", "password": []}
 
     @staticmethod
-    def get_register_form_data(form: dict[str, str]):
+    def get_register_form_data(form: dict[str, str]) -> tuple[str, str, str]:
+        """Função que retira os dados de registro.
+
+        Args:
+            form (dict[str, str]): _description_
+
+        Returns:
+            tuple[str, str, str]: _description_
+
+        """
         email = form.get("account_email")
         name = form.get("account_name")
         password = form.get("account_email")
         return email, name, password
 
     @staticmethod
-    def get_login_form_data(form: dict[str, str]):
+    def get_login_form_data(form: dict[str, str]) -> tuple[str, str]:
         email = form.get("login-email")
         password = form.get("login-password")
         return email, password
@@ -59,14 +69,11 @@ class LoginController:
     def validate_login(self, form: dict[str, str]) -> bool:
         email, password = self.get_login_form_data(form)
         user = self.db.session.query(User).filter(User.email == email).scalar()
-        print(user, user.password)
         if not user:
-            print("local certo")
             self.messages["login"] = "* E-mail e/ou senha inválidos"
             return False
 
         if bcrypt.check_password_hash(user.password, password):
-            print("deveteria ter user")
             self.messages["login"] = "* E-mail e/ou senha inválidos"
             return False
 

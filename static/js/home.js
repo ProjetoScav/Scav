@@ -15,6 +15,18 @@ document.addEventListener("alpine:init", function () {
   }));
 });
 
+// Função de remoção de popups
+remove_popups = function () {
+  try {
+    download_popup = document.querySelector(".popup__section");
+    download_popup.remove();
+  } catch (error) {}
+  try {
+    login_popup = document.querySelector(".login-popup");
+    login_popup.remove();
+  }   catch (error) {}
+};
+
 // Exclusão dos popups com esc
 document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") {
@@ -23,15 +35,7 @@ document.addEventListener("keydown", function (event) {
 });
 
 // Exclusão dos popups com click no backdrop
-// Todo: inclusão da funcionalidade no login popup
 backdrop = document.querySelector(".backdrop");
 backdrop.addEventListener("click", function () {
   remove_popups();
 });
-
-remove_popups = function () {
-  download_popup = document.querySelector(".popup__section");
-  login_popup = document.querySelector(".login-popup");
-  download_popup.remove();
-  login_popup.remove();
-};

@@ -18,15 +18,20 @@ def components_routes(bp: Blueprint) -> Blueprint:
 
     @bp.get("/login-popup")
     def login_popup():
-        block = request.args.get("block", "first", str)
-        return render_block("components/login-popup.j2", block_name=block)
+        return render_template(
+            "components/login-popup.j2",
+            messages={"login": "", "name": "", "email": "", "password": ""},
+        )
 
     @bp.route("/results", methods=["GET", "POST"])
     def resultado():
         page = request.args.get("pagina", 1, int)
         front = ResultadoGerador(session, db)
         result = front.generate_search_result(page)
-        return render_template("components/result/result.j2", result=result)
+        return render_template(
+            "components/result/result.j2",
+            result=result,
+        )
 
     # TODO: refatorar
     @bp.get("/scav")
@@ -40,7 +45,6 @@ def components_routes(bp: Blueprint) -> Blueprint:
                 "pages/index.j2",
                 "content",
                 result=result,
-                messages={"login": "", "name": "", "email": "", "password": ""},
             )
         return render_template(
             "layouts/scav.j2",
