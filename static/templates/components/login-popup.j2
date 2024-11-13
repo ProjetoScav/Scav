@@ -49,7 +49,7 @@
                     <div>
                         <label for="account_name"
                             name="create-account" id="create-account">Nome</label>
-                        <input class="input {{ messages.check_input_error('register_email') }}" type="text" id="account_name" name="account_name"
+                        <input class="input {{ messages.check_input_error('register_name') }}" type="text" id="account_name" name="account_name"
                             placeholder="Digitar nome" x-model="name" required>
                         <p class="error-msg">{{ messages.register_name }}</p>
                     </div>
@@ -64,7 +64,7 @@
                     <div>
                         <label
                             for="account_password">Senha</label>
-                        <input class="input {{ messages.check_input_error('register_email') }}" type="password" id="account_password" name="account_password"
+                        <input class="input {{ messages.check_input_error('register_password') }}" type="password" id="account_password" name="account_password"
                             placeholder="Digitar senha" x-model="password" required>
                         <p class="error-msg">{{ messages.register_password }}</p>
                     </div>

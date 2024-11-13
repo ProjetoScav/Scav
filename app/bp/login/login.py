@@ -36,7 +36,9 @@ def login_routes(bp: Blueprint) -> Blueprint:
     @bp.route("/user_area", methods=["GET"])
     @login_required
     def user_area():
-        return render_template("pages/user_area.j2")
+        return render_template(
+            "pages/user_area.j2",
+        )
 
     @bp.route("/login/", methods=["POST", "GET"])
     def login():

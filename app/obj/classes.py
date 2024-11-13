@@ -103,5 +103,7 @@ class LoginPopupMessages:
 
     def validate_register(self) -> bool:
         if self.register_name or self.register_name or self.register_password:
+            print(self.register_name, self.register_email, self.register_password)
             return False
+        print(self.register_name, self.register_email, self.register_password)
         return True

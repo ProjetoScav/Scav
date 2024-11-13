@@ -73,6 +73,7 @@ class LoginController:
             self.messages.register_name = (
                 "* Seu nome não pode ultrapassar 50 caracteres"
             )
+        print(self.messages.check_input_error("register_password"))
         return self.messages.validate_register()
 
     def register_user(self, form: dict[str, str]) -> User:
@@ -106,9 +107,9 @@ class LoginController:
         email, password = self.get_login_form_data(form)
         user = self.db.session.query(User).filter(User.email == email).scalar()
         if not user:
-            self.messages.invalid_login = "* E-mail e/ou senha inválidos"
+            self.messages.login = "* E-mail e/ou senha inválidos"
             return False
         if not bcrypt.check_password_hash(user.password, password):
-            self.messages.invalid_login = "* E-mail e/ou senha inválidos"
+            self.messages.login = "* E-mail e/ou senha inválidos"
             return False
         return True

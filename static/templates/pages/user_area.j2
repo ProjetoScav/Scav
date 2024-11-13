@@ -1,4 +1,4 @@
-{% import 'pages/index.j2' as index %}
+{% from 'pages/index.j2' import fonts_and_favicon %}
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Área de usuários logados do Scav">
     {# Fonts and favicons #}
-    {{ index.fonts_and_favicon() }}
+    {{ fonts_and_favicon() }}
     {# Extensions #}
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/htmx.org@1.9.12"
