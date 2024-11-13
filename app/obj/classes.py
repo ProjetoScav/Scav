@@ -1,4 +1,4 @@
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from typing import Optional
 
 
@@ -30,7 +30,7 @@ class CNPJ:
 
     @staticmethod
     def __lista_to_string(lista: list) -> Optional[str]:
-        """Método que converte uma lista em uma string pra planilha"""
+        """Método que converte uma lista em uma string pra planilha."""
         try:
             lista = [f"{item}," for item in lista if item]
             return "".join(lista)[:-1]
@@ -38,11 +38,11 @@ class CNPJ:
             return None
 
     def transformar_em_dicionario(self) -> dict[str, str]:
-        "Método que transforma a classe em um dicionário"
+        """Método que transforma a classe em um dicionário."""
         return {k: str(v) for k, v in asdict(self).items()}
 
     def ajustar_dados_pra_download(self):
-        "Método que ajusta os dados pra inserção na planilha"
+        """Método que ajusta os dados pra inserção na planilha."""
         cnpj = self.transformar_em_dicionario()
         for chave in ["telefones", "quadro_societario", "atividades_secundarias"]:
             if cnpj[chave]:
@@ -79,13 +79,34 @@ class SearchResult:
 
 
 @dataclass
-class LoginErrorMessages:
-    invalid_email: str
-    invalid_password: str
+class LoginPopupMessages:
+    login: str = ""
+    register_name: str = ""
+    register_email: list[str] = field(default_factory=list)
+    register_password: str = ""
 
+    def check_input_error(self, attr: str):
+        match attr:
+            case "login":
+                if self.login:
+                    return "input--error"
+            case "register_name":
+                if self.register_name:
+                    return "input--error"
+            case "register_email":
+                if self.register_email:
+                    return "input--error"
+            case "register_password":
+                if self.register_password:
+                    return "input--error"
+        return ""
 
-@dataclass
-class RegisterErrorMessages:
-    invalid_name: str
-    invalid_email: str
-    invalid_password: str
+    def validate_login(self) -> bool:
+        if self.login:
+            return False
+        return True
+
+    def validate_register(self) -> bool:
+        if self.register_name or self.register_name or self.register_password:
+            return False
+        return True

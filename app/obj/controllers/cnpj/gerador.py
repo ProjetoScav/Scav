@@ -10,7 +10,8 @@ from app.obj.data.mappers import matriz_filial, mei, situacao_cadastral
 
 def transformar_em_cnpj(estabelecimento: Estabelecimento) -> CNPJ:
     """Função que recebe uma entidade Estabelecimento e
-    retorna um objeto CNPJ"""
+    retorna um objeto CNPJ
+    """
     return CNPJ(
         cnpj=estabelecimento.cnpj_completo,
         razao_social=estabelecimento.empresa.razao_social,
@@ -44,7 +45,8 @@ def transformar_em_cnpj(estabelecimento: Estabelecimento) -> CNPJ:
 
 def montar_telefone(ddd: str, numero: str) -> Optional[str]:
     """Função que recebe DDD e número e retorna um número
-    de telefone formatado"""
+    de telefone formatado
+    """
     try:
         if numero and ddd:
             telefone = f"({ddd}) {numero}"
@@ -56,7 +58,8 @@ def montar_telefone(ddd: str, numero: str) -> Optional[str]:
 
 def montar_natureza_juridica(empresa: Empresa) -> str:
     """Função que recebe o modelo SQLAlchemy Empresa e formata os atributos
-    de natureza jurídica em uma string"""
+    de natureza jurídica em uma string
+    """
     natureza_id = empresa.natureza_juridica_id
     natureza = empresa.natureza_juridica.natureza
     return f"{natureza_id} - {natureza}"
@@ -64,7 +67,8 @@ def montar_natureza_juridica(empresa: Empresa) -> str:
 
 def montar_atividade_principal(atividade: Atividade) -> str:
     """Função que recebe o modelo SQLAlchemy Atividade e formata os atributos
-    de atividade princial em uma string"""
+    de atividade princial em uma string
+    """
     return f"{atividade.atividade_id} - {atividade.atividade}"
 
 
@@ -72,7 +76,8 @@ def montar_atividades_secundarias(
     estabelecimento: Estabelecimento,
 ) -> Optional[list[str]]:
     """Função que recebe a entidade Estabelecimento e formata os atributos
-    das atividades secundárias em uma string"""
+    das atividades secundárias em uma string
+    """
     try:
         lista_de_atividades = estabelecimento.atividades_secundarias
         atividades = [
@@ -103,7 +108,8 @@ def montar_mei(estabelecimento: Estabelecimento) -> Optional[str]:
 
 def montar_socios(estabelecimento: Estabelecimento) -> Optional[list[str]]:
     """Função que retorna uma lista com os sócios do Estabelecimento
-    formatados"""
+    formatados
+    """
     socios = estabelecimento.empresa.socios
     if socios:
         return [
@@ -114,7 +120,8 @@ def montar_socios(estabelecimento: Estabelecimento) -> Optional[list[str]]:
 
 def montar_telefones(estabelecimento: Estabelecimento) -> list[str | None]:
     """Função que retorna uma lista com os telefones do Estabelecimento
-    formatado"""
+    formatado
+    """
     return [
         montar_telefone(estabelecimento.ddd_1, estabelecimento.telefone_1),
         montar_telefone(estabelecimento.ddd_2, estabelecimento.telefone_2),
@@ -123,7 +130,8 @@ def montar_telefones(estabelecimento: Estabelecimento) -> list[str | None]:
 
 class CNPJFront:
     """Classe que faz a busca dos dados
-    e os organiza pra consumo do template"""
+    e os organiza pra consumo do template
+    """
 
     def __init__(self, db: SQLAlchemy, estabelecimento_id: int) -> None:
         self.db = db
@@ -133,6 +141,7 @@ class CNPJFront:
 
     def criar_cnpj(self) -> CNPJ:
         """Função que pega os dados do CNPJ na DB
-        e retorna um objeto CNPJ"""
+        e retorna um objeto CNPJ
+        """
         cnpj = self.query.first()
         return transformar_em_cnpj(cnpj)

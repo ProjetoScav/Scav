@@ -2,12 +2,12 @@ from flask import Blueprint, render_template, request, session
 from jinja2_fragments.flask import render_block
 
 from app.ext.db.db import db
+from app.obj.classes import LoginPopupMessages
 from app.obj.controllers.resultado.gerador import ResultadoGerador
 
 
 def components_routes(bp: Blueprint) -> Blueprint:
-    """Função que registra as rotas de Componentes
-    no Blueprint"""
+    """Função que registra as rotas de Componentes no Blueprint."""
 
     @bp.get("/popup")
     def download_popup():
@@ -20,7 +20,7 @@ def components_routes(bp: Blueprint) -> Blueprint:
     def login_popup():
         return render_template(
             "components/login-popup.j2",
-            messages={"login": "", "name": "", "email": "", "password": ""},
+            messages=LoginPopupMessages(),
         )
 
     @bp.route("/results", methods=["GET", "POST"])

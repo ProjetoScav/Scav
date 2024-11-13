@@ -22,16 +22,16 @@ class Query:
         self.price = self.generate_price()
 
     def generate_n_cnpjs(self) -> int:
-        "Método que cria o atributo n_cnpjs dentro da Query"
+        """Método que cria o atributo n_cnpjs dentro da Query"""
         return self.query.count()
 
     def generate_price(self) -> Decimal:
-        "Método que cria o atributo preço dentro da Query"
+        """Método que cria o atributo preço dentro da Query"""
         price = round(Decimal(self.n_cnpjs) * Decimal(0.001), 2)
         return price
 
     def clean_data(self) -> None:
-        "Método que faz a limpeza dos dados do form"
+        """Método que faz a limpeza dos dados do form"""
         for chave, valor in self.form.items():
             if chave in campos_lista:
                 self.form[chave] = formatar_campo_lista(valor)

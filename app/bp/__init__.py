@@ -9,7 +9,8 @@ from .login.blueprint import login_blueprint
 
 def register_blueprints(app: Flask) -> Flask:
     """Função que registra os blueprints com as
-    rotas no app e o retorna"""
+    rotas no app e o retorna
+    """
     app.register_blueprint(cnpj_blueprint)
     app.register_blueprint(home_blueprint)
     app.register_blueprint(download_blueprint)

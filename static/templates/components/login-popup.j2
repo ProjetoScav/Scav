@@ -6,30 +6,24 @@
             <p>Encontre e baixe as informações desejadas de CNPJs de todo Brasil</p>
         </article>
         <div class="login">
+            {% block login_form %}
             <article x-show="state === 'login'">
                 <h2>Olá, que bom te ver aqui!</h2>
                 <form class='login__form' name='login' id="login" action="{{ url_for('login.login') }}" method="post"
-                    hx-swap-oob="true" hx-boost="false"
+                    hx-boost="false"
                     x-data="{ email: '', password: '', get isFilled() { return !(Boolean(this.email) && Boolean(this.password)) } }"
                     hx-ext="alpinemorph">
-                    {% if messages.login %}
-                    {% set class = "input--error" %}
-                    {% else %}
-                    {% set class = "" %}
-                    {% endif %}
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div>
                         <label for="login-email">E-mail</label>
-                        <input class="input {{ class }}" name='login-email' id="login-email" type="email"
-                            placeholder="Digitar email" x-model="email">
+                        <input class="input {{ messages.check_input_error('login') }}" name='login-email'
+                            id="login-email" type="email" placeholder="Digitar email" x-model="email">
                     </div>
                     <div>
                         <label for="password">Senha</label>
-                        <input class="input {{ class }}" name='login-password' id='login-password' type="password"
-                            placeholder="Digitar senha" x-model="password">
-                        {% if messages.login %}
-                        <p class="error-msg">* E-mail e/ou senha inválidos</p>
-                        {% endif %}
+                        <input class="input {{ messages.check_input_error('login') }}" name='login-password'
+                            id='login-password' type="password" placeholder="Digitar senha" x-model="password">
+                        <p class="error-msg">{{ messages.login }}</p>
                     </div>
                     <button class="btn" :class="isFilled ? 'btn--grey': ''" form="login" :disabled="isFilled">
                         Acessar conta
@@ -39,10 +33,12 @@
                     Ainda não tem conta? <a class="change-section purple" @click="state = 'create'">Criar conta</a>
                 </p>
             </article>
+            {% endblock %}
+            {% block register_form %}
             <article class="account-create" x-show="state === 'create'">
                 <h2>Criar conta</h2>
                 <form class="account-create__form" name="create_account" id="create_account" method="post"
-                    action="{{ url_for('login.signup') }}" hx-boost="false" hx-ext="alpinemorph" hx-swap-oob="true"
+                    action="{{ url_for('login.signup') }}" hx-boost="false" hx-ext="alpinemorph"
                     x-data="{ name: '',
                               email: '',
                               password: '',
@@ -51,44 +47,26 @@
                               get isFilled() { return !(Boolean(this.email) && Boolean(this.password) && Boolean(this.name) && Boolean(this.passwordConfirmed) && this.samePasswords) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div>
-                        {% if messages.name %}
-                        <label for="account_name input--error" name="create-account" id="create-account">Nome</label>
+                        <label for="account_name {{ messages.check_input_error('register_name') }}"
+                            name="create-account" id="create-account">Nome</label>
                         <input class="input" type="text" id="account_name" name="account_name"
                             placeholder="Digitar nome" x-model="name" required>
-                        <p class="error-msg">{{ messages.name }}</p>
-                        {% else %}
-                        <label for="account_name" name="create-account" id="create-account">Nome</label>
-                        <input class="input" type="text" id="account_name" name="account_name"
-                            placeholder="Digitar nome" x-model="name" required>
-                        {% endif %}
+                        <p class="error-msg">{{ messages.register_name }}</p>
                     </div>
                     <div>
-                        {% if messages.email %}
-                        <label for="account_email input--error">E-mail</label>
+                        <label for="account_email {{ messages.check_input_error('register_email') }}">E-mail</label>
                         <input class="input" type="text" id="account_email" name="account_email"
                             placeholder="Digitar email" x-model="email" required>
-                        {% for message in messages.email %}
+                        {% for message in messages.register_email %}
                         <p class="error-msg">{{ message }}</p>
                         {% endfor %}
-                        {% else %}
-                        <label for="account_email">E-mail</label>
-                        <input class="input" type="text" id="account_email" name="account_email"
-                            placeholder="Digitar email" x-model="email" required>
-                        {% endif %}
                     </div>
                     <div>
-                        {% if messages.password %}
-                        <label for="account_password input--error">Senha</label>
+                        <label
+                            for="account_password {{ messages.check_input_error('register_password') }}">Senha</label>
                         <input class="input" type="password" id="account_password" name="account_password"
                             placeholder="Digitar senha" x-model="password" required>
-                        {% for message in messages.password %}
-                        <p class="error-msg">{{ message }}</p>
-                        {% endfor %}
-                        {% else %}
-                        <label for="account_password">Senha</label>
-                        <input class="input" type="password" id="account_password" name="account_password"
-                            placeholder="Digitar senha" x-model="password" required>
-                        {% endif %}
+                        <p class="error-msg">{{ messages.register_password }}</p>
                     </div>
                     <div>
                         <label for="account_password_2">Confirmar senha</label>
@@ -105,6 +83,7 @@
                     Já possui conta? <a class="change-section purple" @click="state = 'login'">Fazer login</a>
                 </p>
             </article>
+            {% endblock %}
         </div>
     </section>
 </section>

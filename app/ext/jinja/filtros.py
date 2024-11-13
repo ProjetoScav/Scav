@@ -1,6 +1,7 @@
 def formatar_cnpj(cnpj: int) -> str:
     """Função que recebe uma string de números e a retorna
-    formatada como CNPJ"""
+    formatada como CNPJ
+    """
     cnpj = str(cnpj)
     return (
         cnpj[:2]
@@ -17,7 +18,8 @@ def formatar_cnpj(cnpj: int) -> str:
 
 def formatar_data(data: str) -> str:
     """Função que recebe uma data em formato YYYY-MM-dd
-    e retorna em dd/MM/YYYY"""
+    e retorna em dd/MM/YYYY
+    """
     try:
         ano = data[:4]
         mes = data[5:7]
@@ -34,7 +36,8 @@ def formatar_numero(numero: str) -> str:
 
 def formatar_razao_social(razao: str) -> str:
     """Função que recebe uma string e se ela tiver mais de
-    59 caracteres ele a encerra com ..."""
+    59 caracteres ele a encerra com ...
+    """
     try:
         n_digitos = 59
         if len(razao) > n_digitos:

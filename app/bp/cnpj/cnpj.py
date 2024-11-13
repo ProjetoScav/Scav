@@ -9,7 +9,8 @@ from app.obj.controllers.cnpj.gerador import CNPJFront
 
 def cnpj_rota(bp: Blueprint) -> Blueprint:
     """Função que registra as rotas de
-    CNPJ no Blueprint"""
+    CNPJ no Blueprint
+    """
 
     @bp.route("/cnpj/<int:estabelecimento_id>")
     @cache.memoize(120)

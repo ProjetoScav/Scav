@@ -13,7 +13,7 @@ class CNPJ:
         ...
 
     def transformar_em_dicionario(self) -> dict[str, str]:
-        "Método que transforma a classe em um dicionário"
+        """Método que transforma a classe em um dicionário"""
         return {k: str(v) for k, v in asdict(self).items()}
 
     @staticmethod
@@ -26,7 +26,7 @@ class CNPJ:
             return None
 
     def ajustar_dados_pra_download(self) -> Optional[str]:
-        "Método que ajusta os dados pra inserção na planilha"
+        """Método que ajusta os dados pra inserção na planilha"""
         cnpj = self.transformar_em_dicionario()
         for chave in ("telefones", "quadro_societario", "atividades_secundarias"):
             if valor := cnpj[chave]:

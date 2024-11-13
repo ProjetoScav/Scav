@@ -12,7 +12,8 @@ from app.obj.controllers.cnpj.gerador import transformar_em_cnpj
 
 class Planilhador:
     """Classe encarregada do processo
-    de geração de planilhas de dados"""
+    de geração de planilhas de dados
+    """
 
     def __init__(self, session, db: SQLAlchemy) -> None:
         self.db = db
@@ -40,7 +41,8 @@ class Planilhador:
 
     def __exportar_dataframe(self, df: pd.DataFrame) -> str:
         """Função que recebe um dataframe, gera um
-        arquivo Excel ou CSV com ele e retorna o seu caminho"""
+        arquivo Excel ou CSV com ele e retorna o seu caminho
+        """
         max_rows = 1_000_000
         if len(df) > max_rows:
             arquivo = self.__gerar_nome_planilha("csv")
@@ -55,7 +57,8 @@ class Planilhador:
 
     def pegar_os_dados(self) -> str:
         """Função que busca os dados na DB e transforma
-        eles em planilha"""
+        eles em planilha
+        """
         iterador = self.query.query.yield_per(10)
         linhas = [
             transformar_em_cnpj(resultado).ajustar_dados_pra_download()

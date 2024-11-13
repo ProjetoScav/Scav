@@ -16,7 +16,8 @@ class ResultadoGerador:
     @staticmethod
     def __gerar_faixa_de_cards(pagina: int) -> tuple[int, int]:
         """Função que recebe o número da pagina da home que deve ser exibida e retorna
-        2 valores que dão o começo e o fim do intervalo dos cards"""
+        2 valores que dão o começo e o fim do intervalo dos cards
+        """
         return (pagina * 10) - 10, pagina * 10
 
     @staticmethod

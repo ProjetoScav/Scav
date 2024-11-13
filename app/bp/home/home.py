@@ -7,7 +7,8 @@ from app.obj.controllers.resultado.gerador import ResultadoGerador
 
 def home_routes(bp: Blueprint) -> Blueprint:
     """Função que registra as rotas da
-    Homepage no Blueprint"""
+    Homepage no Blueprint
+    """
 
     @bp.route("/", methods=["GET"])
     def home():
