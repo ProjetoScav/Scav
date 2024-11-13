@@ -7,10 +7,9 @@
         </article>
         <div class="login">
             {% block login_form %}
-            <article x-show="state === 'login'">
+            <article class="account-login" x-show="state === 'login'">
                 <h2>Olá, que bom te ver aqui!</h2>
-                <form class='login__form' name='login' id="login" action="{{ url_for('login.login') }}" method="post"
-                    hx-boost="false"
+                <form class='login__form' name='login' id="login" hx-post="{{ url_for('login.login') }}" hx-swap="outerHTML" hx-target=".account-login"
                     x-data="{ email: '', password: '', get isFilled() { return !(Boolean(this.email) && Boolean(this.password)) } }"
                     hx-ext="alpinemorph">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -37,8 +36,9 @@
             {% block register_form %}
             <article class="account-create" x-show="state === 'create'">
                 <h2>Criar conta</h2>
-                <form class="account-create__form" name="create_account" id="create_account" method="post"
-                    action="{{ url_for('login.signup') }}" hx-boost="false" hx-ext="alpinemorph"
+                <form class="account-create__form " name="create_account" id="create_account"
+                    hx-post="{{ url_for('login.signup') }}" hx-ext="alpinemorph" hx-swap="outerHTML"
+                    hx-target=".account-create"
                     x-data="{ name: '',
                               email: '',
                               password: '',
@@ -47,15 +47,15 @@
                               get isFilled() { return !(Boolean(this.email) && Boolean(this.password) && Boolean(this.name) && Boolean(this.passwordConfirmed) && this.samePasswords) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div>
-                        <label for="account_name {{ messages.check_input_error('register_name') }}"
+                        <label for="account_name"
                             name="create-account" id="create-account">Nome</label>
-                        <input class="input" type="text" id="account_name" name="account_name"
+                        <input class="input {{ messages.check_input_error('register_email') }}" type="text" id="account_name" name="account_name"
                             placeholder="Digitar nome" x-model="name" required>
                         <p class="error-msg">{{ messages.register_name }}</p>
                     </div>
                     <div>
-                        <label for="account_email {{ messages.check_input_error('register_email') }}">E-mail</label>
-                        <input class="input" type="text" id="account_email" name="account_email"
+                        <label for="account_email">E-mail</label>
+                        <input class="input {{ messages.check_input_error('register_email') }}" type="text" id="account_email" name="account_email"
                             placeholder="Digitar email" x-model="email" required>
                         {% for message in messages.register_email %}
                         <p class="error-msg">{{ message }}</p>
@@ -63,8 +63,8 @@
                     </div>
                     <div>
                         <label
-                            for="account_password {{ messages.check_input_error('register_password') }}">Senha</label>
-                        <input class="input" type="password" id="account_password" name="account_password"
+                            for="account_password">Senha</label>
+                        <input class="input {{ messages.check_input_error('register_email') }}" type="password" id="account_password" name="account_password"
                             placeholder="Digitar senha" x-model="password" required>
                         <p class="error-msg">{{ messages.register_password }}</p>
                     </div>

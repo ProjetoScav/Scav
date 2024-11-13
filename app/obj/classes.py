@@ -101,11 +101,6 @@ class LoginPopupMessages:
                     return "input--error"
         return ""
 
-    def validate_login(self) -> bool:
-        if self.login:
-            return False
-        return True
-
     def validate_register(self) -> bool:
         if self.register_name or self.register_name or self.register_password:
             return False

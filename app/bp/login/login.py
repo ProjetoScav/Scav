@@ -1,4 +1,12 @@
-from flask import Blueprint, redirect, render_template, request, session, url_for
+from flask import (
+    Blueprint,
+    make_response,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
+)
 from flask_login import login_required, login_user, logout_user
 from jinja2_fragments.flask import render_block
 
@@ -16,17 +24,19 @@ def login_routes(bp: Blueprint) -> Blueprint:
         if login.validate_register(request.form):
             new_user = LoginController(db).register_user(request.form)
             login_user(new_user)
-            return render_template("pages/logged_area.j2", user=new_user)
+            response = make_response("")
+            response.headers["HX-Redirect"] = "/user_area"
+            return response
         return render_block(
             "components/login-popup.j2",
-            block_name="login_form",
+            block_name="register_form",
             messages=login.messages,
         )
 
-    @bp.route("/logged_area", methods=["GET"])
+    @bp.route("/user_area", methods=["GET"])
     @login_required
-    def logged_area():
-        return render_template("pages/logged_area.j2")
+    def user_area():
+        return render_template("pages/user_area.j2")
 
     @bp.route("/login/", methods=["POST", "GET"])
     def login():
@@ -38,10 +48,10 @@ def login_routes(bp: Blueprint) -> Blueprint:
                 .scalar()
             )
             login_user(user)
-            return redirect(url_for("login.logged_area"))
+            return redirect(url_for("login.user_area"))
         return render_block(
-            "components/forms/register_form.j2",
-            block_name="register_form",
+            "components/login-popup.j2",
+            block_name="login_form",
             messages=login.messages,
         )
 

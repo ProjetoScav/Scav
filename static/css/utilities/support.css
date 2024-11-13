@@ -26,3 +26,7 @@
 .color--grey {
   color: #4e474e;
 }
+
+.error-msg {
+  color: #bb3b3b;
+}

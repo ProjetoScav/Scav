@@ -94,7 +94,7 @@ class LoginController:
         return new_user
 
     def validate_login(self, form: dict[str, str]) -> bool:
-        """_summary_.
+        """Método de validação de login.
 
         Args:
             form (dict[str, str]): dados de login enviados pelo usuário
@@ -107,6 +107,8 @@ class LoginController:
         user = self.db.session.query(User).filter(User.email == email).scalar()
         if not user:
             self.messages.invalid_login = "* E-mail e/ou senha inválidos"
+            return False
         if not bcrypt.check_password_hash(user.password, password):
             self.messages.invalid_login = "* E-mail e/ou senha inválidos"
-        return self.messages.validate_login()
+            return False
+        return True
