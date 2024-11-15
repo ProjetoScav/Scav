@@ -73,7 +73,6 @@ class LoginController:
             self.messages.register_name = (
                 "* Seu nome não pode ultrapassar 50 caracteres"
             )
-        print(self.messages.check_input_error("register_password"))
         return self.messages.validate_register()
 
     def register_user(self, form: dict[str, str]) -> User:

@@ -1,4 +1,3 @@
-{% from 'pages/index.j2' import fonts_and_favicon %}
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -10,7 +9,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Área de usuários logados do Scav">
     {# Fonts and favicons #}
-    {{ fonts_and_favicon() }}
+    {# Fonts #}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+    {# Favicon #}
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='imgs/icon.png') }}" />
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="{{ url_for('static', filename='icons/apple-touch-icon.png') }}" />
+    <link rel="manifest" href="{{ url_for('static', filename='icons/site.webmanifest') }}" />
+    <link rel="mask-icon" href="{{ url_for('static', filename='icons/safari-pinned-tab.svg') }}" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
     {# Extensions #}
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/htmx.org@1.9.12"
@@ -35,8 +47,8 @@
                 <img class="mini-arrow svg" src="{{ url_for('static', filename='imgs/open-icon.svg') }}"
                     alt="seta-de-abertura" width="34px" height="34px">
             </article>
-            <article class="list__item" hx-get="{{ url_for('components.lists') }}" hx-target=".view"
-                hx-swap="outerHTML" x-data="{ open: true }" @click="open = !open">
+            <article class="list__item" hx-get="{{ url_for('components.lists') }}" hx-target=".view" hx-swap="outerHTML"
+                x-data="{ open: true }" @click="open = !open">
                 <img class="mini-list" src="{{ url_for('static', filename='imgs/list-icon.svg') }}" alt="icone-de-lista"
                     height="32px" width="32px">
                 <p>Listas</p>
@@ -57,7 +69,8 @@
                 {% endfor %}
             </div>
         </section>
-        <article class="help" hx-get="{{ url_for('components.faq', tipo='user_area') }}" hx-target=".view" hx-swap="outerHTML">
+        <article class="help" hx-get="{{ url_for('components.faq', tipo='user_area') }}" hx-target=".view"
+            hx-swap="outerHTML">
             <img class="mini-list" src="{{ url_for('static', filename='imgs/buoy.svg') }}" alt="icone-de-ajuda"
                 height="32px" width="32px">
             <p>Ajuda</p>

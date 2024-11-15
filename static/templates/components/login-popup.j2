@@ -9,9 +9,10 @@
             {% block login_form %}
             <article class="account-login" x-show="state === 'login'">
                 <h2>Olá, que bom te ver aqui!</h2>
-                <form class='login__form' name='login' id="login" hx-post="{{ url_for('login.login') }}" hx-swap="outerHTML" hx-target=".account-login"
+                <form class='login__form' name='login' id="login" hx-post="{{ url_for('login.login') }}"
+                    hx-swap="outerHTML" hx-target=".account-login"
                     x-data="{ email: '', password: '', get isFilled() { return !(Boolean(this.email) && Boolean(this.password)) } }"
-                    hx-ext="alpinemorph">
+                    hx-ext="alpinemorph" novalidate>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div>
                         <label for="login-email">E-mail</label>
@@ -47,25 +48,25 @@
                               get isFilled() { return !(Boolean(this.email) && Boolean(this.password) && Boolean(this.name) && Boolean(this.passwordConfirmed) && this.samePasswords) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div>
-                        <label for="account_name"
-                            name="create-account" id="create-account">Nome</label>
-                        <input class="input {{ messages.check_input_error('register_name') }}" type="text" id="account_name" name="account_name"
-                            placeholder="Digitar nome" x-model="name" required>
+                        <label for="account_name" name="create-account" id="create-account">Nome</label>
+                        <input class="input {{ messages.check_input_error('register_name') }}" type="text"
+                            id="account_name" name="account_name" placeholder="Digitar nome" x-model="name" required novalidate>
                         <p class="error-msg">{{ messages.register_name }}</p>
                     </div>
                     <div>
                         <label for="account_email">E-mail</label>
-                        <input class="input {{ messages.check_input_error('register_email') }}" type="text" id="account_email" name="account_email"
-                            placeholder="Digitar email" x-model="email" required>
+                        <input class="input {{ messages.check_input_error('register_email') }}" type="text"
+                            id="account_email" name="account_email" placeholder="Digitar email" x-model="email"
+                            required novalidate>
                         {% for message in messages.register_email %}
                         <p class="error-msg">{{ message }}</p>
                         {% endfor %}
                     </div>
                     <div>
-                        <label
-                            for="account_password">Senha</label>
-                        <input class="input {{ messages.check_input_error('register_password') }}" type="password" id="account_password" name="account_password"
-                            placeholder="Digitar senha" x-model="password" required>
+                        <label for="account_password">Senha</label>
+                        <input class="input {{ messages.check_input_error('register_password') }}" type="password"
+                            id="account_password" name="account_password" placeholder="Digitar senha" x-model="password"
+                            required>
                         <p class="error-msg">{{ messages.register_password }}</p>
                     </div>
                     <div>
